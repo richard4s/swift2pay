@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Picker, keyboard, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Picker, AsyncStorage } from 'react-native';
 
 import Card from '../components/Card';
 
@@ -20,17 +20,63 @@ export default class Airtime extends Component {
   constructor(){
     super();
     this.state={
-      PickerValue:''
+      PickerValue:'',
+      phone: ''
     }
   }; 
+
+  buyAirtime = async () => {
+    const grabUserId = await AsyncStorage.getItem('userId')
+
+    alert('you are about to buy airtime')
+
+    fetch('https://swift2pay.com/account/api/request.php?action=profile&userID='+grabUserId+'&apiKey=JFJHFJJ38388739949HFGDJ', {
+      method: 'GET',
+    }) 
+    .then(response => response.json())
+    .then((json) => {
+      user = JSON.stringify(json)
+      console.log('Response: ' , user, json.message)
+
+      this.setState({
+        phone: json.phone
+      });
+
+      
+    })
+    .catch((error) => {
+      console.error(error);
+      alert(error)
+    });
+
+    fetch('https://swift2pay.com/account/api/request?action=walletAirtimePurchase&amount=10&mobileNetwork=mtn&apiKey=JFJHFJJ38388739949HFGDJ&phone='+this.state.phone+'&user_id='+ grabUserId +'&service_name=Airtime%20Purchase', {
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then((json) => {
+      user = JSON.stringify(json)
+      console.log('Response: ' , user, json.message)
+      this.setState({
+        message: json.message,
+      });
+
+      if(json.status == 200){
+        console.log(json.message)
+        alert(json.message)
+        
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      alert(error)
+    });
+  }
 
 
  render() {
   const { navigate } = this.props.navigation;
   return (
-    <TouchableWithoutFeedback onPress={() => {
-      keyboard.dismiss();
-    }}>
+    
         <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
     
           <View style={{margin: 15}} >
@@ -84,11 +130,10 @@ export default class Airtime extends Component {
             <Card>
               <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter amount" keyboardType="number-pad" />
             </Card>
-            <Text style={styles.submit} onPress={() => navigate('Browse')}>Payment</Text>
+            <Text style={styles.submit} onPress={this.buyAirtime}>Payment</Text>
           </View>
 
       </ImageBackground>
-    </TouchableWithoutFeedback>
    
   )
  }

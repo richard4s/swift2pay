@@ -5,6 +5,14 @@ import Card from '../components/Card';
 
 export default class Login extends Component {
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      message: ''
+    }
+  }
+
   static navigationOptions = {
     headerStyle: {
       backgroundColor: 'rgb(147, 43, 173)',
@@ -23,17 +31,37 @@ export default class Login extends Component {
   };
 
   componentDidMount() {
+    
+    
+  }
+
+  loginUsers = () => {
+    
+    console.log('User details',this.state.email, this.state.password)
+
     fetch('https://swift2pay.com/account/api/request.php?action=login&email='+this.state.email+'&password='+this.state.password+'&apiKey=JFJHFJJ38388739949HFGDJ', {
       method: 'GET',
     })
     .then(response => response.json())
-    .then(json => {
+    .then((json) => {
+      user = JSON.stringify(json)
+      console.log('Response: ' , user, json.message)
       this.setState({
-        data: json.body,
+        message: json.message,
       });
+
+      if(json.status == 200){
+        console.log(json.message)
+        alert(json.message)
+        // alert(json.userID) 
+        this.props.navigation.navigate('Browse', {
+          userId: json.userID
+        })
+      }
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(error);
+      alert(error)
     });
   }
 
@@ -59,12 +87,10 @@ export default class Login extends Component {
  _login = async() => {
    if (this.state.email === '' && this.state.password === '') {
      alert('Please insert email or password');
-   } else if (this.state.email === data && this.state.password === data) {
-    this.props.navigation.navigate('Browse');
    } else {
-     alert('Invalid email or password details.')
+     this.loginUsers()
    }
- }
+ } 
 };
 
 const styles = StyleSheet.create({

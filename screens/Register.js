@@ -29,6 +29,33 @@ export default class Register extends Component {
     }
   }
 
+  registerUser = () => {
+    
+    fetch('https://swift2pay.com/account/api/request?action=register&email=' + this.state.email + '&password='+this.state.password+'&apiKey=JFJHFJJ38388739949HFGDJ&phone='+this.state.phone+'&first_name='+this.state.firstName+'&last_name='+this.state.lastName, {
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then((json) => {
+      user = JSON.stringify(json)
+      console.log('Response: ' , user, json.message)
+      this.setState({
+        message: json.message,
+      });
+
+      if(json.status == 201){
+        console.log(json.message)
+        alert(json.message) 
+        this.props.navigation.navigate('Browse', {
+          userId: json.userID
+        })
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      alert(error)
+    });
+  }
+
 
  render() {
   const { navigate } = this.props.navigation;
@@ -51,14 +78,12 @@ export default class Register extends Component {
       </ImageBackground>
  )
  }
- _register = async() => {
+ _register = async () => {
    if (this.state.firstName === '' && this.state.lastName === '' && this.state.phone === '' && this.state.email === '' && this.state.password === '') {
      alert('Kindly fill all fields in the form');
-   }
-   else if(userInfo.firstName === this.state.firstName && userInfo.LastName === this.state.lastName && userInfo.phone === this.state.phone && userInfo.email === this.state.email && userInfo.password === this.state.password) {
-    this.props.navigation.navigate('Browse');
-   } else {
-    alert('You should look into your data provided and correct or fill all fields ');
+   }else { 
+    // alert('You should look into your data provided and correct or fill all fields ');
+    this.registerUser()
    }
  }
 };
