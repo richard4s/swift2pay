@@ -30,10 +30,6 @@ export default class Login extends Component {
     password: '',
   };
 
-  componentDidMount() {
-    
-    
-  }
 
   loginUsers = () => {
     
@@ -71,7 +67,6 @@ export default class Login extends Component {
   return (
       <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
         <View style={styles.screen}>
-        <Button color="#932BAD" onPress={() => navigate('Browse')} title="Submit" />
         <Text style={styles.login}>Login</Text>
           <Card style={styles.inputContainer}>
             <TextInput style={{ width: '90%', height: 40, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Email address" onChangeText={(email)=>this.setState({email})} value={this.state.email} />

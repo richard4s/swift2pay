@@ -23,12 +23,13 @@ export default class Welcome extends Component {
     return (
       <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
       <View style={styles.screen}>
-        <Button  color="#932BAD" style={{padding: 5, margin: 25}} title='Login' onPress={() => navigate('Login')}  />
         <View style={styles.space}></View>
-        <Button  color="#932BAD" style={{padding: 5, margin: 25}} title='Signup' onPress={() => navigate('Register')}  />
         <Image source={require('../assets/images/welcome/wel.png')} style={styles.imageContainer} />
         <Image style={styles.iconContainer} source={require('../assets/images/welcome/log.png')} />
         <Text button style={styles.login} onPress={() => navigate('Login')} >LogIn</Text>
+        <View style={styles.space}></View>
+        <View style={styles.space}></View>
+        <View style={styles.space}></View>
         <Text style={styles.signup} onPress={() => navigate('Register')} >SignUp</Text>
         <Text style={styles.paragraph}>Welcome to Swift2Pay! Your most trusted and reliable app for online transactions and bill payments.</Text>
       </View>
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     padding: 5,
     paddingLeft: 55,
-    marginTop: 355
+    marginTop: 363
    },
    signup: {
     width: 190,
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingTop: 15,
     paddingLeft: 55,
-    marginTop: 340
+    marginTop: 375
    },
   iconContainer: {
     width: '100%',

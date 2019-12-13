@@ -8,6 +8,9 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "appcenter": "2.6.0",
+    "appcenter-analytics": "2.6.0",
+    "appcenter-crashes": "2.6.0",
     "expo": "^35.0.0",
     "react": "16.8.3",
     "react-dom": "16.8.3",
@@ -16,6 +19,7 @@
     "react-native-gesture-handler": "~1.3.0",
     "react-native-hyperlink": "0.0.16",
     "react-native-paper": "^3.3.0",
+    "react-native-picker-module": "^1.2.3",
     "react-native-web": "^0.11.7",
     "react-navigation": "^4.0.8",
     "react-navigation-material-bottom-tabs": "^2.1.5",
