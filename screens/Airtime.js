@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Picker, AsyncStorage } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, AsyncStorage, TouchableOpacity } from 'react-native';
+
+import ReactNativePickerModule from 'react-native-picker-module';
 
 import Card from '../components/Card';
 
@@ -20,8 +22,14 @@ export default class Airtime extends Component {
   constructor(){
     super();
     this.state={
-      PickerValue:'',
-      phone: ''
+      phone: '',
+      selectedValue: null,
+      data: [
+        "mtn",
+        "glo",
+        "etisalat",
+        "airtel"
+      ], 
     }
   }; 
 
@@ -81,51 +89,112 @@ export default class Airtime extends Component {
     
           <View style={{margin: 15}} >
             <Card>
-              <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Phone number" keyboardType="number-pad" />
+              <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Phone number" keyboardType="number-pad" onChangeText={(phone)=>this.setState({phone})} value={this.state.phone} />
             </Card>
           </View>
           
-          <View style={{margin: 15}} >
+          {/* <View style={{margin: 15}} >
             <Card >
-              <Picker
-                style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }}
-                selectedValue={this.state.PickerValue}
-                onValueChange={(itemValue, itemIndex) =>
-                  this.setState({PickerValue: itemValue})
-                }>
-                <Picker.Item label="Select phone operator" value="select" />
-                <Picker.Item label="MTN Nigeria" value="mtn" />
-                <Picker.Item label="Globacom" value="glo" />
-                <Picker.Item label="Airtel Nigeria" value="airtel" />
-                <Picker.Item label="9Mobile" value="etisalat" />
-              </Picker>
+              <TouchableOpacity onPress={() => {this.pickerRef.show()}} >
+                <Text style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }} >Click to select a network</Text>
+              </TouchableOpacity>
+
+              <ReactNativePickerModule
+                pickerRef={e => this.pickerRef = e}
+                value={this.state.selectedValue}
+                title={"Select a network"}
+                items={this.state.data}
+                onValueChange={(network) =>
+                  this.setState({
+                    selectedValue: network
+                    })
+                }
+                
+              />
             </Card>
-          </View>
+          </View> */}
           
 
           <View style={{margin: 25}}>
+              <Text>Select airtime network</Text>
+                <ScrollView style={{width: '100%'}} >
+
+                  <View style={styles.view}>
+
+                    <TouchableOpacity >
+                      <Card style={styles.cardTwo}>
+                        <Text style={{fontSize: 13, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1, marginTop: 18,}} >MTN</Text>
+                        <Text style={{fontSize: 8, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1,}} >Nigeria</Text>
+                      </Card>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity>
+                      <Card style={styles.cardTwo}>
+                        <Text style={{fontSize: 13, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1, marginTop: 18, }} >Glo</Text>
+                        <Text style={{fontSize: 8, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1,}} >Globacom</Text>
+                      </Card>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity>
+                      <Card style={styles.cardTwo}>
+                        <Text style={{fontSize: 13, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1, marginTop: 18, }} >9Mobile</Text>
+                        <Text style={{fontSize: 8, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1, }} >(Etisalat)</Text>
+                      </Card>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity>
+                      <Card style={styles.cardTwo}>
+                        <Text style={{fontSize: 13, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1, marginTop: 18, }} >Airtel</Text>
+                        <Text style={{fontSize: 8, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1,}} >Nigeria</Text>
+                      </Card>
+                    </TouchableOpacity>
+
+                  </View>
+                </ScrollView>
+              
+          </View>
+          
+
+          <View style={{margin: 15, marginTop: 15}}>
               <Text>Select amount (NGN)</Text>
-              <View style={styles.view}>
-                  <Card style={styles.cardTwo}>
-                    <Text style={{fontSize: 13, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 3, marginTop: 18,}} >100</Text>
-                    <Text style={{fontSize: 8, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1,}} >NGN</Text>
-                  </Card>
-                  <Card style={styles.cardTwo}>
-                    <Text style={{fontSize: 13, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 3, marginTop: 18, }} >500</Text>
-                    <Text style={{fontSize: 8, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1,}} >NGN</Text>
-                  </Card>
-                  <Card style={styles.cardTwo}>
-                    <Text style={{fontSize: 13, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 3, marginTop: 18, }} >1000</Text>
-                    <Text style={{fontSize: 8, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1, }} >NGN</Text>
-                  </Card>
-                  <Card style={styles.cardTwo}>
-                    <Text style={{fontSize: 13, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 3, marginTop: 18, }} >5000</Text>
-                    <Text style={{fontSize: 8, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1,}} >NGN</Text>
-                  </Card>
-              </View>
+
+                <ScrollView>
+                  <View style={styles.view}>
+
+                    <TouchableOpacity >
+                      <Card style={styles.cardTwo}>
+                        <Text style={{fontSize: 13, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1, marginTop: 18,}} >100</Text>
+                        <Text style={{fontSize: 8, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1,}} >NGN</Text>
+                      </Card>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity>
+                      <Card style={styles.cardTwo}>
+                        <Text style={{fontSize: 13, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1, marginTop: 18, }} >500</Text>
+                        <Text style={{fontSize: 8, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1,}} >NGN</Text>
+                      </Card>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity>
+                      <Card style={styles.cardTwo}>
+                        <Text style={{fontSize: 13, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1, marginTop: 18, }} >1000</Text>
+                        <Text style={{fontSize: 8, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1, }} >NGN</Text>
+                      </Card>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity>
+                      <Card style={styles.cardTwo}>
+                        <Text style={{fontSize: 13, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1, marginTop: 18, }} >5000</Text>
+                        <Text style={{fontSize: 8, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1,}} >NGN</Text>
+                      </Card>
+                    </TouchableOpacity>
+
+                  </View>
+                </ScrollView>
+
           </View>
 
-          <View style={{margin: 15, marginTop: 85}} >
+          <View style={{margin: 15, marginTop: 25}} >
           <Text style={{margin: 3}}>Or enter amount (NGN50 - NGN50,000)</Text>
             <Card>
               <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter amount" keyboardType="number-pad" />
@@ -163,7 +232,8 @@ const styles = StyleSheet.create({
    view: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "center"
+    justifyContent: "center",
+    width: '100%'
    },
    card: {
     flex: 1,
