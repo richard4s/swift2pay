@@ -3,8 +3,6 @@ import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, Scro
 
 import Card from '../components/Card';
 
-import FundWallet from './FundWallet';
-
 export default class Browse extends Component {
 
   constructor(props) {
@@ -135,7 +133,7 @@ export default class Browse extends Component {
        <Text style={styles.textTwo} >Wallet Balance: ₦{this.state.wallet}</Text>
        <View style={[styles.view, {width: '100%'}]} >
 
-          <TouchableOpacity onPress={() => navigate('FundWallet') } >
+          <TouchableOpacity onPress={() => navigate('FundWallet')} >
             <Card style={styles.cardTwo}>
               <Image source={require('../assets/images/browse-icons/wallet.png')} style={styles.imageTwo} />
               <Text style={{fontSize: 8, fontWeight: 'bold', textAlign: "center", padding: 2,}} >Fund Wallet</Text>
@@ -149,7 +147,8 @@ export default class Browse extends Component {
             </Card>
           </TouchableOpacity>
           
-       </View>
+       </View
+       {/* <Text style={{fontSize: 8, fontWeight: 'bold', textAlign: "center", padding: 2,}} >No Reward to transfer</Text> */}
      </Card>
    </View>
     <View style={styles.screen}>

@@ -135,7 +135,7 @@ export default class Browse extends Component {
        <Text style={styles.textTwo} >Wallet Balance: ₦{this.state.wallet}</Text>
        <View style={[styles.view, {width: '100%'}]} >
 
-          <TouchableOpacity onPress={() => navigate('FundWallet') } >
+          <TouchableOpacity onPress={this.FundWallet} >
             <Card style={styles.cardTwo}>
               <Image source={require('../assets/images/browse-icons/wallet.png')} style={styles.imageTwo} />
               <Text style={{fontSize: 8, fontWeight: 'bold', textAlign: "center", padding: 2,}} >Fund Wallet</Text>

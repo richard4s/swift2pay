@@ -15,8 +15,6 @@ import BankTransfer from './screens/BankTransfer';
 import Insurance from './screens/Insurance';
 import FundWallet from './screens/FundWallet';
 
-console.disableYellowBox = true;
-
 // Import all the screens we are going to switch 
 
 const App = createStackNavigator({

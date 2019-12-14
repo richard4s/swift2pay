@@ -47,7 +47,9 @@ export default class Airtime extends Component {
       console.log('Response: ' , user, json.message)
 
       this.setState({
-        phone: json.phone
+        phone: json.phone,
+        mobileNetwork: json.mobileNetwork,
+        amount: json.amount,
       });
 
       
@@ -57,7 +59,7 @@ export default class Airtime extends Component {
       alert(error)
     });
 
-    fetch('https://swift2pay.com/account/api/request?action=walletAirtimePurchase&amount=10&mobileNetwork=mtn&apiKey=JFJHFJJ38388739949HFGDJ&phone='+this.state.phone+'&user_id='+ grabUserId +'&service_name=Airtime%20Purchase', {
+    fetch('https://swift2pay.com/account/api/request?action=walletAirtimePurchase&amount='+this.state.amount+'&mobileNetwork='+this.state.mobileNetwork+'&apiKey=JFJHFJJ38388739949HFGDJ&phone='+this.state.phone+'&user_id='+ grabUserId +'&service_name=Airtime%20Purchase', {
       method: 'GET',
     })
     .then(response => response.json())
@@ -115,8 +117,8 @@ export default class Airtime extends Component {
           </View> */}
           
 
-          <View style={{margin: 25}}>
-              <Text>Select airtime network</Text>
+          {/* <View style={{margin: 25}}>
+              <Text>Input airtime network</Text>
                 <ScrollView style={{width: '100%'}} >
 
                   <View style={styles.view}>
@@ -152,10 +154,10 @@ export default class Airtime extends Component {
                   </View>
                 </ScrollView>
               
-          </View>
+          </View> */}
           
 
-          <View style={{margin: 15, marginTop: 15}}>
+          {/* <View style={{margin: 15, marginTop: 15}}>
               <Text>Select amount (NGN)</Text>
 
                 <ScrollView>
@@ -192,12 +194,19 @@ export default class Airtime extends Component {
                   </View>
                 </ScrollView>
 
+          </View> */}
+
+          <View style={{margin: 15, marginTop: 25}} >
+          <Text style={{margin: 3}}>Input airtime network</Text>
+            <Card>
+              <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Write mtn, glo, airtel, etisalat" onChangeText={(mobileNetwork)=>this.setState({mobileNetwork})} value={this.state.mobileNetwork} />
+            </Card>
           </View>
 
           <View style={{margin: 15, marginTop: 25}} >
-          <Text style={{margin: 3}}>Or enter amount (NGN50 - NGN50,000)</Text>
+          <Text style={{margin: 3}}>Enter amount (NGN50 - NGN50,000)</Text>
             <Card>
-              <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter amount" keyboardType="number-pad" />
+              <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter amount" keyboardType="number-pad" onChangeText={(amount)=>this.setState({amount})} value={this.state.amount} />
             </Card>
             <Text style={styles.submit} onPress={this.buyAirtime}>Payment</Text>
           </View>

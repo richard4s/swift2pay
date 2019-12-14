@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
+console.disableYellowBox = true;
+
 import Welcome from './screens/Welcome';
 import Login from './screens/Login';
 import Register from './screens/Register';
@@ -14,8 +16,6 @@ import WalletTransfer from './screens/WalletTransfer';
 import BankTransfer from './screens/BankTransfer';
 import Insurance from './screens/Insurance';
 import FundWallet from './screens/FundWallet';
-
-console.disableYellowBox = true;
 
 // Import all the screens we are going to switch 
 

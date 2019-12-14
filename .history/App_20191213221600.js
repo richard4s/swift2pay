@@ -13,9 +13,6 @@ import BillPayment from './screens/BillPayment';
 import WalletTransfer from './screens/WalletTransfer';
 import BankTransfer from './screens/BankTransfer';
 import Insurance from './screens/Insurance';
-import FundWallet from './screens/FundWallet';
-
-console.disableYellowBox = true;
 
 // Import all the screens we are going to switch 
 
@@ -32,7 +29,6 @@ const App = createStackNavigator({
     WalletTransfer: { screen: WalletTransfer }, 
     BankTransfer: { screen: BankTransfer }, 
     Insurance: { screen: Insurance }, 
-    FundWallet: { screen: FundWallet }, 
   },
   {
     initialRouteName: 'Welcome',
