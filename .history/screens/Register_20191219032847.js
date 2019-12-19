@@ -203,6 +203,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: 'bold',
     color: 'rgb(147, 43, 173)',
-    
+    paddingTop: 3,
+    marginTop: 8,
   },
 });

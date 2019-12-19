@@ -75,37 +75,23 @@ export default class Login extends Component {
         <View style={styles.screen}>
         <Text style={styles.login}>Login</Text>
           <Card style={styles.inputContainer}>
-
-            <View style={styles.sectionStyle}>
-              <Image style={styles.imageStyle} source={require('../assets/images/icons/login/email.png')} />
-              <TextInput style={styles.textInput} placeholder="Email address" onChangeText={(email)=>this.setState({email})} value={this.state.email} />
-            </View>
-            
-            <View style={styles.sectionStyle}>
-              <Image style={styles.imageStyle} source={require('../assets/images/icons/login/password.png')} />
-              <TextInput style={styles.textInput} placeholder="Password" secureTextEntry onChangeText={(password)=>this.setState({password})} value={this.state.password} />
-            </View>
-            
+            <View></View>
+            <TextInput style={{ width: '90%', height: 40, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Email address" onChangeText={(email)=>this.setState({email})} value={this.state.email} />
+            <TextInput style={{ width: '90%', height: 40, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Password" secureTextEntry onChangeText={(password)=>this.setState({password})} value={this.state.password} />
           </Card>
-
-          <ScrollView >
-            <TouchableOpacity style={styles.submit} onPress={this._login}>
+          <ScrollView style={styles.submit}>
+            <TouchableOpacity onPress={this._login}>
               <Text style={styles.textTwo}>Submit</Text>
             </TouchableOpacity>
           </ScrollView>
-
+          <Text style={styles.signup} onPress={() => navigate('Register')}>SignUp</Text>
         </View>
-
-        <TouchableOpacity onPress={() => navigate('Register')}>
-          <Text style={styles.signup} >SignUp</Text>
-        </TouchableOpacity>
-
       </ImageBackground>
   
  )
  }
  _login = async() => {
-   if (this.state.email === '' || this.state.password === '') {
+   if (this.state.email === '' && this.state.password === '') {
      alert('Please insert email or password');
    } else {
      alert('please wait...')
@@ -126,31 +112,6 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center'
   },
-  sectionStyle: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  imageStyle: {
-    padding: 5,
-    margin: 2,
-    height: 15,
-    width: 15,
-    resizeMode: 'stretch',
-    alignItems: 'center',
-  },
-  textInput: {
-    width: '90%', 
-    height: 40, 
-    borderColor: 'gray', 
-    borderWidth: 1, 
-    borderTopWidth: 0, 
-    borderLeftWidth: 0, 
-    borderRightWidth: 0, 
-    alignItems: "center", 
-    padding: 5, 
-    margin: 5
-  },
    login: {
     fontSize: 25,
     fontWeight: "500",
@@ -166,8 +127,8 @@ const styles = StyleSheet.create({
     position: "relative",
     marginVertical: 10,
     marginLeft: 195,
-    marginBottom: 99,
-    marginTop: 50
+    marginBottom: 30,
+    marginTop: 170
    },
    inputContainer: {
     width: 600,
@@ -179,6 +140,7 @@ const styles = StyleSheet.create({
     height: 60,
     fontSize: 25,
     fontWeight: "500",
+    position: "absolute",
     color: "purple",
     borderWidth: 2,
     borderTopWidth: 0,
@@ -187,10 +149,10 @@ const styles = StyleSheet.create({
     borderColor: "purple",
     alignContent: 'center',
     paddingTop: 15,
-    paddingLeft: 45,
     padding: 5,
-    marginTop: 35
-   },
+    paddingLeft: 55,
+    marginTop: 375
+  },
   textTwo: {
     fontSize: 17,
     fontWeight: 'bold',

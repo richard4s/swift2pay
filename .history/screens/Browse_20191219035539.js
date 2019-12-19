@@ -62,7 +62,7 @@ export default class Browse extends Component {
 
       if(json.status == 200){
         console.log(json.message)
-        alert('Data successfully updated') 
+        alert(json.message) 
         this._storeData(json.userID)  
       }
     })

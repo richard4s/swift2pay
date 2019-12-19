@@ -43,8 +43,8 @@ export default class Register extends Component {
       });
 
       if(json.status == 201){
-        alert('please wait...')
         console.log(json.message)
+        alert('please wait...')
         alert(json.message) 
         this.props.navigation.navigate('Browse', {
           userId: json.userID
@@ -69,54 +69,24 @@ export default class Register extends Component {
         <View style={styles.screen}>
         <Text style={styles.signup}>SignUp</Text>
           <Card style={styles.inputContainer}>
-
-            <View style={styles.sectionStyle} >
-              <Image style={styles.imageStyle} source={require('../assets/images/icons/signup/firstname.png')} />
-              <TextInput style={styles.textInput} placeholder="First Name" onChangeText={(firstName)=>this.setState({firstName})} value={this.state.firstName} />
-            </View>
-
-            <View style={styles.sectionStyle} >
-              <Image style={styles.imageStyle} source={require('../assets/images/icons/signup/firstname.png')} />
-              <TextInput style={styles.textInput} placeholder="Last Name" onChangeText={(lastName)=>this.setState({lastName})} value={this.state.lastName} />
-            </View>
-
-            <View style={styles.sectionStyle} >
-              <Image style={styles.imageStyle} source={require('../assets/images/icons/signup/phone.png')} />
-              <TextInput style={styles.textInput} placeholder="Phone number" keyboardType="number-pad" onChangeText={(phone)=>this.setState({phone})} value={this.state.phone} />
-            </View>
-
-            <View style={styles.sectionStyle} >
-              <Image style={styles.imageStyle} source={require('../assets/images/icons/signup/email.png')} />
-              <TextInput style={styles.textInput} placeholder="Email" onChangeText={(email)=>this.setState({email})} value={this.state.email} />
-            </View>
-
-            <View style={styles.sectionStyle} >
-              <Image style={styles.imageStyle} source={require('../assets/images/icons/signup/password.png')} />
-              <TextInput style={styles.textInput} placeholder="Password" secureTextEntry={true} onChangeText={(password)=>this.setState({password})} value={this.state.password} />
-            </View>
-
+            <TextInput style={styles.textInput} placeholder="First Name" onChangeText={(firstName)=>this.setState({firstName})} value={this.state.firstName} />
+            <TextInput style={{ width: '90%', height: 40, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Last Name" onChangeText={(lastName)=>this.setState({lastName})} value={this.state.lastName} />
+            <TextInput style={{ width: '90%', height: 40, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Phone number" keyboardType="number-pad" onChangeText={(phone)=>this.setState({phone})} value={this.state.phone} />
+            <TextInput style={{ width: '90%', height: 40, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Email" onChangeText={(email)=>this.setState({email})} value={this.state.email} />
+            <TextInput style={{ width: '90%', height: 40, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Password" secureTextEntry={true} onChangeText={(password)=>this.setState({password})} value={this.state.password} />
           </Card>
-
-          <ScrollView >
-            <TouchableOpacity style={styles.submit} onPress={this._register} >
-              <Text style={styles.textTwo} >Submit</Text>
-            </TouchableOpacity>
-          </ScrollView>
-
-          <TouchableOpacity onPress={() => navigate('Login')}>
-            <Text style={styles.login} >LogIn</Text>
-          </TouchableOpacity>  
-          
+            <Text style={styles.submit} onPress={this._register}>Submit</Text>
+          <Text style={styles.login} onPress={() => navigate('Login')}>LogIn</Text>
         </View>
       </ImageBackground>
  )
  }
- _register = async() => {
+ _register = async () => {
    if (this.state.firstName === '' && this.state.lastName === '' && this.state.phone === '' && this.state.email === '' && this.state.password === '') {
-     alert('please wait...');
+     alert('please wait...')
      alert('Kindly fill all fields in the form');
    }else { 
-    alert('please wait...');
+    alert('please wait...')
     this.registerUser()
    }
  }
@@ -129,7 +99,7 @@ const styles = StyleSheet.create({
     height: null,
     resizeMode: 'cover'
    },
-  screen: {
+   screen: {
     flex: 1,
     padding: 10,
     alignItems: 'center'
@@ -174,7 +144,7 @@ const styles = StyleSheet.create({
     position: "relative",
     marginVertical: 10,
     marginLeft: 195,
-    marginBottom: 45,
+    marginBottom: 25,
     marginTop: 40
    },
    inputContainer: {
@@ -183,7 +153,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   submit: {
-    width: 180,
+    width: 190,
     height: 60,
     fontSize: 25,
     fontWeight: "500",
@@ -199,10 +169,4 @@ const styles = StyleSheet.create({
     padding: 5,
     marginTop: 35
    },
-   textTwo: {
-    fontSize: 17,
-    fontWeight: 'bold',
-    color: 'rgb(147, 43, 173)',
-    
-  },
 });

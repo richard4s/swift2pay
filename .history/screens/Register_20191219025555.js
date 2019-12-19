@@ -102,11 +102,8 @@ export default class Register extends Component {
               <Text style={styles.textTwo} >Submit</Text>
             </TouchableOpacity>
           </ScrollView>
-
-          <TouchableOpacity onPress={() => navigate('Login')}>
-            <Text style={styles.login} >LogIn</Text>
-          </TouchableOpacity>  
-          
+            
+          <Text style={styles.login} onPress={() => navigate('Login')}>LogIn</Text>
         </View>
       </ImageBackground>
  )
@@ -174,7 +171,7 @@ const styles = StyleSheet.create({
     position: "relative",
     marginVertical: 10,
     marginLeft: 195,
-    marginBottom: 45,
+    marginBottom: 25,
     marginTop: 40
    },
    inputContainer: {
@@ -203,6 +200,5 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: 'bold',
     color: 'rgb(147, 43, 173)',
-    
   },
 });

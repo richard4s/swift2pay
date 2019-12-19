@@ -3,6 +3,8 @@ import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, Scro
 
 import Card from '../components/Card';
 
+import FundWallet from './FundWallet';
+
 export default class Browse extends Component {
 
   constructor(props) {
@@ -62,7 +64,7 @@ export default class Browse extends Component {
 
       if(json.status == 200){
         console.log(json.message)
-        alert('Data successfully updated') 
+        alert(json.message) 
         this._storeData(json.userID)  
       }
     })

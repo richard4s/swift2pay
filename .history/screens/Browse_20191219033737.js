@@ -3,6 +3,8 @@ import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, Scro
 
 import Card from '../components/Card';
 
+import FundWallet from './FundWallet';
+
 export default class Browse extends Component {
 
   constructor(props) {
@@ -62,7 +64,7 @@ export default class Browse extends Component {
 
       if(json.status == 200){
         console.log(json.message)
-        alert('Data successfully updated') 
+        alert(json.message) 
         this._storeData(json.userID)  
       }
     })
@@ -129,10 +131,10 @@ export default class Browse extends Component {
 
      <Text style={[styles.textTwo, {marginBottom: 15, color: 'black'}]}> Hi, {this.state.first_name} {this.state.last_name}</Text> 
 
-     <Card style={{height: 185, marginBottom: 5}}>
+     <Card style={{height: 175, marginBottom: 5}}>
        <Text style={styles.textTwo} >Wallet Balance: ₦{this.state.wallet}</Text>
        
-       <View style={[styles.view, {width: '100%', height: '50%'}]} >
+       <View style={[styles.view, {width: '100%'}]} >
 
           <TouchableOpacity onPress={() => navigate('FundWallet') } >
             <Card style={styles.cardTwo}>
@@ -315,7 +317,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'rgb(50, 50, 50)',
     paddingTop: 1,
-    marginTop: 15,
+    marginTop: 17,
    },
    image: {
     width: '50%',
@@ -329,6 +331,6 @@ const styles = StyleSheet.create({
     alignContent: "center",
     padding: null,
     margin: 2,
-    marginTop: 25,
+    marginTop: 15,
    },
 });

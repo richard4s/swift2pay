@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, TouchableOpacity } from 'react-native';
 
 import Card from '../components/Card';
 
-export default class Login extends Component {
+const userInfo = {firstName: 'Akanda', lastName: 'Ara', phone: '08136266387', email: 'akadanzara@gmail.com', password: 'damond'}
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      message: ''
-    }
-  }
-
+export default class Register extends Component {
   static navigationOptions = {
     headerStyle: {
       backgroundColor: 'rgb(147, 43, 173)',
@@ -25,21 +18,20 @@ export default class Login extends Component {
     },
   };
 
-  state = {
-    email: '',
-    password: '',
-  };
-
-  componentDidMount(){
-    
+  constructor(props) {
+    super(props);
+    this.state = {
+      firstName: '',
+      lastName: '',
+      phone: '',
+      email: '',
+      password: '',
+    }
   }
 
-
-  loginUsers = () => {
+  registerUser = () => {
     
-    console.log('User details',this.state.email, this.state.password)
-
-    fetch('https://swift2pay.com/account/api/request.php?action=login&email='+this.state.email+'&password='+this.state.password+'&apiKey=JFJHFJJ38388739949HFGDJ', {
+    fetch('https://swift2pay.com/account/api/request?action=register&email=' + this.state.email + '&password='+this.state.password+'&apiKey=JFJHFJJ38388739949HFGDJ&phone='+this.state.phone+'&first_name='+this.state.firstName+'&last_name='+this.state.lastName, {
       method: 'GET',
     })
     .then(response => response.json())
@@ -50,14 +42,15 @@ export default class Login extends Component {
         message: json.message,
       });
 
-      if(json.status == 200){
+      if(json.status == 201){
         console.log(json.message)
-        alert(json.message)
-        // alert(json.userID) 
+        alert('please wait...')
+        alert(json.message) 
         this.props.navigation.navigate('Browse', {
           userId: json.userID
         })
-      } else if (json.status == 400){
+      } else if (json.status == 204){
+        alert('please wait...')
         alert(json.message)
       }
     })
@@ -71,47 +64,38 @@ export default class Login extends Component {
  render() {
   const { navigate } = this.props.navigation;
   return (
+    
       <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
         <View style={styles.screen}>
-        <Text style={styles.login}>Login</Text>
+        <Text style={styles.signup}>SignUp</Text>
           <Card style={styles.inputContainer}>
-
-            <View style={styles.sectionStyle}>
-              <Image style={styles.imageStyle} source={require('../assets/images/icons/login/email.png')} />
-              <TextInput style={styles.textInput} placeholder="Email address" onChangeText={(email)=>this.setState({email})} value={this.state.email} />
-            </View>
-            
-            <View style={styles.sectionStyle}>
-              <Image style={styles.imageStyle} source={require('../assets/images/icons/login/password.png')} />
-              <TextInput style={styles.textInput} placeholder="Password" secureTextEntry onChangeText={(password)=>this.setState({password})} value={this.state.password} />
-            </View>
-            
+            <TextInput style={styles.textInput} placeholder="First Name" onChangeText={(firstName)=>this.setState({firstName})} value={this.state.firstName} />
+            <TextInput style={styles.textInput} placeholder="Last Name" onChangeText={(lastName)=>this.setState({lastName})} value={this.state.lastName} />
+            <TextInput style={styles.textInput} placeholder="Phone number" keyboardType="number-pad" onChangeText={(phone)=>this.setState({phone})} value={this.state.phone} />
+            <TextInput style={styles.textInput} placeholder="Email" onChangeText={(email)=>this.setState({email})} value={this.state.email} />
+            <TextInput style={styles.textInput} placeholder="Password" secureTextEntry={true} onChangeText={(password)=>this.setState({password})} value={this.state.password} />
           </Card>
 
-          <ScrollView >
-            <TouchableOpacity style={styles.submit} onPress={this._login}>
-              <Text style={styles.textTwo}>Submit</Text>
+          <ScrollView style={styles.submit}>
+            <TouchableOpacity onPress={this._register} >
+              <Text style={styles.submit} >Submit</Text>
             </TouchableOpacity>
           </ScrollView>
-
+            
+          <Text style={styles.login} onPress={() => navigate('Login')}>LogIn</Text>
         </View>
-
-        <TouchableOpacity onPress={() => navigate('Register')}>
-          <Text style={styles.signup} >SignUp</Text>
-        </TouchableOpacity>
-
       </ImageBackground>
-  
  )
  }
- _login = async() => {
-   if (this.state.email === '' || this.state.password === '') {
-     alert('Please insert email or password');
-   } else {
+ _register = async () => {
+   if (this.state.firstName === '' && this.state.lastName === '' && this.state.phone === '' && this.state.email === '' && this.state.password === '') {
      alert('please wait...')
-     this.loginUsers()
+     alert('Kindly fill all fields in the form');
+   }else { 
+    alert('please wait...')
+    this.registerUser()
    }
- } 
+ }
 };
 
 const styles = StyleSheet.create({
@@ -151,23 +135,23 @@ const styles = StyleSheet.create({
     padding: 5, 
     margin: 5
   },
-   login: {
+   signup: {
     fontSize: 25,
     fontWeight: "500",
     position: "relative",
     paddingRight: 195,
     color: '#932BAD',
-    marginTop: 95,
-    marginBottom: 35
+    marginTop: 35,
+    marginBottom: 25
    },
-   signup: {
+   login: {
     fontSize: 25,
     fontWeight: "500",
     position: "relative",
     marginVertical: 10,
     marginLeft: 195,
-    marginBottom: 99,
-    marginTop: 50
+    marginBottom: 25,
+    marginTop: 40
    },
    inputContainer: {
     width: 600,
@@ -175,7 +159,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   submit: {
-    width: 180,
+    width: 190,
     height: 60,
     fontSize: 25,
     fontWeight: "500",
@@ -191,7 +175,7 @@ const styles = StyleSheet.create({
     padding: 5,
     marginTop: 35
    },
-  textTwo: {
+   textTwo: {
     fontSize: 17,
     fontWeight: 'bold',
     color: 'rgb(147, 43, 173)',

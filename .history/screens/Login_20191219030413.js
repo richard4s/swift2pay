@@ -105,7 +105,7 @@ export default class Login extends Component {
  )
  }
  _login = async() => {
-   if (this.state.email === '' || this.state.password === '') {
+   if (this.state.email === '' && this.state.password === '') {
      alert('Please insert email or password');
    } else {
      alert('please wait...')
@@ -166,8 +166,8 @@ const styles = StyleSheet.create({
     position: "relative",
     marginVertical: 10,
     marginLeft: 195,
-    marginBottom: 99,
-    marginTop: 50
+    marginBottom: 30,
+    marginTop: 130
    },
    inputContainer: {
     width: 600,

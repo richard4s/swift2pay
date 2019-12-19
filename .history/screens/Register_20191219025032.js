@@ -39,6 +39,7 @@ export default class Register extends Component {
       user = JSON.stringify(json)
       console.log('Response: ' , user, json.message)
       this.setState({
+        alert('please wait...'),
         message: json.message,
       });
 
@@ -71,27 +72,27 @@ export default class Register extends Component {
           <Card style={styles.inputContainer}>
 
             <View style={styles.sectionStyle} >
-              <Image style={styles.imageStyle} source={require('../assets/images/icons/signup/firstname.png')} />
+              <Image />
               <TextInput style={styles.textInput} placeholder="First Name" onChangeText={(firstName)=>this.setState({firstName})} value={this.state.firstName} />
             </View>
 
             <View style={styles.sectionStyle} >
-              <Image style={styles.imageStyle} source={require('../assets/images/icons/signup/firstname.png')} />
+              <Image />
               <TextInput style={styles.textInput} placeholder="Last Name" onChangeText={(lastName)=>this.setState({lastName})} value={this.state.lastName} />
             </View>
 
             <View style={styles.sectionStyle} >
-              <Image style={styles.imageStyle} source={require('../assets/images/icons/signup/phone.png')} />
+              <Image />
               <TextInput style={styles.textInput} placeholder="Phone number" keyboardType="number-pad" onChangeText={(phone)=>this.setState({phone})} value={this.state.phone} />
             </View>
 
             <View style={styles.sectionStyle} >
-              <Image style={styles.imageStyle} source={require('../assets/images/icons/signup/email.png')} />
+              <Image />
               <TextInput style={styles.textInput} placeholder="Email" onChangeText={(email)=>this.setState({email})} value={this.state.email} />
             </View>
 
             <View style={styles.sectionStyle} >
-              <Image style={styles.imageStyle} source={require('../assets/images/icons/signup/password.png')} />
+              <Image />
               <TextInput style={styles.textInput} placeholder="Password" secureTextEntry={true} onChangeText={(password)=>this.setState({password})} value={this.state.password} />
             </View>
 
@@ -102,21 +103,18 @@ export default class Register extends Component {
               <Text style={styles.textTwo} >Submit</Text>
             </TouchableOpacity>
           </ScrollView>
-
-          <TouchableOpacity onPress={() => navigate('Login')}>
-            <Text style={styles.login} >LogIn</Text>
-          </TouchableOpacity>  
-          
+            
+          <Text style={styles.login} onPress={() => navigate('Login')}>LogIn</Text>
         </View>
       </ImageBackground>
  )
  }
  _register = async() => {
    if (this.state.firstName === '' && this.state.lastName === '' && this.state.phone === '' && this.state.email === '' && this.state.password === '') {
-     alert('please wait...');
+     alert('please wait...')
      alert('Kindly fill all fields in the form');
    }else { 
-    alert('please wait...');
+    alert('please wait...')
     this.registerUser()
    }
  }
@@ -174,7 +172,7 @@ const styles = StyleSheet.create({
     position: "relative",
     marginVertical: 10,
     marginLeft: 195,
-    marginBottom: 45,
+    marginBottom: 25,
     marginTop: 40
    },
    inputContainer: {
@@ -203,6 +201,5 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: 'bold',
     color: 'rgb(147, 43, 173)',
-    
   },
 });
