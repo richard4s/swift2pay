@@ -50,6 +50,10 @@ export default class Login extends Component {
         message: json.message,
       });
 
+      if(_login){
+        alert('Please wait...')
+      }
+
       if(json.status == 200){
         console.log(json.message)
         alert(json.message)
@@ -80,7 +84,7 @@ export default class Login extends Component {
           </Card>
           <ScrollView style={styles.submit}>
             <TouchableOpacity onPress={this._login}>
-              <Text style={styles.textTwo}>Submit</Text>
+              <Text>Submit</Text>
             </TouchableOpacity>
           </ScrollView>
           <Text style={styles.signup} onPress={() => navigate('Register')}>SignUp</Text>
@@ -93,7 +97,6 @@ export default class Login extends Component {
    if (this.state.email === '' && this.state.password === '') {
      alert('Please insert email or password');
    } else {
-     alert('please wait...')
      this.loginUsers()
    }
  } 
@@ -127,7 +130,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginLeft: 195,
     marginBottom: 30,
-    marginTop: 170
+    marginTop: 150
    },
    inputContainer: {
     width: 600,
@@ -135,7 +138,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   submit: {
-    width: 180,
+    width: 190,
     height: 60,
     fontSize: 25,
     fontWeight: "500",
@@ -151,10 +154,5 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingLeft: 55,
     marginTop: 375
-  },
-  textTwo: {
-    fontSize: 17,
-    fontWeight: 'bold',
-    color: 'rgb(147, 43, 173)',
   },
 });

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, } from 'react-native';
 
 import Card from '../components/Card';
 
@@ -83,10 +83,9 @@ export default class Register extends Component {
  }
  _register = async () => {
    if (this.state.firstName === '' && this.state.lastName === '' && this.state.phone === '' && this.state.email === '' && this.state.password === '') {
-     alert('please wait...')
      alert('Kindly fill all fields in the form');
    }else { 
-    alert('please wait...')
+    // alert('You should look into your data provided and correct or fill all fields ');
     this.registerUser()
    }
  }

@@ -155,6 +155,6 @@ const styles = StyleSheet.create({
   textTwo: {
     fontSize: 17,
     fontWeight: 'bold',
-    color: 'rgb(147, 43, 173)',
+    color: '#932BAD',
   },
 });

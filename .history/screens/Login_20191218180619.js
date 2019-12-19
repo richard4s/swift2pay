@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, } from 'react-native';
 
 import Card from '../components/Card';
 
@@ -57,8 +57,6 @@ export default class Login extends Component {
         this.props.navigation.navigate('Browse', {
           userId: json.userID
         })
-      } else if (json.status == 400){
-        alert(json.message)
       }
     })
     .catch((error) => {
@@ -78,11 +76,7 @@ export default class Login extends Component {
             <TextInput style={{ width: '90%', height: 40, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Email address" onChangeText={(email)=>this.setState({email})} value={this.state.email} />
             <TextInput style={{ width: '90%', height: 40, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Password" secureTextEntry onChangeText={(password)=>this.setState({password})} value={this.state.password} />
           </Card>
-          <ScrollView style={styles.submit}>
-            <TouchableOpacity onPress={this._login}>
-              <Text style={styles.textTwo}>Submit</Text>
-            </TouchableOpacity>
-          </ScrollView>
+          <Text style={styles.submit} onPress={this._login}>Submit</Text>
           <Text style={styles.signup} onPress={() => navigate('Register')}>SignUp</Text>
         </View>
       </ImageBackground>
@@ -93,7 +87,6 @@ export default class Login extends Component {
    if (this.state.email === '' && this.state.password === '') {
      alert('Please insert email or password');
    } else {
-     alert('please wait...')
      this.loginUsers()
    }
  } 
@@ -127,7 +120,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginLeft: 195,
     marginBottom: 30,
-    marginTop: 170
+    marginTop: 150
    },
    inputContainer: {
     width: 600,
@@ -135,7 +128,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   submit: {
-    width: 180,
+    width: 190,
     height: 60,
     fontSize: 25,
     fontWeight: "500",
@@ -151,10 +144,5 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingLeft: 55,
     marginTop: 375
-  },
-  textTwo: {
-    fontSize: 17,
-    fontWeight: 'bold',
-    color: 'rgb(147, 43, 173)',
   },
 });

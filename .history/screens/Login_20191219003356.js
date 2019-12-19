@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginLeft: 195,
     marginBottom: 30,
-    marginTop: 170
+    marginTop: 150
    },
    inputContainer: {
     width: 600,
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   submit: {
-    width: 180,
+    width: 190,
     height: 60,
     fontSize: 25,
     fontWeight: "500",
@@ -153,8 +153,8 @@ const styles = StyleSheet.create({
     marginTop: 375
   },
   textTwo: {
-    fontSize: 17,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: 'rgb(147, 43, 173)',
+    color: '#932BAD',
   },
 });

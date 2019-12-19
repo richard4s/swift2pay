@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginLeft: 195,
     marginBottom: 30,
-    marginTop: 170
+    marginTop: 150
    },
    inputContainer: {
     width: 600,
@@ -155,6 +155,6 @@ const styles = StyleSheet.create({
   textTwo: {
     fontSize: 17,
     fontWeight: 'bold',
-    color: 'rgb(147, 43, 173)',
+    color: '#932BAD',
   },
 });

@@ -86,6 +86,7 @@ export default class Register extends Component {
      alert('please wait...')
      alert('Kindly fill all fields in the form');
    }else { 
+    // alert('You should look into your data provided and correct or fill all fields ');
     alert('please wait...')
     this.registerUser()
    }

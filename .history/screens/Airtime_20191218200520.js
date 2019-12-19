@@ -95,7 +95,7 @@ export default class Airtime extends Component {
             </Card>
           </View>
           
-          {/* <View style={{margin: 15}} >
+          <View style={{margin: 15}} >
             <Card >
               <TouchableOpacity onPress={() => {this.pickerRef.show()}} >
                 <Text style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }} >Click to select a network</Text>
@@ -114,7 +114,7 @@ export default class Airtime extends Component {
                 
               />
             </Card>
-          </View> */}
+          </View>
           
 
           <View style={{margin: 25}}>
@@ -157,7 +157,7 @@ export default class Airtime extends Component {
           </View>
           
 
-          <View style={{margin: 15, marginTop: 15}}>
+          {/* <View style={{margin: 15, marginTop: 15}}>
               <Text>Select amount (NGN)</Text>
 
                 <ScrollView>
@@ -194,7 +194,7 @@ export default class Airtime extends Component {
                   </View>
                 </ScrollView>
 
-          </View>
+          </View> */}
 
           <View style={{margin: 15, marginTop: 25}} >
           <Text style={{margin: 3}}>Input airtime network</Text>
