@@ -77,14 +77,28 @@ export default class FundWallet extends Component {
       const { navigate } = this.props.navigation;
       return (
 
+        {/*<RavePaymentModal
+    		        text="Make Payment"
+    		        class="payButton"
+    		        metadata={[{metaname:'Device', metavalue : 'IPhone X'}]}
+    		        reference={this.getReference()}
+    		        email={this.state.email}
+    		        amount={this.state.amount}
+    		        ravePubKey={this.state.key}
+    		        callback={this.callback}
+    		        close={this.close}
+                    isProduction={false}
+                    tag="button" 
+        />*/}
+
           <Rave 
-            amount="100" 
+            amount="500" 
             country="NG" 
-            currency="NGN"
+            currency="NGN" 
             paymentOption="card,account"
             email="test@mail.com" 
             firstname="Oluwole" 
-            lastname="Adebiyi"
+            lastname="Adebiyi" 
             publickey="FLWPUBK-ad71471b648438d621c9411ff917410d-X" 
             encryptionkey="****************"
             meta={[{ metaname: "color", metavalue: "red" }, { metaname: "storelocation", metavalue: "ikeja" }]}

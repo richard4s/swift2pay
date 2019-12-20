@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, TouchableOpacity, AsyncStorage, WebView } from 'react-native';
 
+import Rave from 'react-native-rave';
+
 import Card from '../components/Card';
 
 export default class Browse extends Component {
@@ -19,29 +21,26 @@ export default class Browse extends Component {
       commission: ''
     }
 
-    // this.onSuccess = this.onSuccess.bind(this);
-    // this.onFailure = this.onFailure.bind(this);
-    // this.onClose = this.onClose.bind(this);
+    this.onSuccess = this.onSuccess.bind(this);
+    this.onFailure = this.onFailure.bind(this);
+    this.onClose = this.onClose.bind(this);
     
   }
 
-  // onSuccess(data) {
-  //   console.log("success", data);
-  //   alert("success", data);
-  //   // You can get the transaction reference from successful transaction charge response returned and handle your transaction verification here
+  onSuccess(data) {
+    console.log("success", data);
+    // You can get the transaction reference from successful transaction charge response returned and handle your transaction verification here
 
-  // }
+  }
 
-  // onFailure(data) {
-  //   console.log("error", data);
-  //   alert("error", data);
-  // }
+  onFailure(data) {
+    console.log("error", data);
+  }
 
-  // onClose() {
-  //   //navigate to the desired screen on rave close
-  //   this.props.navigation.navigate('Browse');
+  onClose() {
+    //navigate to the desired screen on rave close
 
-  // }
+  }
 
   static navigationOptions = {
     headerStyle: {
@@ -102,39 +101,39 @@ export default class Browse extends Component {
     }
   }
   
-  // payWithRave = () => {
+  payWithRave = () => {
 
-  //   const API_publicKey = "FLWPUBK-350fb586bc32b05ca501d5889f2ee555-X";
+    const API_publicKey = "FLWPUBK-350fb586bc32b05ca501d5889f2ee555-X";
 
-  //   let x = getpaidSetup({
-  //       PBFPubKey: API_publicKey,
-  //       customer_email: this.state.email,
-  //       amount: 2000,
-  //       customer_phone: this.state.phone,
-  //       currency: "NGN",
-  //       txref: "rave-123456",
-  //       meta: [{
-  //           metaname: "flightID",
-  //           metavalue: "AP1234"
-  //       }],
-  //       onclose: function() {},
-  //       callback: function(response) {
-  //           var txref = response.tx.txRef; // collect txRef returned and pass to a server page to complete status check.
-  //           console.log("This is the response returned after a charge", response);
-  //           if (
-  //               response.tx.chargeResponseCode == "00" ||
-  //               response.tx.chargeResponseCode == "0"
-  //           ) {
-  //               // redirect to a success page
-  //               this.props.navigation.navigate('Browse')
-  //           } else {
-  //               // redirect to a failure page.
-  //           }
+    let x = getpaidSetup({
+        PBFPubKey: API_publicKey,
+        customer_email: this.state.email,
+        amount: 2000,
+        customer_phone: this.state.phone,
+        currency: "NGN",
+        txref: "rave-123456",
+        meta: [{
+            metaname: "flightID",
+            metavalue: "AP1234"
+        }],
+        onclose: function() {},
+        callback: function(response) {
+            var txref = response.tx.txRef; // collect txRef returned and pass to a server page to complete status check.
+            console.log("This is the response returned after a charge", response);
+            if (
+                response.tx.chargeResponseCode == "00" ||
+                response.tx.chargeResponseCode == "0"
+            ) {
+                // redirect to a success page
+                this.props.navigation.navigate('Browse')
+            } else {
+                // redirect to a failure page.
+            }
 
-  //           x.close(); // use this to close the modal immediately after payment.
-  //       }
-  //   })
-  // }
+            x.close(); // use this to close the modal immediately after payment.
+        }
+    })
+  }
 
 
  render() {
@@ -155,7 +154,7 @@ export default class Browse extends Component {
        
        <View style={[styles.view, {width: '100%', height: '50%'}]} >
 
-          <TouchableOpacity onPress={() => navigate('FundWallet')} >
+          <TouchableOpacity onPress={this.payWithRave} >
             <Card style={styles.cardTwo}>
               <Image source={require('../assets/images/browse-icons/wallet.png')} style={styles.imageTwo} />
               <Text style={{fontSize: 8, fontWeight: 'bold', textAlign: "center", padding: 7, margin: 5,}} >Fund Wallet</Text>

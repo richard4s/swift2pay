@@ -78,7 +78,7 @@ export default class FundWallet extends Component {
       return (
 
           <Rave 
-            amount="100" 
+            amount="500" 
             country="NG" 
             currency="NGN"
             paymentOption="card,account"

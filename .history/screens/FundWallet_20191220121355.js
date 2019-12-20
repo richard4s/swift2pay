@@ -3,29 +3,11 @@ import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, Scro
 
 import MyWebView from 'react-native-webview-autoheight';
 
-import RavePaymentModal from 'react-ravepayment'
-
-import Rave from 'react-native-rave';
-
-
 console.disableYellowBox = true;
 
 import Card from '../components/Card';
 
 export default class FundWallet extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      key: "FLWPUBK-XXXXXXXXXXXXXXXXXXXXXXXXXX-X", // RavePay PUBLIC KEY
-      email: "foo@example.com", // customer email
-      amount: 1000 // equals NGN 1000. Minimum amount allowed NGN 1 while on production or live system, it's 10
-      }
-
-    this.onSuccess = this.onSuccess.bind(this);
-    this.onFailure = this.onFailure.bind(this);
-    this.onClose = this.onClose.bind(this);
-  }
   static navigationOptions = {
     title: 'Fund Wallet',
     headerStyle: {
@@ -39,60 +21,27 @@ export default class FundWallet extends Component {
     },
   };
 
-  callback = (response) => {
-    console.log(response);
-
-  }
-
-  close = () => {
-    console.log("Payment closed");
-  }
-
-  getReference = () => {
-    let text = "";
-    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.=";
-
-    for( let i=0; i < 10; i++ )
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-        return text;
-  }
-
-  onSuccess(data) {
-    console.log("success", data);
-    // You can get the transaction reference from successful transaction charge response returned and handle your transaction verification here
- 
-  }
- 
-  onFailure(data) {
-    console.log("error", data);
-  }
- 
-  onClose() {
-    //navigate to the desired screen on rave close
-    console.log("Payment closed");
-  }
-
   render() {
       const { navigate } = this.props.navigation;
       return (
-
-          <Rave 
-            amount="100" 
-            country="NG" 
-            currency="NGN"
-            paymentOption="card,account"
-            email="test@mail.com" 
-            firstname="Oluwole" 
-            lastname="Adebiyi"
-            publickey="FLWPUBK-ad71471b648438d621c9411ff917410d-X" 
-            encryptionkey="****************"
-            meta={[{ metaname: "color", metavalue: "red" }, { metaname: "storelocation", metavalue: "ikeja" }]}
-            onSuccess={res => this.onSuccess(res)} 
-            onFailure={e => this.onFailure(e)}
-            onClose={e => this.onClose(e)}
-        />
         
+            <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
+        
+              <View style={{margin: 15, marginTop: 55}} >
+              <Text style={{margin: 3}}>Enter amount (NGN50 - NGN50,000)</Text>
+                <Card>
+                  <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter amount" keyboardType="number-pad" />
+                </Card>
+                <Text style={styles.submit} onPress={()=>navigate('Browse')}>Payment</Text>
+              </View>
+
+              <MyWebView 
+                source={{uri: 'http://youtube.com'}}
+                startInLoadingState={true}
+              />
+
+          </ImageBackground>
+       
       )
      }
     };

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, TouchableOpacity, AsyncStorage, WebView } from 'react-native';
 
+import Rave from 'react-native-rave';
+
 import Card from '../components/Card';
 
 export default class Browse extends Component {
@@ -155,7 +157,7 @@ export default class Browse extends Component {
        
        <View style={[styles.view, {width: '100%', height: '50%'}]} >
 
-          <TouchableOpacity onPress={() => navigate('FundWallet')} >
+          <TouchableOpacity onPress={() => navigate('Fund Wallet')} >
             <Card style={styles.cardTwo}>
               <Image source={require('../assets/images/browse-icons/wallet.png')} style={styles.imageTwo} />
               <Text style={{fontSize: 8, fontWeight: 'bold', textAlign: "center", padding: 7, margin: 5,}} >Fund Wallet</Text>

@@ -5,9 +5,6 @@ import MyWebView from 'react-native-webview-autoheight';
 
 import RavePaymentModal from 'react-ravepayment'
 
-import Rave from 'react-native-rave';
-
-
 console.disableYellowBox = true;
 
 import Card from '../components/Card';
@@ -21,10 +18,6 @@ export default class FundWallet extends Component {
       email: "foo@example.com", // customer email
       amount: 1000 // equals NGN 1000. Minimum amount allowed NGN 1 while on production or live system, it's 10
       }
-
-    this.onSuccess = this.onSuccess.bind(this);
-    this.onFailure = this.onFailure.bind(this);
-    this.onClose = this.onClose.bind(this);
   }
   static navigationOptions = {
     title: 'Fund Wallet',
@@ -58,40 +51,23 @@ export default class FundWallet extends Component {
         return text;
   }
 
-  onSuccess(data) {
-    console.log("success", data);
-    // You can get the transaction reference from successful transaction charge response returned and handle your transaction verification here
- 
-  }
- 
-  onFailure(data) {
-    console.log("error", data);
-  }
- 
-  onClose() {
-    //navigate to the desired screen on rave close
-    console.log("Payment closed");
-  }
-
   render() {
       const { navigate } = this.props.navigation;
       return (
 
-          <Rave 
-            amount="100" 
-            country="NG" 
-            currency="NGN"
-            paymentOption="card,account"
-            email="test@mail.com" 
-            firstname="Oluwole" 
-            lastname="Adebiyi"
-            publickey="FLWPUBK-ad71471b648438d621c9411ff917410d-X" 
-            encryptionkey="****************"
-            meta={[{ metaname: "color", metavalue: "red" }, { metaname: "storelocation", metavalue: "ikeja" }]}
-            onSuccess={res => this.onSuccess(res)} 
-            onFailure={e => this.onFailure(e)}
-            onClose={e => this.onClose(e)}
-        />
+        <RavePaymentModal
+    		        text="Make Payment"
+    		        class="payButton"
+    		        metadata={[{metaname:'Device', metavalue : 'IPhone X'}]}
+    		        reference={this.getReference()}
+    		        email={this.state.email}
+    		        amount={this.state.amount}
+    		        ravePubKey={this.state.key}
+    		        callback={this.callback}
+    		        close={this.close}
+                    isProduction={false}
+                    tag="button" {/*it can be button or a or input tag */}
+    	        />
         
       )
      }

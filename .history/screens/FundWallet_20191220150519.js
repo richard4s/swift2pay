@@ -78,13 +78,13 @@ export default class FundWallet extends Component {
       return (
 
           <Rave 
-            amount="100" 
+            amount="500" 
             country="NG" 
-            currency="NGN"
+            currency="NGN" 
             paymentOption="card,account"
             email="test@mail.com" 
             firstname="Oluwole" 
-            lastname="Adebiyi"
+            lastname="Adebiyi" 
             publickey="FLWPUBK-ad71471b648438d621c9411ff917410d-X" 
             encryptionkey="****************"
             meta={[{ metaname: "color", metavalue: "red" }, { metaname: "storelocation", metavalue: "ikeja" }]}

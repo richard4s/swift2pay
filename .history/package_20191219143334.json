@@ -17,18 +17,13 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
     "react-native-gesture-handler": "~1.3.0",
     "react-native-hyperlink": "0.0.16",
-    "react-native-label-select": "^1.1.0",
     "react-native-paper": "^3.3.0",
     "react-native-picker-module": "^1.2.3",
-    "react-native-rave": "^2.2.5",
-    "react-native-rave-webview": "^1.0.0",
     "react-native-web": "^0.11.7",
     "react-native-webview": "^7.6.0",
-    "react-native-webview-autoheight": "^1.0.6",
     "react-navigation": "^4.0.8",
     "react-navigation-material-bottom-tabs": "^2.1.5",
     "react-navigation-stack": "^1.10.3",
-    "react-ravepayment": "^2.0.8",
     "undefined": "."
   },
   "devDependencies": {
