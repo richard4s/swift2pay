@@ -14,7 +14,6 @@ export default class Transactions extends Component {
        //Sets Header text style
      },
    };
-   
   render() {
     return (
       <View style={styles.container}>
