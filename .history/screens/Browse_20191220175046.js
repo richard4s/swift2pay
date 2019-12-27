@@ -162,7 +162,7 @@ export default class Browse extends Component {
             </Card>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigate('Transactions')} >
+          <TouchableOpacity onPress={() => navigate('Transasctions')} >
             <Card style={styles.cardTwo}>
               <Image source={require('../assets/images/browse-icons/transaction.png')} style={styles.imageTwo} />
               <Text style={{fontSize: 8, fontWeight: 'bold', textAlign: "center", padding: 7, margin: 5}} >Transactions</Text>

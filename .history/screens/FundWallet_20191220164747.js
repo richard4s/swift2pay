@@ -86,7 +86,7 @@ export default class FundWallet extends Component {
             firstname="Oluwole" 
             lastname="Adebiyi"
             publickey="FLWPUBK-ad71471b648438d621c9411ff917410d-X" 
-            encryptionkey="408d9cfd87970bbb5851ec4f"
+            encryptionkey=""
             meta={[{ metaname: "color", metavalue: "red" }, { metaname: "storelocation", metavalue: "ikeja" }]}
             onSuccess={res => this.onSuccess(res)} 
             onFailure={e => this.onFailure(e)}
