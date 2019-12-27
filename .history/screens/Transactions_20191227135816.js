@@ -3,11 +3,7 @@ import { Text, View, StyleSheet } from react-native;
 
 export default class Transactions extends Component {
   render(){
-    return(
-      <View style={styles.container}>
-        <Text>Transactions List</Text>
-      </View>
-    )
+    return()
   }
 };
 

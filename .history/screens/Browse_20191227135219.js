@@ -19,7 +19,29 @@ export default class Browse extends Component {
       commission: ''
     }
 
+    // this.onSuccess = this.onSuccess.bind(this);
+    // this.onFailure = this.onFailure.bind(this);
+    // this.onClose = this.onClose.bind(this);
+    
   }
+
+  // onSuccess(data) {
+  //   console.log("success", data);
+  //   alert("success", data);
+  //   // You can get the transaction reference from successful transaction charge response returned and handle your transaction verification here
+
+  // }
+
+  // onFailure(data) {
+  //   console.log("error", data);
+  //   alert("error", data);
+  // }
+
+  // onClose() {
+  //   //navigate to the desired screen on rave close
+  //   this.props.navigation.navigate('Browse');
+
+  // }
 
   static navigationOptions = {
     headerStyle: {

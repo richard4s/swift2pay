@@ -5,7 +5,7 @@ export default class Transactions extends Component {
   render(){
     return(
       <View style={styles.container}>
-        <Text>Transactions List</Text>
+        <Text></Text>
       </View>
     )
   }
