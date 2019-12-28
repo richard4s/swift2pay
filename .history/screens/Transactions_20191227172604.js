@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, FlatList, Image, ActivityIndicator } from 'react-native';
+import { Text, View, StyleSheet, FlatList, Image } from 'react-native';
 
 import { ListItem } from "react-native-elements"
 
@@ -20,48 +20,32 @@ export default class Transactions extends Component {
    constructor(props){
      super(props);
      this.state={ 
-       data: [],
-       page: 1,
-       isLoading: false
+       data: []
       };
    }
 
    componentDidMount() {
-     this.setState({isLoading: true}, this.getData)
+     this.getData()
    }
 
    getData = async () => {
-     const apiURL = "https://jsonplaceholder.typicode.com/photos?_limit=5&_page=" + this.state.page
+     const apiURL = "https://jsonplaceholder.typicode.com/photos?_limit=10"
      fetch(apiURL).then((res) => res.json())
      .then((resJson) => {
        this.setState({
-         data: this.state.data.concat(resJson),
-         isLoading: false
+         data: resJson
        })
      })
    }
 
    renderRow = ({item}) => {
-      return (
-        <View style={styles.itemRow}>
-          <Image source={{uri: item.url}} style={styles.itemImage} />
-          <Text style={styles.itemText}>{item.title}</Text>
-          <Text style={styles.itemText}>{item.id}</Text>
-        </View>
-      )
-   }
-
-   renderFooter = () => {
      return (
-       this.state.isLoading ?
-       <View style={styles.loader}>
-         <ActivityIndicator size="large" />
-       </View>: null
+       <View style={styles.itemRow}>
+         <Image source={{uri: item.url}} style={styles.itemImage} />
+         <Text style={styles.itemText}>{item.title}</Text>
+         <Text style={styles.itemText}>{item.id}</Text>
+       </View>
      )
-   }
-
-   handleLoadMore = () => {
-     this.setState({page: this.state.page + 1, isLoading: true}, this.getData)
    }
 
   render() {
@@ -70,10 +54,7 @@ export default class Transactions extends Component {
         style={styles.screen}
         data={this.state.data}
         renderItem={this.renderRow}
-        keyExtractor={(item, index) => index.toString()}
-        onEndReached={this.handleLoadMore}
-        onEndReachedThreshold={0}
-        // ListFooterComponent={this.renderFooter}
+        keyExtractor={(item, index) => index.toString() }
       />
     )
   }
@@ -93,12 +74,8 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   itemImage: {
-    width: '100%',
+    width: 100%,
     height: 200,
     resizeMode: 'cover'
-  },
-  loader: {
-    marginTop: 10,
-    alignItems: 'center'
   }
 });

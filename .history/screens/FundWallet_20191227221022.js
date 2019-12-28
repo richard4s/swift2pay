@@ -90,9 +90,6 @@ export default class FundWallet extends Component {
       })
 
     })
-    .catch((err) => {
-      console.log(err)
-    })
 
   }
  

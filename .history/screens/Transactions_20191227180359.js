@@ -42,13 +42,13 @@ export default class Transactions extends Component {
    }
 
    renderRow = ({item}) => {
-      return (
-        <View style={styles.itemRow}>
-          <Image source={{uri: item.url}} style={styles.itemImage} />
-          <Text style={styles.itemText}>{item.title}</Text>
-          <Text style={styles.itemText}>{item.id}</Text>
-        </View>
-      )
+    return (
+      <View style={styles.itemRow}>
+        <Image source={{uri: item.url}} style={styles.itemImage} />
+        <Text style={styles.itemText}>{item.title}</Text>
+        <Text style={styles.itemText}>{item.id}</Text>
+      </View>
+    )
    }
 
    renderFooter = () => {
@@ -73,7 +73,7 @@ export default class Transactions extends Component {
         keyExtractor={(item, index) => index.toString()}
         onEndReached={this.handleLoadMore}
         onEndReachedThreshold={0}
-        // ListFooterComponent={this.renderFooter}
+        ListFooterComponent={this.renderFooter}
       />
     )
   }

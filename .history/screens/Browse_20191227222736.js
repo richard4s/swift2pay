@@ -4,9 +4,6 @@ import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, Scro
 import Card from '../components/Card';
 import Constants from 'expo-constants';
 
-import refreshComponent from './refreshComponent'
-import grabInfo from './grabInfo'
-
 export default class Browse extends Component {
 
   constructor(props) {
@@ -47,12 +44,6 @@ export default class Browse extends Component {
 
     console.log('userId: '+this.props.navigation.state.params.userId)
 
-    // grabInfo(this.props.navigation.state.params.userId).then(response => response.json())
-    // .then((json) => {
-    //   user = JSON.stringify(json)
-    //   console.log('Functional response: ' , user, json.message)
-    //   });
-
     fetch('https://swift2pay.com/account/api/request.php?action=profile&userID='+this.props.navigation.state.params.userId+'&apiKey=JFJHFJJ38388739949HFGDJ', {
       method: 'GET',
     }) 
@@ -90,7 +81,7 @@ export default class Browse extends Component {
     }
   }
 
-  wait = (timeout) => {
+  function wait(timeout) {
     return new Promise(resolve => {
       setTimeout(resolve, timeout);
     });
@@ -100,17 +91,16 @@ export default class Browse extends Component {
   const { navigate } = this.props.navigation;
   const { navigation } = this.props;
 
-  
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+
+    wait(2000).then(() => setRefreshing(false));
+  }, [refreshing]);
 
 
   return (
-    <SafeAreaView style={styles.container}>
-    <ScrollView
-        contentContainerStyle={styles.scrollView}
-        refreshControl={
-          <RefreshControl refreshing={refreshComponent.refreshing} onRefresh={refreshComponent.onRefresh} />
-        }
-      >
    <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
    <View style={{margin: 25}}>
 
@@ -240,23 +230,11 @@ export default class Browse extends Component {
     </View>
     
    </ImageBackground>
-   </ScrollView>
-   </SafeAreaView>
  )
  }
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: Constants.statusBarHeight,
-  },
-  scrollView: {
-    flex: 1,
-    backgroundColor: 'pink',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   backgroundImage: {
     flex: 1,
     width: null,

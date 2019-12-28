@@ -57,19 +57,14 @@ export default class FundWallet extends Component {
         return text;
   }
 
-   onSuccess = async (data) => {
+   async onSuccess(data) {
     console.log("success", data);
     // You can get the transaction reference from successful transaction charge response returned and handle your transaction verification here
     console.log('data 1', data.data.tx.txRef)
 
     const grabUserId = await AsyncStorage.getItem('userId')
 
-    console.log(grabUserId)
-
-    let transReference = data.data.tx.txRef.slice(6)
-    console.log(transReference)
-
-    fetch('http://swift2pay.com/account/api/request?action=walletFunding&apiKey=JFJHFJJ38388739949HFGDJ&userID='+grabUserId+'&txref='+data.data.tx.txRef, {
+    fetch('http://swift2pay.com/account/api/request?action=walletFunding&apiKey=JFJHFJJ38388739949HFGDJ&userID='+this.props.navigation.state.params.userId+'&txref=data.data.tx.txRef', {
       method: 'GET',
     }) 
     .then(response => response.json())
@@ -84,15 +79,6 @@ export default class FundWallet extends Component {
         wallet: json.wallet,
         commission: json.commission
       });
-
-      this.props.navigation.navigate('Browse', {
-        userId: grabUserId
-      })
-
-    })
-    .catch((err) => {
-      console.log(err)
-    })
 
   }
  
@@ -114,7 +100,7 @@ export default class FundWallet extends Component {
       return (
 
           <Rave 
-            amount="5" 
+            amount="10" 
             country="NG" 
             currency="NGN"
             paymentOption="card,account"

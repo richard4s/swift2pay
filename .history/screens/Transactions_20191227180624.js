@@ -73,7 +73,7 @@ export default class Transactions extends Component {
         keyExtractor={(item, index) => index.toString()}
         onEndReached={this.handleLoadMore}
         onEndReachedThreshold={0}
-        // ListFooterComponent={this.renderFooter}
+        ListFooterComponent={this.renderFooter}
       />
     )
   }

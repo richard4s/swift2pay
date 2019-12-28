@@ -69,7 +69,7 @@ export default class FundWallet extends Component {
     let transReference = data.data.tx.txRef.slice(6)
     console.log(transReference)
 
-    fetch('http://swift2pay.com/account/api/request?action=walletFunding&apiKey=JFJHFJJ38388739949HFGDJ&userID='+grabUserId+'&txref='+data.data.tx.txRef, {
+    fetch('http://swift2pay.com/account/api/request?action=walletFunding&apiKey=JFJHFJJ38388739949HFGDJ&userID='+grabUserId+'&txref='+transReference, {
       method: 'GET',
     }) 
     .then(response => response.json())
@@ -89,9 +89,6 @@ export default class FundWallet extends Component {
         userId: grabUserId
       })
 
-    })
-    .catch((err) => {
-      console.log(err)
     })
 
   }

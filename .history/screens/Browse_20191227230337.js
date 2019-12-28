@@ -47,11 +47,11 @@ export default class Browse extends Component {
 
     console.log('userId: '+this.props.navigation.state.params.userId)
 
-    // grabInfo(this.props.navigation.state.params.userId).then(response => response.json())
-    // .then((json) => {
-    //   user = JSON.stringify(json)
-    //   console.log('Functional response: ' , user, json.message)
-    //   });
+    grabInfo.then(response => response.json())
+    .then((json) => {
+      user = JSON.stringify(json)
+      console.log('Functional response: ' , user, json.message)
+      });
 
     fetch('https://swift2pay.com/account/api/request.php?action=profile&userID='+this.props.navigation.state.params.userId+'&apiKey=JFJHFJJ38388739949HFGDJ', {
       method: 'GET',

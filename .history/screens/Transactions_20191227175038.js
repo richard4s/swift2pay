@@ -27,41 +27,40 @@ export default class Transactions extends Component {
    }
 
    componentDidMount() {
-     this.setState({isLoading: true}, this.getData)
+     this.setState({isLoading: true}, )
+     this.getData()
    }
 
    getData = async () => {
-     const apiURL = "https://jsonplaceholder.typicode.com/photos?_limit=5&_page=" + this.state.page
+     const apiURL = "https://jsonplaceholder.typicode.com/photos?_limit=10&_page=" + this.state.page
      fetch(apiURL).then((res) => res.json())
      .then((resJson) => {
        this.setState({
-         data: this.state.data.concat(resJson),
-         isLoading: false
+         data: this.state.data.concat(resJson)
        })
      })
    }
 
-   renderRow = ({item}) => {
-      return (
-        <View style={styles.itemRow}>
-          <Image source={{uri: item.url}} style={styles.itemImage} />
-          <Text style={styles.itemText}>{item.title}</Text>
-          <Text style={styles.itemText}>{item.id}</Text>
-        </View>
-      )
-   }
-
    renderFooter = () => {
      return (
-       this.state.isLoading ?
        <View style={styles.loader}>
          <ActivityIndicator size="large" />
-       </View>: null
+       </View>
+     )
+   }
+
+   renderRow = ({item}) => {
+     return (
+       <View style={styles.itemRow}>
+         <Image source={{uri: item.url}} style={styles.itemImage} />
+         <Text style={styles.itemText}>{item.title}</Text>
+         <Text style={styles.itemText}>{item.id}</Text>
+       </View>
      )
    }
 
    handleLoadMore = () => {
-     this.setState({page: this.state.page + 1, isLoading: true}, this.getData)
+     this.setState({page: this.state.page + 1}, this.getData)
    }
 
   render() {
@@ -73,7 +72,7 @@ export default class Transactions extends Component {
         keyExtractor={(item, index) => index.toString()}
         onEndReached={this.handleLoadMore}
         onEndReachedThreshold={0}
-        // ListFooterComponent={this.renderFooter}
+        ListFooterComponent={this.renderFooter}
       />
     )
   }

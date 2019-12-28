@@ -28,6 +28,7 @@ export default class Transactions extends Component {
 
    componentDidMount() {
      this.setState({isLoading: true}, this.getData)
+     this.getData()
    }
 
    getData = async () => {
@@ -35,20 +36,10 @@ export default class Transactions extends Component {
      fetch(apiURL).then((res) => res.json())
      .then((resJson) => {
        this.setState({
-         data: this.state.data.concat(resJson),
+         data: this.state.data.concat(resJson)
          isLoading: false
        })
      })
-   }
-
-   renderRow = ({item}) => {
-      return (
-        <View style={styles.itemRow}>
-          <Image source={{uri: item.url}} style={styles.itemImage} />
-          <Text style={styles.itemText}>{item.title}</Text>
-          <Text style={styles.itemText}>{item.id}</Text>
-        </View>
-      )
    }
 
    renderFooter = () => {
@@ -60,8 +51,18 @@ export default class Transactions extends Component {
      )
    }
 
+   renderRow = ({item}) => {
+     return (
+       <View style={styles.itemRow}>
+         <Image source={{uri: item.url}} style={styles.itemImage} />
+         <Text style={styles.itemText}>{item.title}</Text>
+         <Text style={styles.itemText}>{item.id}</Text>
+       </View>
+     )
+   }
+
    handleLoadMore = () => {
-     this.setState({page: this.state.page + 1, isLoading: true}, this.getData)
+     this.setState({page: this.state.page + 1}, this.getData)
    }
 
   render() {
@@ -73,7 +74,7 @@ export default class Transactions extends Component {
         keyExtractor={(item, index) => index.toString()}
         onEndReached={this.handleLoadMore}
         onEndReachedThreshold={0}
-        // ListFooterComponent={this.renderFooter}
+        ListFooterComponent={this.renderFooter}
       />
     )
   }
