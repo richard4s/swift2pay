@@ -23,7 +23,7 @@ export default function App() {
  const onRefresh = React.useCallback(() => {
    setRefreshing(true);
 
-   grabInfo(1).then(response => response.json())
+   grabInfo(this.props.navigation.state.params.userId).then(response => response.json())
   .then((json) => {
     user = JSON.stringify(json)
     setRefreshing(false)

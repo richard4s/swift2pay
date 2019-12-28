@@ -23,12 +23,11 @@ export default function App() {
  const onRefresh = React.useCallback(() => {
    setRefreshing(true);
 
-   grabInfo(1).then(response => response.json())
+   grabInfo(this.props.navigation.state.params.userId).then(response => response.json())
   .then((json) => {
     user = JSON.stringify(json)
-    setRefreshing(false)
     console.log('Functional response: ' , user, json.message)
   });
-   // wait(2000).then(() => setRefreshing(false));
+   wait(2000).then(() => setRefreshing(false));
  }, [refreshing]);
 }
