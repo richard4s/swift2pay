@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, FlatList, Image, ActivityIndicator, AsyncStorage, SafeAreaView } from 'react-native';
+import { Text, View, StyleSheet, FlatList, Image, ActivityIndicator, AsyncStorage } from 'react-native';
 
 // import { ListItem } from "react-native-elements"
 
@@ -34,7 +34,6 @@ export default class Transactions extends Component {
    getData = async () => {
     //  const apiURL = "https://jsonplaceholder.typicode.com/photos?_limit=5&_page=" + this.state.page
     const grabUserId = await AsyncStorage.getItem('userId')
-    console.log('Gott hereeeeee')
     const apiURL = 'https://swift2pay.com/account/api/request.php?action=getTransactions&userID='+ grabUserId +'&apiKey=JFJHFJJ38388739949HFGDJ'
      fetch(apiURL).then((res) => res.json())
      .then((resJson) => {
@@ -74,9 +73,8 @@ export default class Transactions extends Component {
 
   render() {
     return (
-      <SafeAreaView>
-        <Text>Hellooooo</Text>
-      </SafeAreaView>
+      <>
+      </>
       // <FlatList 
       //   style={styles.screen}
       //   data={this.state.data}

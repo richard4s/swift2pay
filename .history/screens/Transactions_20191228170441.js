@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, FlatList, Image, ActivityIndicator, AsyncStorage, SafeAreaView } from 'react-native';
+import { Text, View, StyleSheet, FlatList, Image, ActivityIndicator, AsyncStorage } from 'react-native';
 
 // import { ListItem } from "react-native-elements"
 
@@ -20,41 +20,37 @@ export default class Transactions extends Component {
    constructor(props){
      super(props);
      this.state={ 
-       data: null,
+       data: [],
        page: 1,
        isLoading: false
       };
    }
 
-   componentDidMount = async () => {
-    //  this.setState({isLoading: true}, this.getData)
-    this.getData()
+   componentDidMount() {
+     this.setState({isLoading: true}, this.getData)
    }
 
    getData = async () => {
     //  const apiURL = "https://jsonplaceholder.typicode.com/photos?_limit=5&_page=" + this.state.page
     const grabUserId = await AsyncStorage.getItem('userId')
-    console.log('Gott hereeeeee')
     const apiURL = 'https://swift2pay.com/account/api/request.php?action=getTransactions&userID='+ grabUserId +'&apiKey=JFJHFJJ38388739949HFGDJ'
      fetch(apiURL).then((res) => res.json())
      .then((resJson) => {
-       console.log('transactions ---' , resJson)
-      //  this.setState({
-      //    data: resJson,
-      //    isLoading: false
-      //  })
+       this.setState({
+         data: resJson,
+         isLoading: true
+       })
      })
    }
 
    renderRow = ({item}) => {
       return (
         <View style={styles.itemRow}>
-        <Text style={styles.itemText}>good</Text>
-          {/* <Text style={styles.itemText}>{item.service_name}</Text>
+          <Text style={styles.itemText}>{item.service_name}</Text>
           <Text style={styles.itemText}>{item.service_value}</Text>
           <Text style={styles.itemText}>{item.amount}</Text>
           <Text style={styles.itemText}>{item.date}</Text>
-          <Text style={styles.itemText}>{item.value_number}</Text> */}
+          <Text style={styles.itemText}>{item.value_number}</Text>
         </View>
       )
    }
@@ -74,18 +70,15 @@ export default class Transactions extends Component {
 
   render() {
     return (
-      <SafeAreaView>
-        <Text>Hellooooo</Text>
-      </SafeAreaView>
-      // <FlatList 
-      //   style={styles.screen}
-      //   data={this.state.data}
-      //   renderItem={this.renderRow}
-      //   keyExtractor={(item, date) => date.toString()}
-      //   // onEndReached={this.handleLoadMore}
-      //   // onEndReachedThreshold={0}
-      //   // ListFooterComponent={this.renderFooter}
-      // />
+      <FlatList 
+        style={styles.screen}
+        data={this.state.data}
+        renderItem={this.renderRow}
+        keyExtractor={(item, index) => index.toString()}
+        onEndReached={this.handleLoadMore}
+        onEndReachedThreshold={0}
+        ListFooterComponent={this.renderFooter}
+      />
     )
   }
 };
