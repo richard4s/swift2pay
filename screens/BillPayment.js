@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, TouchableOpacity } from 'react-native';
 
 import Card from '../components/Card';
 
@@ -25,29 +25,46 @@ export default class BillPayment extends Component {
    
     <View style={styles.screen}>
      <ScrollView style={{width: '90%', marginTop: 31,}} >
+      
       <View style={styles.view}>
-       <Card onPress={() => navigate('Airtime')} style={styles.card} >
-        <Image onPress={() => navigate('Airtime')} source={require('../assets/images/bill-payment/tv.png')} style={styles.image} />
-        <Text onPress={() => navigate('Airtime')} style={styles.text}>TV Subscription</Text>
-       </Card>
-       <Card onPress={() => navigate('Data')} style={styles.card}>
-        <Image onPress={() => navigate('Data')} source={require('../assets/images/bill-payment/electricity.png')} style={styles.image} />
-        <Text onPress={() => navigate('Data')} style={styles.text}>Electricity</Text>
-       </Card>        
+        <TouchableOpacity>
+          <Card onPress={() => navigate('Airtime')} style={styles.card} >
+            <Image onPress={() => navigate('Airtime')} source={require('../assets/images/bill-payment/tv.png')} style={styles.image} />
+            <Text onPress={() => navigate('Airtime')} style={styles.text}>TV Subscription</Text>
+          </Card>
+        </TouchableOpacity>
+
+        <TouchableOpacity>
+          <Card onPress={() => navigate('Data')} style={styles.card}>
+            <Image onPress={() => navigate('Data')} source={require('../assets/images/bill-payment/electricity.png')} style={styles.image} />
+            <Text onPress={() => navigate('Data')} style={styles.text}>Electricity</Text>
+          </Card>
+        </TouchableOpacity>
+       
       </View>
+
       <View style={styles.view}>
-       <Card style={styles.card}>
-        <Image source={require('../assets/images/bill-payment/education.png')} style={styles.image} />
-        <Text style={styles.text}>Education</Text>
-       </Card>
-       <Card style={styles.card}>
-        <Image source={require('../assets/images/bill-payment/internet.png')} style={styles.image} />
-        <Text style={styles.text}>Internet</Text>
-       </Card>           
+
+        <TouchableOpacity>
+          <Card style={styles.card}>
+           <Image source={require('../assets/images/bill-payment/education.png')} style={styles.image} />
+            <Text style={styles.text}>Education</Text>
+          </Card>
+        </TouchableOpacity>
+
+        <TouchableOpacity>
+          <Card style={styles.card}>
+            <Image source={require('../assets/images/bill-payment/internet.png')} style={styles.image} />
+            <Text style={styles.text}>Internet</Text>
+          </Card>
+        </TouchableOpacity>
+                  
       </View>
       
      </ScrollView>
+
     </View>
+    
    </ImageBackground>
  )
  }

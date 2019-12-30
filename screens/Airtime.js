@@ -7,29 +7,6 @@ import Card from '../components/Card';
 
 
 
-// const amount = [
-//   {
-//     label: '100 NGN',
-//     amountValue: '100',
-//   },
-//   {
-//     label: '200 NGN',
-//     amountValue: '200',
-//   },
-//   {
-//     label: '500 NGN',
-//     amountValue: '500',
-//   },
-//   {
-//     label: '1000 NGN',
-//     amountValue: '1000',
-//   },
-//   {
-//     label: '5000 NGN',
-//     amountValue: '5000',
-//   },
-// ];
-
 
 export default class Airtime extends Component {
   static navigationOptions = {
@@ -74,7 +51,7 @@ export default class Airtime extends Component {
   buyAirtime = async () => {
     const grabUserId = await AsyncStorage.getItem('userId')
 
-    alert('you are about to buy airtime')
+    alert('You are about to buy airtime...')
 
     fetch('https://swift2pay.com/account/api/request.php?action=profile&userID='+grabUserId+'&apiKey=JFJHFJJ38388739949HFGDJ', {
       method: 'GET',
@@ -110,12 +87,14 @@ export default class Airtime extends Component {
 
       if(json.status == 200){
         console.log(json.message)
-        alert(json.message)
-        
+        console.log(this.state.amount)
+        alert('Please wait...')
+        alert('You have successfully purchased ' + this.state.pickerSelection + ' on ' + this.state.phone + ' of NGN' + this.state.amount )
       }
     })
     .catch((error) => {
       console.error(error);
+      alert('Oops! Transaction failed...')
       alert(error)
     });
   }
@@ -355,12 +334,22 @@ export default class Airtime extends Component {
             <Card>
               <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter amount" keyboardType="number-pad" onChangeText={(amount)=>this.setState({amount})} value={this.state.amount} />
             </Card>
-            <Text style={styles.submit} onPress={this.buyAirtime}>Payment</Text>
+            <Text style={styles.submit} onPress={this._airtime}>Payment</Text>
           </View>
 
       </ImageBackground>
    
   )
+ }
+
+ _airtime = async() => {
+   if (this.state.phone === '' || this.state.pickerSelection === '' ) {
+     alert('Please wait...')
+     alert('Please fill all required fields')
+   } else {
+     alert('Please wait...')
+     this.buyAirtime()
+   }
  }
 };
 
