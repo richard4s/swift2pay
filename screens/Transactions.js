@@ -40,22 +40,21 @@ export default class Transactions extends Component {
      .then((resJson) => {
       // JSON.stringify(resJson)
        console.log('transactions ---' , JSON.stringify(resJson))
-      //  this.setState({
-      //    data: resJson,
-      //    isLoading: false
-      //  })
+       this.setState({
+         data: resJson,
+         isLoading: false
+       })
      })
    }
 
    renderRow = ({item}) => {
       return (
         <View style={styles.itemRow}>
-        <Text style={styles.itemText}>good</Text>
-          {/* <Text style={styles.itemText}>{item.service_name}</Text>
+          <Text style={styles.itemText}>{item.service_name}</Text>
           <Text style={styles.itemText}>{item.service_value}</Text>
           <Text style={styles.itemText}>{item.amount}</Text>
           <Text style={styles.itemText}>{item.date}</Text>
-          <Text style={styles.itemText}>{item.value_number}</Text> */}
+          <Text style={styles.itemText}>{item.value_number}</Text>
         </View>
       )
    }
@@ -76,17 +75,17 @@ export default class Transactions extends Component {
   render() {
     return (
       <SafeAreaView>
-        <Text>Hellooooo</Text>
+        <FlatList 
+          style={styles.screen}
+          data={this.state.data}
+          renderItem={this.renderRow}
+          keyExtractor={(item, date) => date.toString()}
+          // onEndReached={this.handleLoadMore}
+          // onEndReachedThreshold={0}
+          // ListFooterComponent={this.renderFooter}
+        />
       </SafeAreaView>
-      // <FlatList 
-      //   style={styles.screen}
-      //   data={this.state.data}
-      //   renderItem={this.renderRow}
-      //   keyExtractor={(item, date) => date.toString()}
-      //   // onEndReached={this.handleLoadMore}
-      //   // onEndReachedThreshold={0}
-      //   // ListFooterComponent={this.renderFooter}
-      // />
+      
     )
   }
 };
