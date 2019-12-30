@@ -332,7 +332,7 @@ export default class Airtime extends Component {
             <Card>
               <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter amount" keyboardType="number-pad" onChangeText={(amount)=>this.setState({amount})} value={this.state.amount} />
             </Card>
-            <Text style={styles.submit} onPress={this.buyAirtime}>Payment</Text>
+            <Text style={styles.submit} onPress={this._airtime}>Payment</Text>
           </View>
 
       </ImageBackground>
