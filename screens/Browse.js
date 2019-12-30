@@ -39,6 +39,14 @@ export default class Browse extends Component {
 
   componentDidMount() {
 
+    
+    this.getLoggedInUser()
+    
+
+    
+  }
+
+  getLoggedInUser = () => {
     const { navigation } = this.props;
 
     this.setState({
@@ -46,8 +54,6 @@ export default class Browse extends Component {
     })
 
     console.log('userId: '+this.props.navigation.state.params.userId)
-
-    
 
     fetch('https://swift2pay.com/account/api/request.php?action=profile&userID='+this.props.navigation.state.params.userId+'&apiKey=JFJHFJJ38388739949HFGDJ', {
       method: 'GET',
@@ -67,7 +73,7 @@ export default class Browse extends Component {
 
       if(json.status == 200){
         console.log(json.message)
-        alert('Data successfully updated') 
+        // alert('Data successfully updated') 
         this._storeData(json.userID)  
       }
     })
@@ -104,7 +110,7 @@ export default class Browse extends Component {
     <ScrollView
         contentContainerStyle={styles.scrollView}
         refreshControl={
-          <RefreshControl refreshing={refreshComponent.refreshing} onRefresh={refreshComponent.onRefresh} />
+          <RefreshControl refreshing={false} onRefresh={() => this.getLoggedInUser()} />
         }
       >
    <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>

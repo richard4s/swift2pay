@@ -34,11 +34,12 @@ export default class Transactions extends Component {
    getData = async () => {
     //  const apiURL = "https://jsonplaceholder.typicode.com/photos?_limit=5&_page=" + this.state.page
     const grabUserId = await AsyncStorage.getItem('userId')
-    console.log('Gott hereeeeee')
+    console.log('Gott hereeeeee', grabUserId)
     const apiURL = 'https://swift2pay.com/account/api/request.php?action=getTransactions&userID='+ grabUserId +'&apiKey=JFJHFJJ38388739949HFGDJ'
      fetch(apiURL).then((res) => res.json())
      .then((resJson) => {
-       console.log('transactions ---' , resJson)
+      // JSON.stringify(resJson)
+       console.log('transactions ---' , JSON.stringify(resJson))
       //  this.setState({
       //    data: resJson,
       //    isLoading: false

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, AsyncStorage, TouchableOpacity } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, AsyncStorage,
+  TouchableOpacity, TouchableHighlight
+ } from 'react-native';
 
 import ReactNativePickerModule from 'react-native-picker-module';
 
@@ -24,6 +26,9 @@ export default class Airtime extends Component {
     this.state={
       phone: '',
       selectedValue: null,
+      isClicked: false,
+      buttonClicked: false,
+      buttonColor: '',
       data: [
         "mtn",
         "glo",
@@ -82,9 +87,41 @@ export default class Airtime extends Component {
     });
   }
 
+  componentDidMount() {
+    // this.toggleClick()
+  }
+
+  toggleClick() {
+    if(!this.state.isClicked) {
+      this.setState({isClicked: true})
+    } else {
+      this.setState({isClicked: false})
+    }
+  }
+
+  _onPressButton = () => {
+    // if(this.state.isClicked) {
+    //   return (
+
+    //   )
+    // }
+    this.setState({
+      isClicked: true
+    }) 
+
+  }
+
+  changeColor() {
+    this.setState({buttonColor: 'yellow'});
+  }
+
 
  render() {
   const { navigate } = this.props.navigation;
+  let toggleStyle = this.state.isClicked ? styles.cardTwo : styles.button;
+
+  let toggleColor = this.state.buttonColor
+  
   return (
     
         <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
@@ -123,15 +160,15 @@ export default class Airtime extends Component {
 
                   <View style={styles.view}>
 
-                    <TouchableOpacity >
-                      <Card style={styles.cardTwo}>
+                    <TouchableOpacity onPress={() => this._onPressButton} >
+                      <Card style={[toggleStyle, toggleColor]} >
                         <Text style={{fontSize: 13, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1, marginTop: 18,}} >MTN</Text>
                         <Text style={{fontSize: 8, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1,}} >Nigeria</Text>
                       </Card>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
-                      <Card style={styles.cardTwo}>
+                    <TouchableOpacity onPress={() => this._onPressButton}>
+                      <Card style={toggleStyle}>
                         <Text style={{fontSize: 13, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1, marginTop: 18, }} >Glo</Text>
                         <Text style={{fontSize: 8, fontWeight: 'bold', textAlign: "center", padding: 2, margin: 1,}} >Globacom</Text>
                       </Card>
@@ -259,6 +296,8 @@ const styles = StyleSheet.create({
     margin: 3,
     marginTop: 9,
     padding: null,
+    backgroundColor: '#333',
+    color: '#fff'
    },
    text: {
     fontSize: 11,
@@ -303,4 +342,19 @@ const styles = StyleSheet.create({
     marginTop: 35,
     marginLeft: 135,
    },
+   buttonPress: {
+     backgroundColor: '#333',
+     color: '#fff'
+   },
+   button: {
+    flex: 1,
+    width: 70,
+    height: 70,
+    alignItems: 'center',
+    margin: 3,
+    marginTop: 9,
+    padding: null,
+    backgroundColor: '#fff',
+    color: '#333'
+   }
 });
