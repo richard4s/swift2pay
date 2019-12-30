@@ -39,7 +39,7 @@ export default class Transactions extends Component {
      fetch(apiURL).then((res) => res.json())
      .then((resJson) => {
       // JSON.stringify(resJson)
-       console.log('transactions ---' , JSON.stringify(resJson))
+      //  console.log('transactions ---' , JSON.stringify(resJson))
        this.setState({
          data: resJson,
          isLoading: false
@@ -79,7 +79,7 @@ export default class Transactions extends Component {
           style={styles.screen}
           data={this.state.data}
           renderItem={this.renderRow}
-          keyExtractor={(item, date) => date.toString()}
+          keyExtractor={(item) => item.date}
           // onEndReached={this.handleLoadMore}
           // onEndReachedThreshold={0}
           // ListFooterComponent={this.renderFooter}

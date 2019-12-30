@@ -25,6 +25,33 @@ export default class Data extends Component {
   }; 
 
 
+  buyData = async () => {
+    const grabUserId = await AsyncStorage.getItem('userId')
+    
+    fetch('https://swift2pay.com/account/api/request?action=walletAirtimePurchase&amount='+this.state.amount+'&mobileNetwork='+this.state.pickerSelection+'&apiKey=JFJHFJJ38388739949HFGDJ&phone='+this.state.phone+'&user_id='+ grabUserId +'&service_name=Airtime%20Purchase', {
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then((json) => {
+      user = JSON.stringify(json)
+      console.log('Response: ' , user, json.message)
+      this.setState({
+        message: json.message,
+      });
+
+      if(json.status == 200){
+        console.log(json.message)
+        alert(json.message)
+        
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      alert(error)
+    });
+  }
+
+
  render() {
   const { navigate } = this.props.navigation;
   return (
