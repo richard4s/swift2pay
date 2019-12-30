@@ -21,6 +21,7 @@
     "react-native-label-select": "^1.1.0",
     "react-native-paper": "^3.3.0",
     "react-native-picker-module": "^1.2.3",
+    "react-native-picker-select": "^6.3.3",
     "react-native-rave": "^2.2.5",
     "react-native-rave-webview": "^1.0.0",
     "react-native-web": "^0.11.7",

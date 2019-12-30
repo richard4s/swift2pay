@@ -1,34 +1,28 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, AsyncStorage, TouchableOpacity, Modal, TouchableHighlight } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, AsyncStorage, TouchableOpacity } from 'react-native';
 
 import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
 
 import Card from '../components/Card';
 
-
-
-// const amount = [
-//   {
-//     label: '100 NGN',
-//     amountValue: '100',
-//   },
-//   {
-//     label: '200 NGN',
-//     amountValue: '200',
-//   },
-//   {
-//     label: '500 NGN',
-//     amountValue: '500',
-//   },
-//   {
-//     label: '1000 NGN',
-//     amountValue: '1000',
-//   },
-//   {
-//     label: '5000 NGN',
-//     amountValue: '5000',
-//   },
-// ];
+const network = [
+  {
+    label: 'MTN Nigeria',
+    value: 'mtn',
+  },
+  {
+    label: 'Globacom',
+    value: 'glo',
+  },
+  {
+    label: 'Airtel Nigeria',
+    value: 'airtel',
+  },
+  {
+    label: '9 Mobile',
+    value: 'etisalat',
+  },
+];
 
 
 export default class Airtime extends Component {
@@ -45,31 +39,20 @@ export default class Airtime extends Component {
     },
   };
 
-  constructor(props){
-    super(props);
+  constructor(){
+    super();
     this.state={
       phone: '',
       value: null,
-      pickerSelection: 'Click to select a network!',
-      pickerDisplayed: false,
-      mobileNetwork: undefined,
-      data: [], 
+      favNetwork: undefined,
+      data: [
+        "mtn",
+        "glo",
+        "etisalat",
+        "airtel"
+      ], 
     }
   }; 
-
-  setPickerValue(newValue) {
-    this.setState({
-      pickerSelection: newValue
-    })
-
-    this.togglePicker();
-  }
-
-  togglePicker() {
-    this.setState({
-      pickerDisplayed: !this.state.pickerDisplayed
-    })
-  }
 
   buyAirtime = async () => {
     const grabUserId = await AsyncStorage.getItem('userId')
@@ -97,7 +80,7 @@ export default class Airtime extends Component {
       alert(error)
     });
 
-    fetch('https://swift2pay.com/account/api/request?action=walletAirtimePurchase&amount='+this.state.amount+'&mobileNetwork='+this.state.pickerSelection+'&apiKey=JFJHFJJ38388739949HFGDJ&phone='+this.state.phone+'&user_id='+ grabUserId +'&service_name=Airtime%20Purchase', {
+    fetch('https://swift2pay.com/account/api/request?action=walletAirtimePurchase&amount='+this.state.amount+'&mobileNetwork='+this.state.mobileNetwork+'&apiKey=JFJHFJJ38388739949HFGDJ&phone='+this.state.phone+'&user_id='+ grabUserId +'&service_name=Airtime%20Purchase', {
       method: 'GET',
     })
     .then(response => response.json())
@@ -122,36 +105,11 @@ export default class Airtime extends Component {
 
  render() {
 
-  const networkValues = [
-    {
-      label: 'MTN Nigeria',
-      value: 'mtn',
-    },
-    {
-      label: 'Globacom',
-      value: 'glo',
-    },
-    {
-      label: '9 Mobile',
-      value: 'etisalat',
-    },
-    {
-      label: 'Airtel Nigeria',
-      value: 'airtel',
-    },
-  ];
-
   const networkPlaceholder = {
-    label: 'Click to select a network...',
+    label: 'Select a network...',
     value: null,
     color: '#9EA0A4',
   };
-
-  // const amountPlaceholder = {
-  //   label: 'Select an amount...',
-  //   amountValue: null,
-  //   color: '#9EA0A4',
-  // };
 
   const { navigate } = this.props.navigation;
   return (
@@ -189,53 +147,33 @@ export default class Airtime extends Component {
           <View style={{margin: 25}}>
 
           <Card >
-              <TouchableOpacity onPress={() => {this.togglePicker()}} >
-                <Text style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }} placeholder={networkPlaceholder} >{this.state.pickerSelection}</Text>
+              <TouchableOpacity onPress={() => {this.pickerRef.show()}} >
+                <Text style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }} >Click to select a network</Text>
               </TouchableOpacity>
 
-              <Modal visible={this.state.pickerDisplayed} animationType={"slide"} transparent={true} >
-                <View style={{ margin: 20, padding: 20,
-                  backgroundColor: '#efefef',
-                  bottom: 20,
-                  left: 20,
-                  right: 20,
-                  alignItems: 'center',
-                  position: 'absolute' }}>
-                  <Text style={{fontWeight: 'bold'}}>Please pick a network</Text>
-                  { networkValues.map((value, index) => {
-                    return <TouchableHighlight key={index} onPress={() => this.setPickerValue(value.value)} style={{ paddingTop: 4, paddingBottom: 4 }}>
-                        <Text>{ value.label }</Text>
-                      </TouchableHighlight>
-                  })}
-
-                  
-                  <TouchableHighlight onPress={() => this.togglePicker()} style={{ paddingTop: 4, paddingBottom: 4 }}>
-                    <Text style={{ color: '#999' }}>Cancel</Text>
-                  </TouchableHighlight>
-                </View>
-              </Modal>
-
-              {/* <RNPickerSelect
+              <RNPickerSelect
                 placeholder={networkPlaceholder}
                 items={network}
-                onValueChange={mobileNetwork => {
+                onValueChange={value => {
                   this.setState({
-                    mobileNetwork: network.value,
+                    favNetwork: value,
                   });
                 }}
                 onUpArrow={() => {
                   this.inputRefs.firstTextInput.focus();
                 }}
                 onDownArrow={() => {
-                  this.inputRefs.value.togglePicker();
+                  this.inputRefs.favSport1.togglePicker();
                 }}
                 style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }}
-                value={this.state.mobileNetwork}
-                
-              /> */}
+                value={this.state.favNetwork}
+                ref={el => {
+                  this.inputRefs.favNetwork = el;
+                }}
+              />
             </Card>          
 
-              {/* <Text>Select airtime network</Text>
+              {/* <Text>Input airtime network</Text>
                 <ScrollView style={{width: '100%'}} >
 
                   <View style={styles.view}>
@@ -274,34 +212,8 @@ export default class Airtime extends Component {
           </View>
           
 
-          {/* <View style={{margin: 15, marginTop: 15}}> */}
-
-            {/* <Card > */}
-                {/* <TouchableOpacity onPress={() => {this.pickerRef.show()}} > */}
-                  {/* <Text style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }} >Click to select a network</Text> */}
-                {/* </TouchableOpacity> */}
-
-                {/* <RNPickerSelect
-                  placeholder={amountPlaceholder}
-                  items={amount}
-                  onValueChange={value => {
-                    this.setState({
-                      amount: value,
-                    });
-                  }}
-                  onUpArrow={() => {
-                    this.inputRefs.firstTextInput.focus();
-                  }}
-                  onDownArrow={() => {
-                    this.inputRefs.value.togglePicker();
-                  }}
-                  style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }}
-                  value={this.state.amount}
-                  
-                /> */}
-              {/* </Card>               */}
-
-              {/* <Text>Select amount (NGN)</Text>
+          <View style={{margin: 15, marginTop: 15}}>
+              <Text>Select amount (NGN)</Text>
 
                 <ScrollView>
                   <View style={styles.view}>
@@ -335,9 +247,9 @@ export default class Airtime extends Component {
                     </TouchableOpacity>
 
                   </View>
-                </ScrollView> */}
+                </ScrollView>
 
-          {/* </View> */}
+          </View>
 
           {/* <View style={{margin: 15, marginTop: 25}} >
           <Text style={{margin: 3}}>Input airtime network</Text>
