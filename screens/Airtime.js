@@ -131,6 +131,10 @@ export default class Airtime extends Component {
   // };
 
   const { navigate } = this.props.navigation;
+  let toggleStyle = this.state.isClicked ? styles.cardTwo : styles.button;
+
+  let toggleColor = this.state.buttonColor
+  
   return (
     
         <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
@@ -388,6 +392,8 @@ const styles = StyleSheet.create({
     margin: 3,
     marginTop: 9,
     padding: null,
+    backgroundColor: '#333',
+    color: '#fff'
    },
    text: {
     fontSize: 11,
@@ -432,4 +438,19 @@ const styles = StyleSheet.create({
     marginTop: 35,
     marginLeft: 135,
    },
+   buttonPress: {
+     backgroundColor: '#333',
+     color: '#fff'
+   },
+   button: {
+    flex: 1,
+    width: 70,
+    height: 70,
+    alignItems: 'center',
+    margin: 3,
+    marginTop: 9,
+    padding: null,
+    backgroundColor: '#fff',
+    color: '#333'
+   }
 });
