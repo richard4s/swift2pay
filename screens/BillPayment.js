@@ -24,7 +24,7 @@ export default class BillPayment extends Component {
    <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
    
     <View style={styles.screen}>
-     <ScrollView style={{width: '90%', marginTop: 31,}} >
+     <ScrollView style={{width: '100%', marginTop: 31,}} >
       
       <View style={styles.view}>
         <TouchableOpacity>
@@ -64,7 +64,7 @@ export default class BillPayment extends Component {
      </ScrollView>
 
     </View>
-    
+
    </ImageBackground>
  )
  }
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     alignItems: 'center',
-    margin: 15,
+    margin: 5,
     marginTop: 29,
     padding: null,
    },
