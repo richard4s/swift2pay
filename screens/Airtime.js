@@ -7,29 +7,6 @@ import Card from '../components/Card';
 
 
 
-// const amount = [
-//   {
-//     label: '100 NGN',
-//     amountValue: '100',
-//   },
-//   {
-//     label: '200 NGN',
-//     amountValue: '200',
-//   },
-//   {
-//     label: '500 NGN',
-//     amountValue: '500',
-//   },
-//   {
-//     label: '1000 NGN',
-//     amountValue: '1000',
-//   },
-//   {
-//     label: '5000 NGN',
-//     amountValue: '5000',
-//   },
-// ];
-
 
 export default class Airtime extends Component {
   static navigationOptions = {
@@ -357,6 +334,15 @@ export default class Airtime extends Component {
       </ImageBackground>
    
   )
+ }
+
+ _airtime = async() => {
+   if (this.state.phone === '' || this.state.pickerSelection === '' ) {
+     alert('Please fill all required fields')
+   } else {
+     alert('Please wait...')
+     this.buyAirtime()
+   }
  }
 };
 
