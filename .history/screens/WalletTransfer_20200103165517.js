@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Picker, AsyncStorage } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Picker } from 'react-native';
 
 import Card from '../components/Card';
 
@@ -17,56 +17,6 @@ export default class WalletTransfer extends Component {
     },
   };
 
-  walletTransfer = async () => {
-    const grabUserId = await AsyncStorage.getItem('userId')
-
-    alert('Wallet Transfer')
-
-    fetch('https://swift2pay.com/account/api/request?action=resolveWalletAccount&recipient=james@gmail.com', {
-      method: 'GET',
-    })
-    .then(response => response.json())
-    .then((json) => {
-      user = JSON.stringify(json)
-      console.log('Response: ' , user, json.message)
-
-      this.setState({
-        status: json.status,
-        recipientUserID: json.userID,
-        name: json.name,
-        message: json.message
-      });
-
-    })
-    .catch((error) => {
-      console.error(error);
-      alert(error)
-    });
-
-    fetch('https://swift2pay.com/account/api/request?action=walletTransfer&recipientID='this.state.recipientUserID'&userID='+grabUserId+'&amount='+this.state.amount+'&apiKey=JFJHFJJ38388739949HFGDJ', {
-      method: 'GET',
-    })
-    .then(response => response.json())
-    .then((json) => {
-      user = JSON.stringify(json)
-      console.log('Response: ', user, json.message)
-      this.setState({
-        message: json.message,
-      });
-
-      if(json.status === 200){
-        console.log(json.message)
-        console.log(this.state.amount)
-        alert('Please wait...')
-      } 
-    })
-    .catch((error) => {
-      console.error(error);
-      alert('Insufficient Wallet Fund')
-      alert(error)
-    });
-  }
-
  render() {
   const { navigate } = this.props.navigation;
   return (
@@ -74,13 +24,13 @@ export default class WalletTransfer extends Component {
    
       <View style={{margin: 15, marginTop: 75,}} >
         <Card>
-          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Recipient email address" onChangeText={(email)=>this.setState({email})} value={this.state.email} />
+          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Recipient phone number" />
         </Card>
       </View>
       
       <View style={{margin: 15}} >
         <Card>
-          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter amount" keyboardType="number-pad" onChangeText={(amount)=>this.setState({amount})} value={this.state.amount} />
+          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter amount" />
         </Card>
       </View>
       
@@ -91,7 +41,7 @@ export default class WalletTransfer extends Component {
       </View>
       
       <View style={{margin: 15, marginTop: 35}} >
-        <Text style={styles.submit} onPress={this.walletTransfer}>Payment</Text>
+        <Text style={styles.submit} onPress={() => navigate('Browse')}>Payment</Text>
       </View>
 
     </ImageBackground>

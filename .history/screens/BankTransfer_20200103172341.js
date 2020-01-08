@@ -28,62 +28,22 @@ export default class BankTransfer extends Component {
 
  render() {
 
-  const bankValues = [
+  const networkValues = [
     {
       label: 'Access Bank',
-      value: 'Access Bank',
+      value: 'access_bank',
     },
     {
-      label: 'Alat By Wema',
-      value: 'Wema',
+      label: 'Globacom',
+      value: 'glo',
     },
     {
-      label: 'Ecobank Nigeria Plc',
-      value: 'Ecobank',
+      label: '9 Mobile',
+      value: 'etisalat',
     },
     {
-      label: 'First Bank of Nigeria',
+      label: 'Airtel Nigeria',
       value: 'airtel',
-    },
-    {
-      label: 'First City Monument Bank',
-      value: 'FCMB',
-    },
-    {
-      label: 'Guaranty Trust Bank',
-      value: 'GTB',
-    },
-    {
-      label: 'Heritage Banking',
-      value: 'Heritage',
-    },
-    {
-      label: 'Polaris Bank Plc',
-      value: 'Polaris',
-    },
-    {
-      label: 'Stanbic-ibtc Bank Plc',
-      value: 'Stanbic',
-    },
-    {
-      label: 'Sterling Bank',
-      value: 'Sterling',
-    },
-    {
-      label: 'Union Bank of Nigeria',
-      value: 'Union Bank',
-    },
-    {
-      label: 'United Bank for Africa',
-      value: 'UBA',
-    },
-    {
-      label: 'Unity Bank Plc',
-      value: 'Unity',
-    },
-    {
-      label: 'Zenith Bank',
-      value: 'Zenith',
     },
   ];
 
@@ -95,7 +55,7 @@ export default class BankTransfer extends Component {
         <Card >
 
           <TouchableOpacity onPress={() => {this.togglePicker()}} >
-            <Text style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }} placeholder={bankPlaceholder} >{this.state.pickerSelection}</Text>
+            <Text style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }} placeholder={networkPlaceholder} >{this.state.pickerSelection}</Text>
           </TouchableOpacity>
 
           <Modal visible={this.state.pickerDisplayed} animationType={"slide"} transparent={true} >
@@ -107,7 +67,7 @@ export default class BankTransfer extends Component {
               alignItems: 'center',
               position: 'absolute' }}>
               <Text style={{fontWeight: 'bold'}}>Please select your bank</Text>
-              { bankValues.map((value, index) => {
+              { networkValues.map((value, index) => {
                 return <TouchableHighlight key={index} onPress={() => this.setPickerValue(value.value)} style={{ paddingTop: 4, paddingBottom: 4 }}>
                     <Text>{ value.label }</Text>
                   </TouchableHighlight>

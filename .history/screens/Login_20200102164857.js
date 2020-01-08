@@ -52,7 +52,7 @@ export default class Login extends Component {
 
       if(json.status == 200){
         console.log(json.message)
-        // alert('Please wait...')
+        alert('Please wait...')
         alert(json.message +': You have been logged in')
         // alert(json.userID) 
         this.props.navigation.navigate('Browse', {
@@ -110,7 +110,7 @@ export default class Login extends Component {
    if (this.state.email === '' || this.state.password === '') {
      alert('Please insert email or password');
    } else {
-     alert('Please wait...')
+     alert('please wait...')
      this.loginUsers()
    }
  } 
