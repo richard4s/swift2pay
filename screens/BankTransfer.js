@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Picker } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Picker, TouchableOpacity, Modal, TouchableHighlight } from 'react-native';
 
 import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
 
 import Card from '../components/Card';
+
+class PayConfirm extends Component {
+  render() {
+    return(
+      <Text>Guyssss</Text>
+    )
+  }
+}
 
 export default class BankTransfer extends Component {
   static navigationOptions = {
@@ -19,12 +27,121 @@ export default class BankTransfer extends Component {
     },
   };
 
-  constructor(){
-   super();
+  constructor(props){
+   super(props);
    this.state={
-     PickerValue:''
+     PickerValue:'',
+     value: null,
+     pickerSelection: 'Click to select a Bank Name!',
+     pickerDisplayed: false,
+     banksList: null,
+     banksLoading: true,
+     accName: '',
+     accNumber: '',
+     accountNumber: '',
+     modalVisible: false
    }
  }; 
+
+ setPickerValue(newValue) {
+  this.setState({
+    pickerSelection: newValue
+  })
+
+  this.togglePicker();
+}
+
+togglePicker() {
+  this.setState({
+    pickerDisplayed: !this.state.pickerDisplayed
+  })
+}
+
+componentDidMount() {
+  this.getBankList()
+  
+}
+
+setModalVisible(visible) {
+  this.setState({modalVisible: visible});
+}
+
+paymentConfirmModal() {
+  return <Modal
+  animationType="slide"
+  transparent={false}
+  visible={this.state.modalVisible}
+  onRequestClose={() => {
+    Alert.alert('Modal has been closed.');
+  }}>
+  <View style={{marginTop: 22}}>
+    <View>
+      <Text>Hello World!</Text>
+
+      <TouchableHighlight
+        onPress={() => {
+          this.setModalVisible(!this.state.modalVisible);
+        }}>
+        <Text>Hide Modal</Text>
+      </TouchableHighlight>
+    </View>
+  </View>
+  </Modal>
+}
+
+getBankList() {
+  fetch('https://swift2pay.com/account/api/request?action=bankList&apiKey=JFJHFJJ38388739949HFGDJ', {
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then((json) => {
+      banks = JSON.stringify(json)
+
+      // console.log('Response: ' , banks, json)
+
+      this.setState({
+        banksList: json,
+        banksLoading: false
+      });
+
+    })
+    .catch((error) => {
+      console.error(error);
+      alert(error)
+    });
+}
+
+payment() {
+  this.resolveBankData(this.state.accountNumber, this.state.pickerSelection)
+}
+
+resolveBankData(accNumber, code) {
+  fetch('https://swift2pay.com/account/api/request?action=resolveBankAccount&accountNo='+accNumber+'&bank='+code, {
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then((json) => {
+      banks = JSON.stringify(json)
+
+      console.log('Response: ' , banks, json)
+
+      this.setState({
+        accNumber: json.accountnumber,
+        accName: json.accname,
+        
+      });
+
+      return <PayConfirm />
+
+      // this.setModalVisible(true)
+      // return  this.paymentConfirmModal()
+
+    })
+    .catch((error) => {
+      console.error(error);
+      alert(error)
+    });
+}
 
  render() {
 
@@ -87,6 +204,12 @@ export default class BankTransfer extends Component {
     },
   ];
 
+  const bankPlaceholder = {
+    label: 'Select your Bank...',
+    value: null,
+    color: '#9EA0A4',
+  };
+
   const { navigate } = this.props.navigation;
   return (
    <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
@@ -107,10 +230,14 @@ export default class BankTransfer extends Component {
               alignItems: 'center',
               position: 'absolute' }}>
               <Text style={{fontWeight: 'bold'}}>Please select your bank</Text>
-              { bankValues.map((value, index) => {
-                return <TouchableHighlight key={index} onPress={() => this.setPickerValue(value.value)} style={{ paddingTop: 4, paddingBottom: 4 }}>
-                    <Text>{ value.label }</Text>
-                  </TouchableHighlight>
+              { this.state.banksLoading ?  <Text>Loading...</Text>
+              
+              :
+              
+              this.state.banksList.map((value, index) => {
+                return <ScrollView><TouchableHighlight key={index} onPress={() => this.setPickerValue(value.code)} style={{ paddingTop: 4, paddingBottom: 4 }}>
+                    <Text>{ value.name }</Text>
+                  </TouchableHighlight></ScrollView>
               })}
 
               
@@ -148,7 +275,7 @@ export default class BankTransfer extends Component {
    
       <View style={{margin: 15, }} >
         <Card>
-          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter account number" />
+          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter account number" onChangeText={(accountNumber)=>this.setState({accountNumber})} value={this.state.accountNumber} />
         </Card>
       </View>
       
@@ -165,8 +292,29 @@ export default class BankTransfer extends Component {
       </View>
       
       <View style={{margin: 15, marginTop: 35}} >
-        <Text style={styles.submit} onPress={() => navigate('Browse')}>Payment</Text>
+        <Text style={styles.submit} onPress={() => this.payment()}>Payment</Text>
       </View>
+
+      <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}>
+          <View style={{marginTop: 22}}>
+            <View>
+              <Text>Hello World!</Text>
+
+              <TouchableHighlight
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}>
+                <Text>Hide Modal</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
 
     </ImageBackground>
   )

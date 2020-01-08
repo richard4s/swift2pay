@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Picker, AsyncStorage, TouchableOpacity } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Picker, AsyncStorage, TouchableOpacity, Modal, TouchableHighlight } from 'react-native';
 
 import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
 
@@ -23,22 +23,37 @@ export default class Electricity extends Component {
     super(props);
     this.state={
      meterNumber: '',
+     amount: '',
      value: null,
-     pickerSelection: 'Click to select a network!',
+     pickerSelection: 'Click to select a Meter Provider!',
      pickerDisplayed: false,
+     pickerVariationSelection: 'Click to select a Variation Code!',
+     pickerVariationDisplayed: false,
      mobileNetwork: undefined,
      data: [],
     }
   }; 
 
-  walletTransfer = async () => {
+  setPickerValue(newValue) {
+   this.setState({
+     pickerSelection: newValue
+   })
+
+   this.togglePicker();
+ }
+
+ togglePicker() {
+   this.setState({
+     pickerDisplayed: !this.state.pickerDisplayed
+   })
+ }
+
+  electricPay = async () => {
     const grabUserId = await AsyncStorage.getItem('userId')
 
     alert('Please wait...')
-
-    alert('Wallet Transfer')
-
-    fetch('https://swift2pay.com/account/api/request?action=resolveWalletAccount&recipient='+this.state.email, {
+    
+    fetch('https://swift2pay.com/account/api/request?action=validateMeter&billersCode=62120151535&serviceID=eko-electric&variation_code=prepaid&apiKey=JFJHFJJ38388739949HFGDJ', {
       method: 'GET',
     })
     .then(response => response.json())
@@ -88,26 +103,135 @@ export default class Electricity extends Component {
   }
 
  render() {
+
+  const networkValues = [
+   {
+     label: 'Eko Electric',
+     value: 'eko-electric',
+   },
+   {
+     label: 'Kano Electric - KEDCO',
+     value: 'kano-electric',
+   },
+   {
+     label: 'Jos Electric - JED',
+     value: 'jos-electric',
+   },
+   {
+     label: 'Ikeja Electric',
+     value: 'ikeja-electric',
+   },
+ ];
+
+ const networkPlaceholder = {
+   label: 'Select a Meter Provider...',
+   value: null,
+   color: '#9EA0A4',
+ };
+
+  const variationValues = [
+   {
+     label: 'Postpaid',
+     value: 'postpaid',
+   },
+   {
+     label: 'Prepaid',
+     value: 'prepaid',
+   },
+ ];
+
+ const variationPlaceholder = {
+   label: 'Select a Variation Code...',
+   value: null,
+   color: '#9EA0A4',
+ };
+ 
   const { navigate } = this.props.navigation;
+  let toggleStyle = this.state.isClicked ? styles.cardTwo : styles.button;
+
+  let toggleColor = this.state.buttonColor
+
   return (
    <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
    
       <View style={{margin: 15, marginTop: 75,}} >
         <Card>
-          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Meter Number" onChangeText={(email)=>this.setState({email})} value={this.state.email} />
+
+        <TouchableOpacity onPress={() => {this.togglePicker()}} >
+          <Text style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }} placeholder={networkPlaceholder} >{this.state.pickerSelection}</Text>
+        </TouchableOpacity>
+
+        <Modal visible={this.state.pickerDisplayed} animationType={"slide"} transparent={true} >
+         <View style={{ margin: 20, padding: 20,
+           backgroundColor: '#efefef',
+           bottom: 20,
+           left: 20,
+           right: 20,
+           alignItems: 'center',
+           position: 'absolute' }}>
+           <Text style={{fontWeight: 'bold'}}>Please select a Meter Provider</Text>
+           { networkValues.map((value, index) => {
+             return <TouchableHighlight key={index} onPress={() => this.setPickerValue(value.value)} style={{ paddingTop: 4, paddingBottom: 4 }}>
+                 <Text>{ value.label }</Text>
+               </TouchableHighlight>
+           })}
+
+           
+           <TouchableHighlight onPress={() => this.togglePicker()} style={{ paddingTop: 4, paddingBottom: 4 }}>
+             <Text style={{ color: '#999' }}>Cancel</Text>
+           </TouchableHighlight>
+         </View>
+       </Modal>
+          {/* <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Select Meter Provider" onChangeText={(email)=>this.setState({email})} value={this.state.email} /> */}
         </Card>
       </View>
       
-      
-      
       <View style={{margin: 15}} >
         <Card>
-          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter message (optional)" onChangeText={(optionalMessage)=>this.setState({optionalMessage})} value={this.state.optionalMessage} />
+           
+        <TouchableOpacity onPress={() => {this.togglePicker()}} >
+          <Text style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }} placeholder={variationPlaceholder} >{this.state.pickerVariationSelection}</Text>
+        </TouchableOpacity>
+
+        <Modal visible={this.state.pickerVariationDisplayed} animationType={"slide"} transparent={true} >
+         <View style={{ margin: 20, padding: 20,
+           backgroundColor: '#efefef',
+           bottom: 20,
+           left: 20,
+           right: 20,
+           alignItems: 'center',
+           position: 'absolute' }}>
+           <Text style={{fontWeight: 'bold'}}>Please select a Variation Code</Text>
+           { variationValues.map((value, index) => {
+             return <TouchableHighlight key={index} onPress={() => this.setPickerValue(value.value)} style={{ paddingTop: 4, paddingBottom: 4 }}>
+                 <Text>{ value.label }</Text>
+               </TouchableHighlight>
+           })}
+
+           
+           <TouchableHighlight onPress={() => this.togglePicker()} style={{ paddingTop: 4, paddingBottom: 4 }}>
+             <Text style={{ color: '#999' }}>Cancel</Text>
+           </TouchableHighlight>
+         </View>
+       </Modal>
+          {/* <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Select Variation Code" onChangeText={(optionalMessage)=>this.setState({optionalMessage})} value={this.state.optionalMessage} /> */}
+        </Card>
+      </View>
+
+      <View style={{margin: 15}} >
+        <Card>
+          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Meter Number" onChangeText={(optionalMessage)=>this.setState({optionalMessage})} value={this.state.optionalMessage} />
+        </Card>
+      </View>
+
+      <View style={{margin: 15}} >
+        <Card>
+          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Amount" onChangeText={(optionalMessage)=>this.setState({optionalMessage})} value={this.state.optionalMessage} />
         </Card>
       </View>
       
       <View style={{margin: 15, marginTop: 35}} >
-        <TouchableOpacity style={styles.submit} onPress={this.walletTransfer}>
+        <TouchableOpacity style={styles.submit} onPress={this.electricPay}>
           <Text style={styles.textTwo} >Payment</Text>
         </TouchableOpacity>
       </View>
