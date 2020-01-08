@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Picker, AsyncStorage, TouchableOpacity } from 'react-native';
 
+import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
+
 import Card from '../components/Card';
 
-export default class WalletTransfer extends Component {
+export default class Electricity extends Component {
   static navigationOptions = {
-    title: 'Wallet Transfer',
+    title: 'Electricity',
     headerStyle: {
       backgroundColor: 'rgb(147, 43, 173)', 
     },
@@ -20,8 +22,12 @@ export default class WalletTransfer extends Component {
   constructor(props){
     super(props);
     this.state={
-      email: '',
-      amount: '',
+     meterNumber: '',
+     value: null,
+     pickerSelection: 'Click to select a network!',
+     pickerDisplayed: false,
+     mobileNetwork: undefined,
+     data: [],
     }
   }; 
 
@@ -88,15 +94,11 @@ export default class WalletTransfer extends Component {
    
       <View style={{margin: 15, marginTop: 75,}} >
         <Card>
-          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Recipient email address" onChangeText={(email)=>this.setState({email})} value={this.state.email} />
+          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Meter Number" onChangeText={(email)=>this.setState({email})} value={this.state.email} />
         </Card>
       </View>
       
-      <View style={{margin: 15}} >
-        <Card>
-          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter amount" keyboardType="number-pad" onChangeText={(amount)=>this.setState({amount})} value={this.state.amount} />
-        </Card>
-      </View>
+      
       
       <View style={{margin: 15}} >
         <Card>

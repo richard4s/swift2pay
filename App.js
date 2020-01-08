@@ -15,6 +15,7 @@ import BankTransfer from './screens/BankTransfer';
 import Insurance from './screens/Insurance';
 import FundWallet from './screens/FundWallet';
 import Transactions from './screens/Transactions';
+import Electricity from './screens/Electricity';
 
 console.disableYellowBox = true;
 
@@ -35,6 +36,7 @@ const App = createStackNavigator({
     Insurance: { screen: Insurance }, 
     FundWallet: { screen: FundWallet }, 
     Transactions: { screen: Transactions }, 
+    Electricity: { screen: Electricity }, 
   },
   {
     initialRouteName: 'Welcome',
