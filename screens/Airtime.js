@@ -60,6 +60,8 @@ export default class Airtime extends Component {
     .then((json) => {
       user = JSON.stringify(json)
       console.log('Response: ' , user, json.message)
+      
+      alert(json.message)
 
       this.setState({
         phone: json.phone,
