@@ -60,7 +60,7 @@ export default class Airtime extends Component {
     .then((json) => {
       user = JSON.stringify(json)
       console.log('Response: ' , user, json.message)
-      
+
       alert(json.message)
 
       this.setState({
@@ -83,12 +83,14 @@ export default class Airtime extends Component {
     .then((json) => {
       user = JSON.stringify(json)
       console.log('Response: ' , user, json.message)
+      alert(json.message)
       this.setState({
         message: json.message,
       });
 
       if(json.status == 200){
         console.log(json.message)
+        alert(json.message)
         console.log(this.state.amount)
         alert('Please wait...')
         alert('You have successfully purchased ' + this.state.pickerSelection + ' on ' + this.state.phone + ' of NGN' + this.state.amount )

@@ -34,6 +34,8 @@ export default class Electricity extends Component {
     }
   }; 
 
+
+
   setPickerValue(newValue) {
    this.setState({
      pickerSelection: newValue
@@ -47,6 +49,24 @@ export default class Electricity extends Component {
      pickerDisplayed: !this.state.pickerDisplayed
    })
  }
+ 
+
+
+  setPickerValue(newValue) {
+   this.setState({
+     pickerVariationSelection: newValue
+   })
+
+   this.togglePicker();
+ }
+
+ togglePicker() {
+   this.setState({
+     pickerVariationDisplayed: !this.state.pickerVariationDisplayed
+   })
+ }
+
+ 
 
   electricPay = async () => {
     const grabUserId = await AsyncStorage.getItem('userId')
