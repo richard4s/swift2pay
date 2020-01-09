@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Picker, AsyncStorage, TouchableOpacity } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Picker, AsyncStorage } from 'react-native';
 
 import Card from '../components/Card';
 
@@ -28,8 +28,6 @@ export default class WalletTransfer extends Component {
   walletTransfer = async () => {
     const grabUserId = await AsyncStorage.getItem('userId')
 
-    alert('Please wait...')
-
     alert('Wallet Transfer')
 
     fetch('https://swift2pay.com/account/api/request?action=resolveWalletAccount&recipient='+this.state.email, {
@@ -39,7 +37,7 @@ export default class WalletTransfer extends Component {
     .then((json) => {
       user = JSON.stringify(json)
       console.log('Response: ' , user, json.message)
-      alert('Full name: ' + json.name + ' Amount: ' +this.state.amount + ' Message: ' +this.state.optionalMessage)
+
       this.setState({
         status: json.status,
         userID: json.userID,
@@ -100,14 +98,12 @@ export default class WalletTransfer extends Component {
       
       <View style={{margin: 15}} >
         <Card>
-          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter message (optional)" onChangeText={(optionalMessage)=>this.setState({optionalMessage})} value={this.state.optionalMessage} />
+          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter message (optional)" />
         </Card>
       </View>
       
       <View style={{margin: 15, marginTop: 35}} >
-        <TouchableOpacity style={styles.submit} onPress={this.walletTransfer}>
-          <Text style={styles.textTwo} >Payment</Text>
-        </TouchableOpacity>
+        <Text style={styles.submit} onPress={this.walletTransfer}>Payment</Text>
       </View>
 
     </ImageBackground>

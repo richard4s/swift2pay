@@ -28,17 +28,17 @@ export default class BillPayment extends Component {
       <ScrollView style={{width: '90%', marginTop: 40, }} >
           
           <View style={styles.view}>
-            <TouchableOpacity onPress={() => navigate('Airtime')} >
-              <Card style={styles.card} >
-                <Image source={require('../assets/images/bill-payment/tv.png')} style={styles.image} />
-                <Text style={styles.text}>TV Subscription</Text>
+            <TouchableOpacity>
+              <Card onPress={() => navigate('Airtime')} style={styles.card} >
+                <Image onPress={() => navigate('Airtime')} source={require('../assets/images/bill-payment/tv.png')} style={styles.image} />
+                <Text onPress={() => navigate('Airtime')} style={styles.text}>TV Subscription</Text>
               </Card>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigate('Electricity')}>
-              <Card style={styles.card}>
-                <Image source={require('../assets/images/bill-payment/electricity.png')} style={styles.image} />
-                <Text style={styles.text}>Electricity</Text>
+            <TouchableOpacity>
+              <Card onPress={() => navigate('Data')} style={styles.card}>
+                <Image onPress={() => navigate('Data')} source={require('../assets/images/bill-payment/electricity.png')} style={styles.image} />
+                <Text onPress={() => navigate('Data')} style={styles.text}>Electricity</Text>
               </Card>
             </TouchableOpacity>
           
