@@ -66,8 +66,6 @@ export default class Television extends Component {
    })
  }
 
-
-
   electricPay = async () => {
     const grabUserId = await AsyncStorage.getItem('userId')
 

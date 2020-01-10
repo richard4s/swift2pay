@@ -66,8 +66,6 @@ export default class Electricity extends Component {
    })
  }
 
-
-
   electricPay = async () => {
     const grabUserId = await AsyncStorage.getItem('userId')
 
@@ -82,8 +80,7 @@ export default class Electricity extends Component {
       console.log('Response: ' , user, json.message)
       this.setState({
         status: json.status,
-        userID: json.userID,
-        name: json.name,
+        meterName: json.meterName,
         message: json.message
       });
 
