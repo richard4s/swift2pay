@@ -80,7 +80,6 @@ export default class Electricity extends Component {
     .then((json) => {
       user = JSON.stringify(json)
       console.log('Response: ' , user, json.message)
-      alert('Full name: ' + json.name + ' Amount: ' +this.state.amount + ' Message: ' +this.state.optionalMessage)
       this.setState({
         status: json.status,
         userID: json.userID,
@@ -192,9 +191,7 @@ export default class Electricity extends Component {
            <Text style={{fontWeight: 'bold'}}>Please select a Meter Provider</Text>
            { networkValues.map((value, index) => {
              return <TouchableHighlight key={index} onPress={() => this.setPickerValue(value.value)} style={{ paddingTop: 4, paddingBottom: 4 }}>
-                <ScrollView>
                  <Text>{ value.label }</Text>
-                </ScrollView>
                </TouchableHighlight>
            })}
 
