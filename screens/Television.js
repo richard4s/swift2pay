@@ -5,9 +5,9 @@ import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
 
 import Card from '../components/Card';
 
-export default class Electricity extends Component {
+export default class Television extends Component {
   static navigationOptions = {
-    title: 'Electricity',
+    title: 'Television',
     headerStyle: {
       backgroundColor: 'rgb(147, 43, 173)', 
     },
@@ -73,7 +73,7 @@ export default class Electricity extends Component {
 
     alert('Please wait...')
     
-    fetch('https://swift2pay.com/account/api/request?action=validateMeter&billersCode='+this.state.meterNumber+'&serviceID='+this.state.pickerSelection+'&variation_code='+this.state.pickerVariationSelection+'&apiKey=JFJHFJJ38388739949HFGDJ', {
+    fetch('https://swift2pay.com/account/api/request?action=validateMeter&billersCode=62120151535&serviceID=eko-electric&variation_code=prepaid&apiKey=JFJHFJJ38388739949HFGDJ', {
       method: 'GET',
     })
     .then(response => response.json())
@@ -192,9 +192,7 @@ export default class Electricity extends Component {
            <Text style={{fontWeight: 'bold'}}>Please select a Meter Provider</Text>
            { networkValues.map((value, index) => {
              return <TouchableHighlight key={index} onPress={() => this.setPickerValue(value.value)} style={{ paddingTop: 4, paddingBottom: 4 }}>
-                <ScrollView>
                  <Text>{ value.label }</Text>
-                </ScrollView>
                </TouchableHighlight>
            })}
 
@@ -242,13 +240,13 @@ export default class Electricity extends Component {
 
       <View style={{margin: 15}} >
         <Card>
-          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Meter Number" onChangeText={(meterNumber)=>this.setState({meterNumber})} value={this.state.meterNumber} />
+          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Meter Number" onChangeText={(optionalMessage)=>this.setState({optionalMessage})} value={this.state.optionalMessage} />
         </Card>
       </View>
 
       <View style={{margin: 15}} >
         <Card>
-          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Amount" onChangeText={(amount)=>this.setState({amount})} value={this.state.amount} />
+          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Amount" onChangeText={(optionalMessage)=>this.setState({optionalMessage})} value={this.state.optionalMessage} />
         </Card>
       </View>
       

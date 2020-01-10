@@ -235,14 +235,14 @@ resolveBankData(accNumber, code) {
               :
               
               this.state.banksList.map((value, index) => {
-                return <ScrollView><TouchableHighlight key={index} onPress={() => this.setPickerValue(value.code)} style={{ paddingTop: 4, paddingBottom: 4 }}>
-                    <Text>{ value.name }</Text>
-                  </TouchableHighlight></ScrollView>
+                return <TouchableHighlight key={index} onPress={() => this.setPickerValue(value.code)} style={{ paddingTop: 4, paddingBottom: 4 }}>
+                    <ScrollView> <Text>{ value.name }</Text> </ScrollView>
+                  </TouchableHighlight>
               })}
 
               
               <TouchableHighlight onPress={() => this.togglePicker()} style={{ paddingTop: 4, paddingBottom: 4 }}>
-                <Text style={{ color: '#999' }}>Cancel</Text>
+                <ScrollView> <Text style={{ color: '#999' }}>Cancel</Text> </ScrollView>
               </TouchableHighlight>
             </View>
           </Modal>
