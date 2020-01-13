@@ -51,7 +51,7 @@ export default class Airtime extends Component {
   buyAirtime = async () => {
     const grabUserId = await AsyncStorage.getItem('userId')
 
-    alert('You are about to buy airtime...')
+    alert('Please wait...')
 
     fetch('https://swift2pay.com/account/api/request.php?action=profile&userID='+grabUserId+'&apiKey=JFJHFJJ38388739949HFGDJ', {
       method: 'GET',
