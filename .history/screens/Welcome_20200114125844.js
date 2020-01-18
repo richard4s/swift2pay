@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 15,
     padding: 5,
+    paddingLeft: 55,
     marginTop: 363
    },
    signup: {
@@ -100,6 +101,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 5,
     paddingTop: 15,
+    paddingLeft: 55,
     marginTop: 375
    },
   iconContainer: {
