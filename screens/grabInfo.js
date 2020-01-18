@@ -5,4 +5,4 @@ const grabInfo = (userId) => {
    
    }
    
-   export default grabInfo;
+export default grabInfo;
