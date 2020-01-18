@@ -43,9 +43,9 @@ export default class FundWallet extends Component {
     },
   };
 
-  componentDidMount() {
-    this.grabUserInfo()
-  }
+  // componentDidMount() {
+  //   this.grabUserInfo()
+  // }
 
   callback = (response) => {
     console.log(response);
@@ -83,8 +83,6 @@ export default class FundWallet extends Component {
         last_name: json.last_name,
         email: json.email
       });
-
-      
 
     })
     .catch((err) => {
@@ -142,14 +140,21 @@ export default class FundWallet extends Component {
   }
 
   raveModal = () => {
-    console.log('Rave modal')
-    this.props.navigation.navigate('ravePay', {
-      message: this.state.message,
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
-      email: this.state.email,
-      amount: this.state.amount
-    })
+    return (<Rave
+      amount={this.state.amount} 
+      country="NG" 
+      currency="NGN"
+      paymentOption="card,account"
+      email={this.state.email} 
+      firstname={this.state.first_name} 
+      lastname={this.state.last_name}
+      publickey="FLWPUBK-ad71471b648438d621c9411ff917410d-X" 
+      encryptionkey="408d9cfd87970bbb5851ec4f"
+      meta={[{ metaname: "color", metavalue: "red" }, { metaname: "storelocation", metavalue: "ikeja" }]}
+      onSuccess={res => this.onSuccess(res)} 
+      onFailure={e => this.onFailure(e)}
+      onClose={e => this.onClose(e)}
+    />)
   }
 
   render() {
@@ -157,15 +162,21 @@ export default class FundWallet extends Component {
 
       return (
 
-        <View style={{margin: 15}} >
-          <Card>
-            <TextInput style={styles.cardStyle} keyboardType="number-pad" onChangeText={(amount)=>this.setState({amount})} value={this.state.amount} placeholder="Enter amount" />
-          </Card>
-
-          <TouchableOpacity style={styles.submit} onPress={() => this.raveModal()}>
-              <Text style={styles.textTwo}>Fund Wallet</Text>
-            </TouchableOpacity>
-        </View>        
+        <Rave
+            amount={this.state.amount} 
+            country="NG" 
+            currency="NGN"
+            paymentOption="card,account"
+            email={this.state.email} 
+            firstname={this.state.first_name} 
+            lastname={this.state.last_name}
+            publickey="FLWPUBK-ad71471b648438d621c9411ff917410d-X" 
+            encryptionkey="408d9cfd87970bbb5851ec4f"
+            meta={[{ metaname: "color", metavalue: "red" }, { metaname: "storelocation", metavalue: "ikeja" }]}
+            onSuccess={res => this.onSuccess(res)} 
+            onFailure={e => this.onFailure(e)}
+            onClose={e => this.onClose(e)}
+        />      
       )
      }
     };
