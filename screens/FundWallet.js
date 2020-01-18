@@ -108,27 +108,34 @@ export default class FundWallet extends Component {
     // })
   }
 
+  raveModal = () => {
+    return <Rave 
+    amount="5" 
+    country="NG" 
+    currency="NGN"
+    paymentOption="card,account"
+    email="test@mail.com" 
+    firstname="Oluwole" 
+    lastname="Adebiyi"
+    publickey="FLWPUBK-ad71471b648438d621c9411ff917410d-X" 
+    encryptionkey="408d9cfd87970bbb5851ec4f"
+    meta={[{ metaname: "color", metavalue: "red" }, { metaname: "storelocation", metavalue: "ikeja" }]}
+    onSuccess={res => this.onSuccess(res)} 
+    onFailure={e => this.onFailure(e)}
+    onClose={e => this.onClose(e)}
+/>
+  }
+
   render() {
       const { navigate } = this.props.navigation;
 
       return (
 
-          <Rave 
-            amount="5" 
-            country="NG" 
-            currency="NGN"
-            paymentOption="card,account"
-            email="test@mail.com" 
-            firstname="Oluwole" 
-            lastname="Adebiyi"
-            publickey="FLWPUBK-ad71471b648438d621c9411ff917410d-X" 
-            encryptionkey="408d9cfd87970bbb5851ec4f"
-            meta={[{ metaname: "color", metavalue: "red" }, { metaname: "storelocation", metavalue: "ikeja" }]}
-            onSuccess={res => this.onSuccess(res)} 
-            onFailure={e => this.onFailure(e)}
-            onClose={e => this.onClose(e)}
-        />
-        
+        <View style={{margin: 15}} >
+          <Card>
+            <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter amount" />
+          </Card>
+        </View>        
       )
      }
     };
