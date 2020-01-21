@@ -18,6 +18,8 @@ import Transactions from './screens/Transactions';
 import Electricity from './screens/Electricity';
 import Television from './screens/Television';
 
+import RavePay from './screens/RavePay';
+
 console.disableYellowBox = true;
 
 // Import all the screens we are going to switch 
@@ -39,6 +41,7 @@ const App = createStackNavigator({
     Transactions: { screen: Transactions }, 
     Electricity: { screen: Electricity }, 
     Television: { screen: Television }, 
+    RavePay: {screen: RavePay},
   },
   {
     initialRouteName: 'Welcome',

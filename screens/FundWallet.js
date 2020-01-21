@@ -143,7 +143,7 @@ export default class FundWallet extends Component {
 
   raveModal = () => {
     console.log('Rave modal')
-    this.props.navigation.navigate('ravePay', {
+    this.props.navigation.navigate('RavePay', {
       message: this.state.message,
       first_name: this.state.first_name,
       last_name: this.state.last_name,

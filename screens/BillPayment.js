@@ -28,7 +28,7 @@ export default class BillPayment extends Component {
       <ScrollView style={{width: '90%', marginTop: 40, }} >
           
           <View style={styles.view}>
-            <TouchableOpacity onPress={() => navigate('Airtime')} >
+            <TouchableOpacity onPress={() => navigate('Television')} >
               <Card style={styles.card} >
                 <Image source={require('../assets/images/bill-payment/tv.png')} style={styles.image} />
                 <Text style={styles.text}>TV Subscription</Text>

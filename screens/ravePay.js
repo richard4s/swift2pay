@@ -12,7 +12,7 @@ console.disableYellowBox = true;
 
 import Card from '../components/Card';
 
-export default class FundWallet extends Component {
+export default class RavePay extends Component {
   constructor(props) {
     super(props)
 

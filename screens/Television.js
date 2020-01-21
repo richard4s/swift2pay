@@ -24,8 +24,9 @@ export default class Television extends Component {
     this.state={
      meterNumber: '',
      amount: '',
+     cardNumber: '',
      value: null,
-     pickerSelection: 'Click to select a Meter Provider!',
+     pickerSelection: 'Click to select a Provider!',
      pickerDisplayed: false,
      pickerVariationSelection: 'Click to select a Variation Code!',
      pickerVariationDisplayed: false,
@@ -48,9 +49,7 @@ export default class Television extends Component {
    this.setState({
      pickerDisplayed: !this.state.pickerDisplayed
    })
- }
- 
-
+  }
 
   setVariationPickerValue(newValue) {
    this.setState({
@@ -66,12 +65,10 @@ export default class Television extends Component {
    })
  }
 
-  electricPay = async () => {
+  televisionResolve = async () => {
     const grabUserId = await AsyncStorage.getItem('userId')
 
-    alert('Please wait...')
-    
-    fetch('https://swift2pay.com/account/api/request?action=validateMeter&billersCode=62120151535&serviceID=eko-electric&variation_code=prepaid&apiKey=JFJHFJJ38388739949HFGDJ', {
+    fetch('http://swift2pay.com/account/api/request?action=tvService&serviceID=dstv&apiKey=JFJHFJJ38388739949HFGDJ', {
       method: 'GET',
     })
     .then(response => response.json())
@@ -124,25 +121,21 @@ export default class Television extends Component {
 
   const networkValues = [
    {
-     label: 'Eko Electric',
-     value: 'eko-electric',
+     label: 'DSTV',
+     value: 'dstv',
    },
    {
-     label: 'Kano Electric - KEDCO',
-     value: 'kano-electric',
+     label: 'GOTV',
+     value: 'gotv',
    },
    {
-     label: 'Jos Electric - JED',
-     value: 'jos-electric',
-   },
-   {
-     label: 'Ikeja Electric',
-     value: 'ikeja-electric',
+     label: 'Startimes',
+     value: 'startimes',
    },
  ];
 
  const networkPlaceholder = {
-   label: 'Select a Meter Provider...',
+   label: 'Select a Provider...',
    value: null,
    color: '#9EA0A4',
  };
@@ -187,7 +180,7 @@ export default class Television extends Component {
            right: 20,
            alignItems: 'center',
            position: 'absolute' }}>
-           <Text style={{fontWeight: 'bold'}}>Please select a Meter Provider</Text>
+           <Text style={{fontWeight: 'bold'}}>Please select a Provider</Text>
            { networkValues.map((value, index) => {
              return <TouchableHighlight key={index} onPress={() => this.setPickerValue(value.value)} style={{ paddingTop: 4, paddingBottom: 4 }}>
                  <Text>{ value.label }</Text>
@@ -203,48 +196,10 @@ export default class Television extends Component {
           {/* <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Select Meter Provider" onChangeText={(email)=>this.setState({email})} value={this.state.email} /> */}
         </Card>
       </View>
-      
-      <View style={{margin: 15}} >
-        <Card>
-           
-        <TouchableOpacity onPress={() => {this.toggleVariationPicker()}} >
-          <Text style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }} placeholder={variationPlaceholder} >{this.state.pickerVariationSelection}</Text>
-        </TouchableOpacity>
-
-        <Modal visible={this.state.pickerVariationDisplayed} animationType={"slide"} transparent={true} >
-         <View style={{ margin: 20, padding: 20,
-           backgroundColor: '#efefef',
-           bottom: 20,
-           left: 20,
-           right: 20,
-           alignItems: 'center',
-           position: 'absolute' }}>
-           <Text style={{fontWeight: 'bold'}}>Please select a Variation Code</Text>
-           { variationValues.map((value, index) => {
-             return <TouchableHighlight key={index} onPress={() => this.setVariationPickerValue(value.value)} style={{ paddingTop: 4, paddingBottom: 4 }}>
-                 <Text>{ value.label }</Text>
-               </TouchableHighlight>
-           })}
-
-           
-           <TouchableHighlight onPress={() => this.toggleVariationPicker()} style={{ paddingTop: 4, paddingBottom: 4 }}>
-             <Text style={{ color: '#999' }}>Cancel</Text>
-           </TouchableHighlight>
-         </View>
-       </Modal>
-          {/* <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Select Variation Code" onChangeText={(optionalMessage)=>this.setState({optionalMessage})} value={this.state.optionalMessage} /> */}
-        </Card>
-      </View>
 
       <View style={{margin: 15}} >
         <Card>
-          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Meter Number" onChangeText={(optionalMessage)=>this.setState({optionalMessage})} value={this.state.optionalMessage} />
-        </Card>
-      </View>
-
-      <View style={{margin: 15}} >
-        <Card>
-          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Amount" onChangeText={(optionalMessage)=>this.setState({optionalMessage})} value={this.state.optionalMessage} />
+          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Smart Card Number" onChangeText={(cardNumber)=>this.setState({cardNumber})} value={this.state.cardNumber} />
         </Card>
       </View>
       
