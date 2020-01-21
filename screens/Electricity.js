@@ -236,13 +236,13 @@ export default class Electricity extends Component {
 
       <View style={{margin: 15}} >
         <Card>
-          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Meter Number" onChangeText={(meterNumber)=>this.setState({meterNumber})} value={this.state.meterNumber} />
+          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Meter Number" keyboardType="number-pad" onChangeText={(meterNumber)=>this.setState({meterNumber})} value={this.state.meterNumber} />
         </Card>
       </View>
 
       <View style={{margin: 15}} >
         <Card>
-          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Amount" onChangeText={(amount)=>this.setState({amount})} value={this.state.amount} />
+          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Amount" keyboardType="number-pad" onChangeText={(amount)=>this.setState({amount})} value={this.state.amount} />
         </Card>
       </View>
       

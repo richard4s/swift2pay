@@ -28,7 +28,7 @@ export default class Welcome extends Component {
         <Image style={styles.iconContainer} source={require('../assets/images/welcome/log.png')} />
 
         <TouchableOpacity style={styles.login} onPress={() => navigate('Login')}>
-          <Text button style={styles.textTwo} >LogIn</Text>
+          <Text button style={styles.login} >LogIn</Text>
         </TouchableOpacity>
 
         <View style={styles.space}></View>
@@ -36,7 +36,7 @@ export default class Welcome extends Component {
         <View style={styles.space}></View>
 
         <TouchableOpacity style={styles.signup} onPress={() => navigate('Register')}>
-          <Text style={styles.textTwo} >SignUp</Text>
+          <Text style={styles.signup} >SignUp</Text>
         </TouchableOpacity>
 
         <Text style={styles.paragraph}>Welcome to Swift2Pay! Your most trusted and reliable app for online transactions and bill payments.</Text>
@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 15,
     padding: 5,
+    paddingLeft: 55,
     marginTop: 363
    },
    signup: {
@@ -100,6 +101,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 5,
     paddingTop: 15,
+    paddingLeft: 55,
     marginTop: 375
    },
   iconContainer: {
