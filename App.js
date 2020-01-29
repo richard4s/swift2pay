@@ -19,6 +19,7 @@ import Electricity from './screens/Electricity';
 import Television from './screens/Television';
 
 import RavePay from './screens/RavePay';
+import tvSubscription from './screens/tvSubscription';
 
 console.disableYellowBox = true;
 
@@ -42,6 +43,7 @@ const App = createStackNavigator({
     Electricity: { screen: Electricity }, 
     Television: { screen: Television }, 
     RavePay: {screen: RavePay},
+    tvSubscription: {screen: tvSubscription}
   },
   {
     initialRouteName: 'Welcome',

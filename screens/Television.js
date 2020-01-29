@@ -32,6 +32,7 @@ export default class Television extends Component {
      pickerVariationDisplayed: false,
      mobileNetwork: undefined,
      data: [],
+     meterName: ''
     }
   }; 
 
@@ -68,20 +69,22 @@ export default class Television extends Component {
   televisionResolve = async () => {
     const grabUserId = await AsyncStorage.getItem('userId')
 
-    fetch('http://swift2pay.com/account/api/request?action=tvService&serviceID=dstv&apiKey=JFJHFJJ38388739949HFGDJ', {
+    console.log('serviceId', this.state.pickerSelection)
+    console.log('cardNumber', this.state.cardNumber)
+    
+
+    fetch('https://swift2pay.com/account/api/request?action=validateMeter&billersCode='+this.state.cardNumber+'&serviceID='+this.state.pickerSelection+'&variation_code=prepaid&apiKey=JFJHFJJ38388739949HFGDJ', {
       method: 'GET',
     })
     .then(response => response.json())
     .then((json) => {
-      user = JSON.stringify(json)
-      console.log('Response: ' , user, json.message)
-      alert('Full name: ' + json.name + ' Amount: ' +this.state.amount + ' Message: ' +this.state.optionalMessage)
-      this.setState({
-        status: json.status,
-        userID: json.userID,
-        name: json.name,
-        message: json.message
-      });
+      tv = JSON.stringify(json)
+
+      this.props.navigation.navigate('tvSubscription', {
+        serviceID: this.state.pickerSelection,
+        cardNumber: this.state.cardNumber,
+        meterName: json.meterName
+      })
 
     })
     .catch((error) => {
@@ -89,32 +92,6 @@ export default class Television extends Component {
       alert(error)
     });
 
-    fetch('https://swift2pay.com/account/api/request?action=walletTransfer&recipientID='+this.state.recipientUserID+'&userID='+grabUserId+'&amount='+this.state.amount+'&apiKey=JFJHFJJ38388739949HFGDJ', {
-      method: 'GET',
-    })
-    .then(response => response.json())
-    .then((json) => {
-      user = JSON.stringify(json)
-      console.log('Response: ', user, json.message)
-      alert(json.message)
-      this.setState({
-        message: json.message,
-      });
-
-      if(json.status === 200){
-        console.log(json.message)
-        console.log(this.state.amount)
-        alert('Please wait...')
-        alert(json.message)
-      } else if(json.status === 400){
-        alert(json.message)
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      alert('Insufficient Wallet Fund')
-      alert(error)
-    });
   }
 
  render() {
@@ -140,22 +117,6 @@ export default class Television extends Component {
    color: '#9EA0A4',
  };
 
-  const variationValues = [
-   {
-     label: 'Postpaid',
-     value: 'postpaid',
-   },
-   {
-     label: 'Prepaid',
-     value: 'prepaid',
-   },
- ];
-
- const variationPlaceholder = {
-   label: 'Select a Variation Code...',
-   value: null,
-   color: '#9EA0A4',
- };
  
   const { navigate } = this.props.navigation;
   let toggleStyle = this.state.isClicked ? styles.cardTwo : styles.button;
@@ -204,7 +165,7 @@ export default class Television extends Component {
       </View>
       
       <View style={{margin: 15, marginTop: 35}} >
-        <TouchableOpacity style={styles.submit} onPress={this.electricPay}>
+        <TouchableOpacity style={styles.submit} onPress={this.televisionResolve}>
           <Text style={styles.textTwo} >Payment</Text>
         </TouchableOpacity>
       </View>
