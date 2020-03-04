@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, 
+  TextInput, Image, Button, TouchableOpacity, ActivityIndicator,
+  ScrollView } from 'react-native';
 
 import Card from '../components/Card';
+
+import Loader from 'react-native-modal-loader';
 
 export default class Login extends Component {
 
@@ -9,7 +13,8 @@ export default class Login extends Component {
     super(props)
 
     this.state = {
-      message: ''
+      message: '',
+      isLoading: false
     }
   }
 
@@ -28,7 +33,18 @@ export default class Login extends Component {
   state = {
     email: '',
     password: '',
+    
   };
+
+  showLoader = () => {
+    this.setState({ isLoading: true });
+  };
+
+  hideLoader = () => {
+    this.setState({
+      isLoading: !this.state.isLoading
+    });
+  }
 
   componentDidMount(){
     
@@ -50,28 +66,43 @@ export default class Login extends Component {
         message: json.message,
       });
 
-      if(json.status == 200){
-        console.log(json.message)
+      if(json.status == 200) {
+
+        this.hideLoader();
+
+
+        console.log(json.message, '---' + this.state.isLoading)
         // alert('Please wait...')
-        alert(json.message +': You have been logged in')
+        // alert(json.message +': You have been logged in')
         // alert(json.userID) 
         this.props.navigation.navigate('Browse', {
           userId: json.userID
         })
+
+        
+
       } else if (json.status == 400){
-        alert('Please wait...')
-        alert(json.message)
+        this.setState({ isLoading: false });
+        // alert('Please wait...')
+        // alert(json.message)
       }
     })
     .catch((error) => {
       console.error(error);
-      alert(error)
+      // alert(error)
     });
   }
+
+  
 
 
  render() {
   const { navigate } = this.props.navigation;
+
+  const ActualLoader = () => {
+    return <Loader loading={this.state.isLoading} color="#ff66be" />
+  }
+
   return (
       <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
         <View style={styles.screen}>
@@ -90,11 +121,16 @@ export default class Login extends Component {
             
           </Card>
 
+          <ActivityIndicator size="large" animating={this.state.isLoading} color="purple" />
+
           <ScrollView >
+            
             <TouchableOpacity style={styles.submit} onPress={this._login}>
               <Text style={styles.textTwo}>Submit</Text>
             </TouchableOpacity>
           </ScrollView>
+
+          
 
         </View>
 
@@ -106,12 +142,19 @@ export default class Login extends Component {
   
  )
  }
+
  _login = async() => {
+  
+  this.setState({ isLoading: true });
+
    if (this.state.email === '' || this.state.password === '') {
+     
+     this.setState({ isLoading: false });
      alert('Please insert email or password');
    } else {
-     alert('Please wait...')
+    //  alert('Please wait...')
      this.loginUsers()
+     
    }
  } 
 };

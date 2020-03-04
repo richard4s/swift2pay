@@ -11,21 +11,23 @@
     "appcenter": "2.6.0",
     "appcenter-analytics": "2.6.0",
     "appcenter-crashes": "2.6.0",
-    "expo": "^35.0.0",
     "react": "16.8.3",
     "react-dom": "16.8.3",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.1.tar.gz",
     "react-native-elements": "^1.2.7",
-    "react-native-gesture-handler": "~1.3.0",
+    "react-native-gesture-handler": "~1.2.1",
     "react-native-hyperlink": "0.0.16",
     "react-native-label-select": "^1.1.0",
+    "react-native-modal-loader": "^1.3.0",
+    "react-native-modals": "^0.19.9",
     "react-native-paper": "^3.3.0",
     "react-native-picker-module": "^1.2.3",
-    "react-native-picker-select": "^6.3.3",
+    "react-native-picker-select": "^6.5.0",
     "react-native-rave": "^2.2.5",
     "react-native-rave-webview": "^1.0.0",
+    "react-native-vector-icons": "^6.6.0",
     "react-native-web": "^0.11.7",
-    "react-native-webview": "^7.6.0",
+    "react-native-webview": "~5.8.1",
     "react-native-webview-autoheight": "^1.0.6",
     "react-navigation": "^4.0.8",
     "react-navigation-material-bottom-tabs": "^2.1.5",
@@ -34,7 +36,8 @@
     "undefined": "."
   },
   "devDependencies": {
-    "babel-preset-expo": "^7.1.0"
+    "babel-preset-expo": "^7.1.0",
+    "expo": "^33.0.7"
   },
   "private": true
 }

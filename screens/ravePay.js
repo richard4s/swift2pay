@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, ImageBackground, TouchableHighlight, Text, View, TextInput, Image, Button, ScrollView, AsyncStorage, TouchableOpacity } from 'react-native';
 
-import MyWebView from 'react-native-webview-autoheight';
+// import MyWebView from 'react-native-webview-autoheight';
 
 import RavePaymentModal from 'react-ravepayment'
 
@@ -43,9 +43,9 @@ export default class RavePay extends Component {
     },
   };
 
-  // componentDidMount() {
-  //   this.grabUserInfo()
-  // }
+  componentDidMount() {
+    this.grabUserInfo()
+  }
 
   callback = (response) => {
     console.log(response);
@@ -76,7 +76,7 @@ export default class RavePay extends Component {
     .then(response => response.json())
     .then((json) => {
       user = JSON.stringify(json)
-      console.log('Response: ' , user, json.message)
+      console.log('Response: ' , user, 'JSON: ',json.message)
       this.setState({
         message: json.message,
         first_name: json.first_name,
@@ -110,10 +110,10 @@ export default class RavePay extends Component {
       user = JSON.stringify(json)
       console.log('Response: ' , user, json.message)
       this.setState({
-        message: json.message,
-        first_name: json.first_name,
-        last_name: json.last_name,
-        email: json.email
+        message: user.message,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        email: user.email
       });
 
       this.props.navigation.navigate('Browse', {
@@ -139,44 +139,32 @@ export default class RavePay extends Component {
     // })
   }
 
-  raveModal = () => {
-    return (<Rave
-      amount={this.state.amount} 
-      country="NG" 
-      currency="NGN"
-      paymentOption="card,account"
-      email={this.state.email} 
-      firstname={this.state.first_name} 
-      lastname={this.state.last_name}
-      publickey="FLWPUBK-ad71471b648438d621c9411ff917410d-X" 
-      encryptionkey="408d9cfd87970bbb5851ec4f"
-      meta={[{ metaname: "color", metavalue: "red" }, { metaname: "storelocation", metavalue: "ikeja" }]}
-      onSuccess={res => this.onSuccess(res)} 
-      onFailure={e => this.onFailure(e)}
-      onClose={e => this.onClose(e)}
-    />)
-  }
+  
 
   render() {
       const { navigate } = this.props.navigation;
+      console.log('State: ', this.state)
+      console.log('Amount: ', this.props.navigation.state.params.amount)
 
       return (
-
-        <Rave
-            amount={this.state.amount} 
-            country="NG" 
-            currency="NGN"
-            paymentOption="card,account"
-            email={this.state.email} 
-            firstname={this.state.first_name} 
-            lastname={this.state.last_name}
-            publickey="FLWPUBK-ad71471b648438d621c9411ff917410d-X" 
-            encryptionkey="408d9cfd87970bbb5851ec4f"
-            meta={[{ metaname: "color", metavalue: "red" }, { metaname: "storelocation", metavalue: "ikeja" }]}
-            onSuccess={res => this.onSuccess(res)} 
-            onFailure={e => this.onFailure(e)}
-            onClose={e => this.onClose(e)}
-        />      
+    
+        <View style={{ flex: 1, justifyContent: 'center'}}>
+          <Rave
+              amount={this.props.navigation.state.params.amount} 
+              country="NG" 
+              currency="NGN"
+              paymentOption="card,account"
+              email={this.state.email} 
+              firstname={this.state.first_name} 
+              lastname={this.state.last_name}
+              publickey="FLWPUBK-ad71471b648438d621c9411ff917410d-X" 
+              encryptionkey="408d9cfd87970bbb5851ec4f"
+              meta={[{ metaname: "color", metavalue: "red" }, { metaname: "storelocation", metavalue: "ikeja" }]}
+              onSuccess={res => this.onSuccess(res)} 
+              onFailure={e => this.onFailure(e)}
+              onClose={e => this.onClose(e)}
+          />  
+        </View>    
       )
      }
     };

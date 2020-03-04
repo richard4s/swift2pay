@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, ImageBackground, TouchableHighlight, Text, View, TextInput, Image, Button, ScrollView, AsyncStorage, TouchableOpacity } from 'react-native';
 
-import MyWebView from 'react-native-webview-autoheight';
+// import MyWebView from 'react-native-webview-autoheight';
 
 import RavePaymentModal from 'react-ravepayment'
 
@@ -142,7 +142,7 @@ export default class FundWallet extends Component {
   }
 
   raveModal = () => {
-    console.log('Rave modal')
+    console.log('Rave modal', this.state.amount)
     this.props.navigation.navigate('RavePay', {
       message: this.state.message,
       first_name: this.state.first_name,

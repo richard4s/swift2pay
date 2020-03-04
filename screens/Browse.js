@@ -39,6 +39,9 @@ export default class Browse extends Component {
 
   componentDidMount() {
 
+    this.setState({
+      isLoading: false
+    });
     
     this.getLoggedInUser()
     
