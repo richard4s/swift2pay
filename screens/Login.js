@@ -121,7 +121,7 @@ export default class Login extends Component {
             
           </Card>
 
-          <ActivityIndicator size="large" animating={this.state.isLoading} color="purple" />
+          <ActivityIndicator style={{opacity: this.state.isLoading ? 1.0 : 0.0}} size="large" animating={this.state.isLoading} color="purple" />
 
           <ScrollView >
             

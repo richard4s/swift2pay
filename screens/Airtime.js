@@ -10,7 +10,7 @@ import RNPickerSelect from 'react-native-picker-select';
 
 import Card from '../components/Card';
 
-import Icons from 'react-native-vector-icons/Feather'
+import FeatherIcons from 'react-native-vector-icons/Feather';
 
 export default class Airtime extends Component {
   static navigationOptions = {
@@ -35,7 +35,8 @@ export default class Airtime extends Component {
       pickerDisplayed: false,
       mobileNetwork: undefined,
       data: [], 
-      visible: false
+      visible: false,
+      isLoading: false
     }
   }; 
 
@@ -92,10 +93,14 @@ export default class Airtime extends Component {
 
       this.setState({
         message: json.message,
-        visible: true
+        visible: true,
+        isLoading: false
       });
 
+      // console.log(this.state)
+
       if(json.status == 200){
+        
         console.log(json.message) 
         // alert(json.message)
         console.log(this.state.amount)
@@ -106,8 +111,6 @@ export default class Airtime extends Component {
     })
     .catch((error) => {
       console.error(error);
-      // alert('Oops! Transaction failed...')
-      // alert(error)
 
     });
   }
@@ -176,7 +179,8 @@ export default class Airtime extends Component {
                 }
               >
               <ModalContent>
-                <Text>Payment has been made</Text>
+                  <FeatherIcons style={{ textAlign: "center"}} name="check-circle" size={30} color="purple" />
+                  <Text>Your airtime is on its way</Text>
               </ModalContent>
             </Modal>
     
@@ -189,9 +193,7 @@ export default class Airtime extends Component {
           <View style={{margin: 25}}>
 
           <Card >
-              {/* <TouchableOpacity onPress={() => {this.togglePicker()}} >
-                <Text style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }} placeholder={networkPlaceholder} >{this.state.pickerSelection}</Text>
-              </TouchableOpacity> */}
+            
 
               <RNPickerSelect
                   style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }}
@@ -202,30 +204,11 @@ export default class Airtime extends Component {
                   items={networkValues}
               />
 
-              {/* <Modal visible={this.state.pickerDisplayed} animationType={"slide"} transparent={true} >
-                <View style={{ margin: 20, padding: 20,
-                  backgroundColor: '#efefef',
-                  bottom: 20,
-                  left: 20,
-                  right: 20,
-                  alignItems: 'center',
-                  position: 'absolute' }}>
-                  <Text style={{fontWeight: 'bold'}}>Please pick a network</Text>
-                  { networkValues.map((value, index) => {
-                    return <TouchableHighlight key={index} onPress={() => this.setPickerValue(value.value)} style={{ paddingTop: 4, paddingBottom: 4 }}>
-                        <Text>{ value.label }</Text>
-                      </TouchableHighlight>
-                  })}
-
-                  
-                  <TouchableHighlight onPress={() => this.togglePicker()} style={{ paddingTop: 4, paddingBottom: 4 }}>
-                    <Text style={{ color: '#999' }}>Cancel</Text>
-                  </TouchableHighlight>
-                </View>
-              </Modal> */}
-
            
-            </Card>          
+            </Card>  
+
+
+            <ActivityIndicator size="large" animating={this.state.isLoading} color="purple" />        
 
               
           </View>
@@ -245,14 +228,20 @@ export default class Airtime extends Component {
  }
 
  _airtime = async() => {
+
+  this.setState({ isLoading: true });
+
    if (this.state.phone === '' || this.state.pickerSelection === '' ) {
+    this.setState({ isLoading: false });
      alert('Please wait...')
      alert('Please fill all required fields')
+     
    } else {
     //  alert('Please wait...')
      this.buyAirtime()
    }
  }
+
 };
 
 const styles = StyleSheet.create({
