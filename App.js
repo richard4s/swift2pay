@@ -9,6 +9,7 @@ import Register from './screens/Register';
 import Browse from './screens/Browse';
 import Airtime from './screens/Airtime';
 import Data from './screens/Data';
+import BuyData from './screens/BuyData';
 import BillPayment from './screens/BillPayment';
 import WalletTransfer from './screens/WalletTransfer';
 import BankTransfer from './screens/BankTransfer';
@@ -43,7 +44,8 @@ const App = createStackNavigator({
     Electricity: { screen: Electricity }, 
     Television: { screen: Television }, 
     RavePay: {screen: RavePay},
-    tvSubscription: {screen: tvSubscription}
+    tvSubscription: {screen: tvSubscription},
+    BuyData: {screen: BuyData},
   },
   {
     initialRouteName: 'Welcome',

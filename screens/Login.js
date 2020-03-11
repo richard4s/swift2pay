@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { StyleSheet, ImageBackground, Text, View, 
-  TextInput, Image, Button, TouchableOpacity, ActivityIndicator,
+  TextInput, Image, Button, TouchableOpacity, ActivityIndicator, Platform,
   ScrollView } from 'react-native';
 
 import Card from '../components/Card';
 
 import Loader from 'react-native-modal-loader';
+
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class Login extends Component {
 
@@ -14,7 +16,9 @@ export default class Login extends Component {
 
     this.state = {
       message: '',
-      isLoading: false
+      isLoading: false,
+      spinner: false,
+      successLog: false
     }
   }
 
@@ -46,6 +50,12 @@ export default class Login extends Component {
     });
   }
 
+  hideSpinner = () => {
+    this.setState({
+      spinner: false
+    }); 
+  }
+
   componentDidMount(){
     
   }
@@ -61,7 +71,9 @@ export default class Login extends Component {
     .then(response => response.json())
     .then((json) => {
       user = JSON.stringify(json)
+
       console.log('Response: ' , user, json.message)
+
       this.setState({
         message: json.message,
       });
@@ -69,12 +81,10 @@ export default class Login extends Component {
       if(json.status == 200) {
 
         this.hideLoader();
-
+        this.hideSpinner();
 
         console.log(json.message, '---' + this.state.isLoading)
-        // alert('Please wait...')
-        // alert(json.message +': You have been logged in')
-        // alert(json.userID) 
+        
         this.props.navigation.navigate('Browse', {
           userId: json.userID
         })
@@ -82,14 +92,11 @@ export default class Login extends Component {
         
 
       } else if (json.status == 400){
-        this.setState({ isLoading: false });
-        // alert('Please wait...')
-        // alert(json.message)
+        this.setState({ isLoading: false, spinner: false });
       }
     })
     .catch((error) => {
       console.error(error);
-      // alert(error)
     });
   }
 
@@ -98,10 +105,6 @@ export default class Login extends Component {
 
  render() {
   const { navigate } = this.props.navigation;
-
-  const ActualLoader = () => {
-    return <Loader loading={this.state.isLoading} color="#ff66be" />
-  }
 
   return (
       <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
@@ -121,14 +124,19 @@ export default class Login extends Component {
             
           </Card>
 
-          <ActivityIndicator style={{opacity: this.state.isLoading ? 1.0 : 0.0}} size="large" animating={this.state.isLoading} color="purple" />
-
-          <ScrollView >
-            
+          {
+            Platform.OS === 'android' ?
+              <Spinner
+              visible={this.state.spinner}
+              textContent={'Loading...'}
+              textStyle={{color: '#fff'}}
+            /> :
+            <ActivityIndicator size="large" animating={this.state.isLoading} color="purple" />
+          }
+        
             <TouchableOpacity style={styles.submit} onPress={this._login}>
               <Text style={styles.textTwo}>Submit</Text>
             </TouchableOpacity>
-          </ScrollView>
 
           
 
@@ -145,11 +153,11 @@ export default class Login extends Component {
 
  _login = async() => {
   
-  this.setState({ isLoading: true });
+  this.setState({ isLoading: true, spinner: true });
 
    if (this.state.email === '' || this.state.password === '') {
      
-     this.setState({ isLoading: false });
+     this.setState({ isLoading: false, spinner: false });
      alert('Please insert email or password');
    } else {
     //  alert('Please wait...')
@@ -234,7 +242,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingLeft: 45,
     padding: 5,
-    marginTop: 35
+    marginTop: 30
    },
   textTwo: {
     fontSize: 17,

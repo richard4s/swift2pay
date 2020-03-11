@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Picker, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, TextInput, AsyncStorage, Button, ScrollView, Picker, Keyboard, TouchableWithoutFeedback } from 'react-native';
 
 import Card from '../components/Card';
 
@@ -7,7 +7,7 @@ import RNPickerSelect from 'react-native-picker-select';
 
 export default class BuyData extends Component {
   static navigationOptions = {
-    title: 'Data Service',
+    title: 'Buy Data Service',
     headerStyle: {
       backgroundColor: 'rgb(147, 43, 173)',
     },
@@ -26,7 +26,10 @@ export default class BuyData extends Component {
       pickerSelection: 'Click to select a network!',
       pickerDisplayed: false,
       dataValue: '',
-      phoneNumber: ''
+      phoneNumber: '',
+      getVariation: '',
+      isLoading: true,
+      getUserId: ''
     }
   }; 
 
@@ -44,18 +47,22 @@ export default class BuyData extends Component {
   }
 
 
-  buyData = async () => {
+  getDataBundles = async () => {
     const grabUserId = await AsyncStorage.getItem('userId')
     
-    fetch('https://swift2pay.com/account/api/request?action=walletAirtimePurchase&amount='+this.state.amount+'&mobileNetwork='+this.state.pickerSelection+'&apiKey=JFJHFJJ38388739949HFGDJ&phone='+this.state.phone+'&user_id='+ grabUserId +'&service_name=Airtime%20Purchase', {
+    fetch('https://swift2pay.com/account/api/request?action=getData&mobileNetwork='+this.props.navigation.state.params.network+'-data', {
       method: 'GET',
     })
     .then(response => response.json())
     .then((json) => {
       user = JSON.stringify(json)
-      console.log('Response: ' , user, json.message)
+      console.log('Response Json: ', json.content)
+      // console.log('Response user: ' , user.content.varations)
+      
       this.setState({
-        message: json.message,
+        getVariation: json.content.varations,
+        getUserId: grabUserId,
+        isLoading: false
       });
 
       if(json.status == 200){
@@ -64,17 +71,62 @@ export default class BuyData extends Component {
         
       }
     })
+
     .catch((error) => {
       console.error(error);
       alert(error)
     });
   }
 
-  
+  buyData = () => {
+    
+    fetch('https://swift2pay.com/account/api/request?action=getData&mobileNetwork='+this.props.navigation.state.params.network+'-data', {
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then((json) => {
+      user = JSON.stringify(json)
+      console.log('Response Json: ', json.content)
+      // console.log('Response user: ' , user.content.varations)
+      
+      this.setState({
+        getVariation: json.content.varations,
+        getUserId: grabUserId,
+        isLoading: false
+      });
+
+      if(json.status == 200){
+        console.log(json.message)
+        alert(json.message)
+        
+      }
+    })
+
+    .catch((error) => {
+      console.error(error);
+      alert(error)
+    });
+  }
+
+  componentDidMount = () => {
+      this.getDataBundles();
+      // console.log('another variation: ', this.state.getVariation)
+       
+  }
 
 
  render() {
+
+  console.log('navigation params: ', this.props.navigation.state.params)
+  // console.log('getVariation 123: ', this.state.getVariation)
+  // console.log('getVariation 1: ', this.state.getVariation['name'])
+ 
+
   const { navigate } = this.props.navigation;
+
+  // const { itemValue, itemLabel } = this.state.getVariation;
+
+  // console.log('ANother var:', itemValue, itemLabel)
 
   const networkValues = [
     {
@@ -95,40 +147,26 @@ export default class BuyData extends Component {
     },
   ];
 
-  const dataBundles = [
-    {
-      label: '50MB - 1 day - N50',
-      value: '50MB',
-    },
-    {
-      label: '75MB - 1 day - N100',
-      value: '75MB',
-    },
-    {
-      label: '1GB - 1 day - N350',
-      value: '1GB',
-    },
-    {
-      label: '150MB - 2 days - N200',
-      value: '150MB',
-    },
-    {
-      label: '350MB - 7 days - N300',
-      value: '350MB',
-    },
-    {
-      label: '750MB - 7 days - N500',
-      value: '750MB',
-    },
-    {
-      label: '1.5GB - 30 days - N1000',
-      value: '1.5GB',
-    },
-    {
-      label: '3GB - 30 days - N1500',
-      value: '3GB',
-    },
-  ];
+  // const dataBundles = !this.state.isLoading && this.state.getVariation.map((item) => {
+  //   console.log('items 1:', item)
+  //   console.log('items 2:', item.name)
+  //   const dataArr = {label: item.name, value: item.variation_code}
+  //   return <RNPickerSelect
+  //             style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }}
+  //             onValueChange={(value) => {
+  //                 console.log(value)
+  //                 this.setDataValue(value)
+  //               }}
+  //               itemKey={item} value={item.variation_code}
+  //           />
+  // })
+
+  // {
+  //   !this.state.isLoading ? this.state.getVariation.map((item) => 
+  //   console.log('itemss: ', item)
+  // ) :
+  // console.log('nothing')
+  // }
 
   return (
     <TouchableWithoutFeedback onPress={() => {
@@ -136,37 +174,34 @@ export default class BuyData extends Component {
     }}>
         <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
       
-            <View style={{margin: 15}} >
-              <Card>
-                <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} onChangeText={(phoneNumber)=>this.setState({phoneNumber})} value={this.state.phoneNumber} keyboardType="number-pad" placeholder="Phone number" />
-              </Card>
-            </View>
-            
-            <View style={{margin: 15}} >
+        <View style={{margin: 15}} >
+          <Text>Data bundles</Text>
               <Card >
-                <RNPickerSelect
+                {!this.state.isLoading &&
+                  <RNPickerSelect
                   style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }}
                   onValueChange={(value) => {
-                      console.log(value)
-                      this.setPickerValue(value)
+                      console.log('changed value: ', value)
+                      this.setDataValue(value)
                     }}
-                  items={networkValues}
+                    items={this.state.getVariation}
                 />
+                }
+
+                
+                
               </Card>
-            </View>
+            </View>            
 
             <View style={{margin: 15, marginTop: 85}} >
-              <Text style={styles.submit} onPress={() => this.props.navigation.navigate('BuyData', {
-                  phoneNumber: this.state.phoneNumber,
-                  network: this.state.pickerSelection
-              })}>Proceed</Text>
+              <Text style={styles.submit} onPress={() => alert('proceed')}>Buy Data</Text>
             </View>
 
       </ImageBackground>  
     </TouchableWithoutFeedback>
    
   )
- }
+ } 
 };
 
 const styles = StyleSheet.create({

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, 
+import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Platform,
   AsyncStorage, TouchableOpacity, TouchableHighlight, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
 
 import Modal, { ModalTitle, ModalContent, SlideAnimation, ModalFooter, ModalButton } from 'react-native-modals';
@@ -11,6 +11,8 @@ import RNPickerSelect from 'react-native-picker-select';
 import Card from '../components/Card';
 
 import FeatherIcons from 'react-native-vector-icons/Feather';
+
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class Airtime extends Component {
   static navigationOptions = {
@@ -36,7 +38,9 @@ export default class Airtime extends Component {
       mobileNetwork: undefined,
       data: [], 
       visible: false,
-      isLoading: false
+      isLoading: false,
+      spinner: false,
+      successLog: null
     }
   }; 
 
@@ -52,6 +56,12 @@ export default class Airtime extends Component {
     this.setState({
       pickerDisplayed: !this.state.pickerDisplayed
     })
+  }
+
+  hideSpinner = () => {
+    this.setState({
+      spinner: false
+    }); 
   }
 
   buyAirtime = async () => {
@@ -94,23 +104,29 @@ export default class Airtime extends Component {
       this.setState({
         message: json.message,
         visible: true,
-        isLoading: false
+        isLoading: false,
+        spinner: false,
+        successLog: true
       });
 
       // console.log(this.state)
 
       if(json.status == 200){
-        
-        console.log(json.message) 
-        // alert(json.message)
+        console.log(json.message)
         console.log(this.state.amount)
-        // alert('Please wait...')
-        // alert('You have successfully purchased ' + this.state.pickerSelection + ' on ' + this.state.phone + ' of NGN' + this.state.amount )
-
+      } else {
+        this.setState({
+          successLog: false
+        })
       }
+
     })
     .catch((error) => {
       console.error(error);
+
+      this.setState({
+        successLog: false
+      })
 
     });
   }
@@ -152,6 +168,24 @@ export default class Airtime extends Component {
   let toggleStyle = this.state.isClicked ? styles.cardTwo : styles.button;
 
   let toggleColor = this.state.buttonColor
+
+  const SuccessDialog = () => {
+    return(
+      <View>
+        <FeatherIcons style={{ textAlign: "center"}} name="check-circle" size={30} color="green" />
+        <Text>Your airtime is on its way</Text>
+      </View>   
+    )
+  }
+
+  const ErrorDialog = () => {
+    return(
+      <View>
+        <FeatherIcons style={{ textAlign: "center"}} name="x" size={30} color="red" />
+        <Text>Failed. Try again later</Text>
+      </View>   
+    )
+  }
   
   return (
     
@@ -179,8 +213,9 @@ export default class Airtime extends Component {
                 }
               >
               <ModalContent>
-                  <FeatherIcons style={{ textAlign: "center"}} name="check-circle" size={30} color="purple" />
-                  <Text>Your airtime is on its way</Text>
+                  { 
+                    this.state.successLog == true ? <SuccessDialog /> : <ErrorDialog />
+                  }
               </ModalContent>
             </Modal>
     
@@ -199,7 +234,7 @@ export default class Airtime extends Component {
                   style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }}
                   onValueChange={(value) => {
                       console.log(value)
-                      this.setPickerValue(value.value)
+                      this.setPickerValue(value)
                     }}
                   items={networkValues}
               />
@@ -208,7 +243,15 @@ export default class Airtime extends Component {
             </Card>  
 
 
-            <ActivityIndicator size="large" animating={this.state.isLoading} color="purple" />        
+            {
+            Platform.OS === 'android' ?
+              <Spinner
+              visible={this.state.spinner}
+              textContent={'Loading...'}
+              textStyle={{color: '#fff'}}
+            /> :
+            <ActivityIndicator size="large" animating={this.state.isLoading} color="purple" />
+          }       
 
               
           </View>
@@ -229,10 +272,10 @@ export default class Airtime extends Component {
 
  _airtime = async() => {
 
-  this.setState({ isLoading: true });
+  this.setState({ isLoading: true, spinner: true });
 
    if (this.state.phone === '' || this.state.pickerSelection === '' ) {
-    this.setState({ isLoading: false });
+    this.setState({ isLoading: false, spinner: false });
      alert('Please wait...')
      alert('Please fill all required fields')
      
