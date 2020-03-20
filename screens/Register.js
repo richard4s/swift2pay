@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, 
-  ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+  ScrollView, TouchableOpacity, ActivityIndicator, Platform } from 'react-native';
 
 import Card from '../components/Card';
 
