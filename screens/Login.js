@@ -7,7 +7,11 @@ import Card from '../components/Card';
 
 import Loader from 'react-native-modal-loader';
 
+import FeatherIcons from 'react-native-vector-icons/Feather';
+
 import Spinner from 'react-native-loading-spinner-overlay';
+
+import Modal, { ModalTitle, ModalContent, SlideAnimation, ModalFooter, ModalButton } from 'react-native-modals';
 
 export default class Login extends Component {
 
@@ -16,9 +20,10 @@ export default class Login extends Component {
 
     this.state = {
       message: '',
+      visible: false,
       isLoading: false,
       spinner: false,
-      successLog: false
+      successLog: null
     }
   }
 
@@ -76,12 +81,16 @@ export default class Login extends Component {
 
       this.setState({
         message: json.message,
+        visible: true,
+        isLoading: false,
+        spinner: false,
+        successLog: true
       });
 
       if(json.status == 200) {
 
-        this.hideLoader();
-        this.hideSpinner();
+        // this.hideLoader();
+        // this.hideSpinner();
 
         console.log(json.message, '---' + this.state.isLoading)
         
@@ -91,12 +100,19 @@ export default class Login extends Component {
 
         
 
-      } else if (json.status == 400){
-        this.setState({ isLoading: false, spinner: false });
+      } else {
+        this.setState({
+          successLog: false
+        })
       }
     })
     .catch((error) => {
       console.error(error);
+
+      this.setState({
+        successLog: false
+      })
+
     });
   }
 
@@ -104,10 +120,57 @@ export default class Login extends Component {
 
 
  render() {
+
   const { navigate } = this.props.navigation;
+
+  const SuccessDialog = () => {
+    return(
+      <View>
+        <FeatherIcons style={{ textAlign: "center"}} name="check-circle" size={30} color="green" />
+        <Text>Welcome back!</Text>
+      </View>   
+    )
+  }
+
+  const ErrorDialog = () => {
+    return(
+      <View>
+        <FeatherIcons style={{ textAlign: "center"}} name="x" size={30} color="red" />
+        <Text>Invalid Credentials. Try again later</Text>
+      </View>   
+    )
+  }
 
   return (
       <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
+
+<Modal
+                visible={this.state.visible}
+                modalAnimation={new SlideAnimation({
+                  slideFrom: 'bottom',
+                })}
+                onSwipeOut={(event) => {
+                  this.setState({ visible: false });
+                }}
+                footer={
+                  <ModalFooter>
+                    <ModalButton
+                      text="OK"
+                      onPress={() => {
+                        this.setState({ visible: false });
+                      }}
+                    />
+                  </ModalFooter>
+                }
+              >
+              <ModalContent>
+                  { 
+                    this.state.successLog == true ? <SuccessDialog /> : <ErrorDialog />
+                  }
+              </ModalContent>
+            </Modal>
+
+            
         <View style={styles.screen}>
         <Text style={styles.login}>Login</Text>
           <Card style={styles.inputContainer}>

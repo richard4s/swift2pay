@@ -178,9 +178,9 @@ export default class TvSubsription extends Component {
                 { !this.state.isLoading && this.state.variations.map((value, index) => {
                     return <TouchableHighlight key={index} onPress={() => this.setPickerValue(value.variation_code, value.variation_amount)} style={{ paddingTop: 4, paddingBottom: 4 }}>
                         <Text>{ value.name }</Text>
-                    </TouchableHighlight>
-                    
-                })  } 
+                    </TouchableHighlight> 
+                  }) 
+                } 
                 
                 <TouchableHighlight onPress={() => this.togglePicker()} style={{ paddingTop: 4, paddingBottom: 4 }}>
                 <Text style={{ color: '#999' }}>Cancel</Text>

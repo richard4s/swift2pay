@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Picker, TouchableOpacity, Modal, TouchableHighlight } from 'react-native';
 
-import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
+// import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
+import RNPickerSelect from 'react-native-selector';
 
 import Card from '../components/Card';
 

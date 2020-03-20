@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Picker, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Picker, 
+  Keyboard, TouchableWithoutFeedback, ActivityIndicator, Platform } from 'react-native';
+
+import  Modal, { ModalTitle, ModalContent, SlideAnimation, ModalFooter, ModalButton } from 'react-native-modals';
+
+import FeatherIcons from 'react-native-vector-icons/Feather';
+
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import Card from '../components/Card';
 
-import RNPickerSelect from 'react-native-picker-select';
+// import RNPickerSelect from 'react-native-picker-select';
+import RNPickerSelect from 'react-native-selector';
 
 export default class BuyData extends Component {
   static navigationOptions = {
@@ -26,10 +34,22 @@ export default class BuyData extends Component {
       pickerSelection: 'Click to select a network!',
       pickerDisplayed: false,
       dataValue: '',
-      phoneNumber: ''
+      phoneNumber: '',
+      visible: false,
+      isLoading: false,
+      spinner: false,
+      successLog: null,
+      ErrorLog: false,
+      ErrorVisible: false
     }
   }; 
 
+  
+  hideSpinner = () => {
+    this.setState({
+      spinner: false
+    }); 
+  }
 
   setPickerValue(newValue) {
     this.setState({
@@ -70,7 +90,23 @@ export default class BuyData extends Component {
     });
   }
 
-  
+  moveToData = () => {
+    
+    
+    this.render(
+      
+        <View>
+          <FeatherIcons style={{ textAlign: "center"}} name="x" size={30} color="red" />
+          <Text>Please check all fields</Text>
+        </View>   
+      
+    )
+      
+      //  alert('Please wait...')
+      //  alert('Please fill all required fields')
+       
+     
+   }
 
 
  render() {
@@ -130,15 +166,80 @@ export default class BuyData extends Component {
     },
   ];
 
+  const SuccessDialog = () => {
+    return(
+      <View>
+        <FeatherIcons style={{ textAlign: "center"}} name="check-circle" size={30} color="green" />
+        <Text>Your airtime is on its way</Text>
+      </View>   
+    )
+  }
+
+  const ErrorDialog = () => {
+    return(
+      <View>
+        <FeatherIcons style={{ textAlign: "center"}} name="x" size={30} color="red" />
+        <Text>Please check all fields</Text>
+      </View>   
+    )
+  }
+
+  const _data = async() => {
+
+    this.setState({ isLoading: true, spinner: true });
+  
+     if (this.state.phoneNumber === '' || this.state.phoneNumber <= 10 || this.state.pickerSelection === '' ) {
+        
+        this.setState({ isLoading: false, spinner: false, ErrorLog: true, ErrorVisible: true });
+
+        this.moveToData() 
+
+     } else {
+
+      this.setState({ isLoading: false, spinner: false });
+
+      this.props.navigation.navigate('BuyData', {
+        phoneNumber: this.state.phoneNumber,
+        network: this.state.pickerSelection
+      })
+     }
+   }
+
   return (
     <TouchableWithoutFeedback onPress={() => {
       Keyboard.dismiss();
     }}>
         <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
+
+        <Modal
+                visible={this.state.visible}
+                modalAnimation={new SlideAnimation({
+                  slideFrom: 'bottom',
+                })}
+                onSwipeOut={(event) => {
+                  this.setState({ visible: false });
+                }}
+                footer={
+                  <ModalFooter>
+                    <ModalButton
+                      text="OK"
+                      onPress={() => {
+                        this.setState({ visible: false });
+                      }}
+                    />
+                  </ModalFooter>
+                }
+              >
+              <ModalContent>
+                  { 
+                    this.state.successLog == true ? <SuccessDialog /> : <ErrorDialog />
+                  }
+              </ModalContent>
+            </Modal>
       
             <View style={{margin: 15}} >
               <Card>
-                <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} onChangeText={(phoneNumber)=>this.setState({phoneNumber})} value={this.state.phoneNumber} keyboardType="number-pad" placeholder="Phone number" />
+                <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} returnKeyType={'done'} onChangeText={(phoneNumber)=>this.setState({phoneNumber})} value={this.state.phoneNumber} keyboardType="number-pad" placeholder="Phone number" />
               </Card>
             </View>
             
@@ -155,11 +256,46 @@ export default class BuyData extends Component {
               </Card>
             </View>
 
+            
+
+              <Modal
+                visible={this.state.ErrorVisible}
+                modalAnimation={new SlideAnimation({
+                  slideFrom: 'bottom',
+                })}
+                onSwipeOut={(event) => {
+                  this.setState({ ErrorVisible: false });
+                }}
+                footer={
+                  <ModalFooter>
+                    <ModalButton
+                      text="OK"
+                      onPress={() => {
+                        this.setState({ ErrorVisible: false });
+                      }}
+                    />
+                  </ModalFooter>
+                }
+              >
+              <ModalContent>
+                {
+                  this.state.ErrorLog == true ? <ErrorDialog /> : <Text></Text>
+                }
+              </ModalContent>
+            </Modal>
+
+            {
+            Platform.OS === 'android' ?
+              <Spinner
+              visible={this.state.spinner}
+              textContent={'Loading...'}
+              textStyle={{color: '#fff'}}
+            /> :
+            <ActivityIndicator size="large" animating={this.state.isLoading} color="purple" />
+          }  
+
             <View style={{margin: 15, marginTop: 85}} >
-              <Text style={styles.submit} onPress={() => this.props.navigation.navigate('BuyData', {
-                  phoneNumber: this.state.phoneNumber,
-                  network: this.state.pickerSelection
-              })}>Proceed</Text>
+              <Text style={styles.submit} onPress={() => _data()}>Proceed</Text>
             </View>
 
       </ImageBackground>  

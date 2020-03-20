@@ -6,7 +6,8 @@ import Modal, { ModalTitle, ModalContent, SlideAnimation, ModalFooter, ModalButt
 
 // import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
 
-import RNPickerSelect from 'react-native-picker-select';
+// import RNPickerSelect from 'react-native-picker-select'; 
+import RNPickerSelect from 'react-native-selector';
 
 import Card from '../components/Card';
 
@@ -48,7 +49,7 @@ export default class Airtime extends Component {
     this.setState({
       pickerSelection: newValue
     })
-
+ 
     this.togglePicker();
   }
 
@@ -276,8 +277,8 @@ export default class Airtime extends Component {
 
    if (this.state.phone === '' || this.state.pickerSelection === '' ) {
     this.setState({ isLoading: false, spinner: false });
-     alert('Please wait...')
-     alert('Please fill all required fields')
+    //  alert('Please wait...')
+    //  alert('Please fill all required fields')
      
    } else {
     //  alert('Please wait...')

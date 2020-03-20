@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, 
+  ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import Card from '../components/Card';
 
+import Modal, { ModalTitle, ModalContent, SlideAnimation, ModalFooter, ModalButton } from 'react-native-modals';
+
+import FeatherIcons from 'react-native-vector-icons/Feather';
+
+import Spinner from 'react-native-loading-spinner-overlay';
+
 const userInfo = {firstName: 'Akanda', lastName: 'Ara', phone: '08136266387', email: 'akadanzara@gmail.com', password: 'damond'}
+
 
 export default class Register extends Component {
   static navigationOptions = {
@@ -26,6 +34,10 @@ export default class Register extends Component {
       phone: '',
       email: '',
       password: '',
+      visible: false,
+      isLoading: false,
+      spinner: false,
+      successLog: null
     }
   }
 
@@ -38,34 +50,100 @@ export default class Register extends Component {
     .then((json) => {
       user = JSON.stringify(json)
       console.log('Response: ' , user, json.message)
+
       this.setState({
         message: json.message,
+        visible: true,
+        isLoading: false,
+        spinner: false,
+        successLog: true
       });
 
+      
+
       if(json.status == 201){
-        alert('please wait...')
+        // alert('please wait...')
         console.log(json.message)
-        alert(json.message) 
+        // alert(json.message) 
         this.props.navigation.navigate('Browse', {
           userId: json.userID
         })
-      } else if (json.status == 204){
-        alert('please wait...')
-        alert(json.message)
+      } else {
+        this.setState({
+          successLog: false
+        })
       }
     })
     .catch((error) => {
       console.error(error);
-      alert(error)
+      // alert(error)
+
+      this.setState({
+        successLog: false
+      })
+
     });
+  }
+
+  hideSpinner = () => {
+    this.setState({
+      spinner: false
+    }); 
   }
 
 
  render() {
   const { navigate } = this.props.navigation;
+
+  const SuccessDialog = () => {
+    return(
+      <View>
+        <FeatherIcons style={{ textAlign: "center"}} name="check-circle" size={30} color="green" />
+        <Text>Your airtime is on its way</Text>
+      </View>   
+    )
+  }
+
+  const ErrorDialog = () => {
+    return(
+      <View>
+        <FeatherIcons style={{ textAlign: "center"}} name="x" size={30} color="red" />
+        <Text>Failed. Try again later</Text>
+      </View>   
+    )
+  }
+
   return (
     
       <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
+
+<Modal
+                visible={this.state.visible}
+                modalAnimation={new SlideAnimation({
+                  slideFrom: 'bottom',
+                })}
+                onSwipeOut={(event) => {
+                  this.setState({ visible: false });
+                }}
+                footer={
+                  <ModalFooter>
+                    <ModalButton
+                      text="OK"
+                      onPress={() => {
+                        this.setState({ visible: false });
+                      }}
+                    />
+                  </ModalFooter>
+                }
+              >
+              <ModalContent>
+                  { 
+                    this.state.successLog == true ? <SuccessDialog /> : <ErrorDialog />
+                  }
+              </ModalContent>
+            </Modal>
+
+
         <View style={styles.screen}>
         <Text style={styles.signup}>SignUp</Text>
           <Card style={styles.inputContainer}>
@@ -95,6 +173,19 @@ export default class Register extends Component {
               <TextInput style={styles.textInput} placeholder="Password" secureTextEntry={true} onChangeText={(password)=>this.setState({password})} value={this.state.password} />
             </View>
 
+
+            {
+            Platform.OS === 'android' ?
+              <Spinner
+              visible={this.state.spinner}
+              textContent={'Loading...'}
+              textStyle={{color: '#fff'}}
+            /> :
+            <ActivityIndicator size="large" animating={this.state.isLoading} color="purple" />
+          }  
+
+
+
           </Card>
 
           <ScrollView >
@@ -112,11 +203,15 @@ export default class Register extends Component {
  )
  }
  _register = async() => {
+
+  this.setState({ isLoading: true, spinner: true });
+
    if (this.state.firstName === '' && this.state.lastName === '' && this.state.phone === '' && this.state.email === '' && this.state.password === '') {
-     alert('please wait...');
-     alert('Kindly fill all fields in the form');
+    //  alert('please wait...');
+    //  alert('Kindly fill all fields in the form');
+    this.setState({ isLoading: false, spinner: false });
    }else { 
-    alert('please wait...');
+    // alert('please wait...');
     this.registerUser()
    }
  }
