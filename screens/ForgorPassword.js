@@ -70,7 +70,7 @@ export default class Login extends Component {
     
     console.log('User details',this.state.email, this.state.password)
 
-    fetch('https://swift2pay.com/account/api/request.php?action=login&email='+this.state.email+'&password='+this.state.password+'&apiKey=JFJHFJJ38388739949HFGDJ', {
+    fetch('https://swift2pay.com/account/api/request?action=reset_password&email='+this.state.email+'&&apiKey=JFJHFJJ38388739949HFGDJ', {
       method: 'GET',
     })
     .then(response => response.json())
@@ -172,17 +172,12 @@ export default class Login extends Component {
 
             
         <View style={styles.screen}>
-        <Text style={styles.login}>Login</Text>
+        <Text style={styles.login}>Reset Password</Text>
           <Card style={styles.inputContainer}>
 
             <View style={styles.sectionStyle}>
               <Image style={styles.imageStyle} source={require('../assets/images/icons/login/email.png')} />
               <TextInput style={styles.textInput} placeholder="Email address" onChangeText={(email)=>this.setState({email})} value={this.state.email} />
-            </View>
-            
-            <View style={styles.sectionStyle}>
-              <Image style={styles.imageStyle} source={require('../assets/images/icons/login/password.png')} />
-              <TextInput style={styles.textInput} placeholder="Password" secureTextEntry onChangeText={(password)=>this.setState({password})} value={this.state.password} />
             </View>
             
           </Card>
@@ -198,20 +193,12 @@ export default class Login extends Component {
           }
         
             <TouchableOpacity style={styles.submit} onPress={this._login}>
-              <Text style={styles.textTwo}>Submit</Text>
+              <Text style={styles.textTwo}>Reset</Text>
             </TouchableOpacity>
 
           
 
         </View>
-
-        <TouchableOpacity onPress={() => navigate('ForgotPassword')}>
-          <Text style={styles.signup} >Forgot Password?</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => navigate('Register')}>
-          <Text style={styles.signup} >SignUp</Text>
-        </TouchableOpacity>
 
       </ImageBackground>
   

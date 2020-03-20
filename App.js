@@ -21,6 +21,7 @@ import Television from './screens/Television';
 
 import RavePay from './screens/RavePay';
 import tvSubscription from './screens/tvSubscription';
+import ForgotPassword from './screens/ForgorPassword'
 
 console.disableYellowBox = true;
 
@@ -46,6 +47,7 @@ const App = createStackNavigator({
     RavePay: {screen: RavePay},
     tvSubscription: {screen: tvSubscription},
     BuyData: {screen: BuyData},
+    ForgotPassword: {screen: ForgotPassword},
   },
   {
     initialRouteName: 'Welcome',

@@ -204,7 +204,7 @@ export default class Register extends Component {
  }
  _register = async() => {
 
-  this.setState({ isLoading: true, spinner: true });
+  this.setState({ isLoading: true, spinner: true, visible: true });
 
    if (this.state.firstName === '' && this.state.lastName === '' && this.state.phone === '' && this.state.email === '' && this.state.password === '') {
     //  alert('please wait...');
