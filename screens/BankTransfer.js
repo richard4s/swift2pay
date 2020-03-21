@@ -231,14 +231,18 @@ resolveBankData(accNumber, code) {
               alignItems: 'center',
               position: 'absolute' }}>
               <Text style={{fontWeight: 'bold'}}>Please select your bank</Text>
-              { this.state.banksLoading ?  <Text>Loading...</Text>
+              { this.state.banksLoading ?  
+              <View>
+                <Text>Loading...</Text>
+              </View>
+              
               
               :
               
               this.state.banksList.map((value, index) => {
                 return <TouchableHighlight key={index} onPress={() => this.setPickerValue(value.code)} style={{ paddingTop: 4, paddingBottom: 4 }}>
-                    <ScrollView> <Text>{ value.name }</Text> </ScrollView>
-                  </TouchableHighlight>
+                          <Text>{ value.name }</Text>
+                      </TouchableHighlight>
               })}
 
               
