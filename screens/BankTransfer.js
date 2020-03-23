@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Picker, TouchableOpacity, Modal, TouchableHighlight } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, AsyncStorage, 
+  ScrollView, Picker, TouchableOpacity, Modal, TouchableHighlight } from 'react-native';
 
 // import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
 import RNPickerSelect from 'react-native-selector';
@@ -40,7 +41,10 @@ export default class BankTransfer extends Component {
      accName: '',
      accNumber: '',
      accountNumber: '',
-     modalVisible: false
+     amount: '',
+     tansferMessage: '',
+     modalVisible: false,
+     dataValue: ''
    }
  }; 
 
@@ -113,7 +117,18 @@ getBankList() {
 }
 
 payment() {
-  this.resolveBankData(this.state.accountNumber, this.state.pickerSelection)
+  this.resolveBankData(this.state.accountNumber, this.state.dataValue)
+}
+
+setDataValue(newValue) {
+  // let amounter = newValue.split('-')
+
+  this.setState({
+    dataValue: newValue
+  }, 
+    
+    console.log(this.state.dataValue)
+  )
 }
 
 resolveBankData(accNumber, code) {
@@ -128,20 +143,44 @@ resolveBankData(accNumber, code) {
 
       this.setState({
         accNumber: json.accountnumber,
-        accName: json.accname,
+        accName: json.data.data.accountname,
         
       });
 
-      return <PayConfirm />
-
-      // this.setModalVisible(true)
-      // return  this.paymentConfirmModal()
+      this.props.navigation.navigate('ConfirmTransfer', {
+        accountNumber: this.state.accountNumber,
+        amount: this.state.amount,
+        bankCode: this.state.dataValue,
+        transferMessage: this.state.tansferMessage,
+        accountName: this.state.accName
+      })
 
     })
     .catch((error) => {
       console.error(error);
       alert(error)
     });
+}
+
+initiateTranfer = async() => {
+
+  const grabUserId = await AsyncStorage.getItem('userId')
+
+  fetch('http://swift2pay.com/account/api/request?action=createTransfer&accountNo='+this.state.accountNumber+'&userID='+grabUserId+'&amount='+this.state.amount+'&bank='+this.state.dataValue+'&narration='+this.state.tansferMessage+'&apiKey=JFJHFJJ38388739949HFGDJ', {
+    method: 'GET',
+  })
+  .then(response => response.json())
+  .then((json) => {
+    banks = JSON.stringify(json)
+
+    console.log('Response: ' , banks, json)
+
+    // this.setState({
+    //   accNumber: json.accountnumber,
+    //   accName: json.accname,
+      
+    // });
+  })
 }
 
  render() {
@@ -212,6 +251,7 @@ resolveBankData(accNumber, code) {
   };
 
   const { navigate } = this.props.navigation;
+
   return (
    <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
 
@@ -219,62 +259,21 @@ resolveBankData(accNumber, code) {
         <Card >
 
           <TouchableOpacity onPress={() => {this.togglePicker()}} >
-            <Text style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }} placeholder={bankPlaceholder} >{this.state.pickerSelection}</Text>
-          </TouchableOpacity>
-
-          <Modal visible={this.state.pickerDisplayed} animationType={"slide"} transparent={true} >
-            <View style={{ margin: 20, padding: 20,
-              backgroundColor: '#efefef',
-              bottom: 20,
-              left: 20,
-              right: 20,
-              alignItems: 'center',
-              position: 'absolute' }}>
-              <Text style={{fontWeight: 'bold'}}>Please select your bank</Text>
-              { this.state.banksLoading ?  
+          { this.state.banksLoading ?  
               <View>
                 <Text>Loading...</Text>
               </View>
-              
-              
               :
-              
-              this.state.banksList.map((value, index) => {
-                return <TouchableHighlight key={index} onPress={() => this.setPickerValue(value.code)} style={{ paddingTop: 4, paddingBottom: 4 }}>
-                          <Text>{ value.name }</Text>
-                      </TouchableHighlight>
-              })}
-
-              
-              <TouchableHighlight onPress={() => this.togglePicker()} style={{ paddingTop: 4, paddingBottom: 4 }}>
-                <ScrollView> <Text style={{ color: '#999' }}>Cancel</Text> </ScrollView>
-              </TouchableHighlight>
-            </View>
-          </Modal>
-
-          {/* <Picker
-            style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }}
-            selectedValue={this.state.PickerValue}
-            onValueChange={(itemValue, itemIndex) =>
-              this.setState({PickerValue: itemValue})
-            }>
-            <Picker.Item label="Select bank" value="select" />
-            <Picker.Item label="Access Bank" value="Access Bank" />
-            <Picker.Item label="Alat By Wema" value="Wema" />
-            <Picker.Item label="Ecobank Nigeria Plc" value="Ecobank" />
-            <Picker.Item label="First Bank of Nigeria" value="FBN" />
-            <Picker.Item label="Fidelity Bank" value="Fidelity" />
-            <Picker.Item label="First City Monument Bank" value="FCMB" />
-            <Picker.Item label="Guaranty Trust Bank" value="GTB" />
-            <Picker.Item label="Heritage Banking" value="Heritage" />
-            <Picker.Item label="Polaris Bank Plc" value="Polaris" />
-            <Picker.Item label="Stanbic-ibtc Bank Plc" value="Stanbic" />
-            <Picker.Item label="Sterling Bank" value="Sterling" />
-            <Picker.Item label="Union Bank of Nigeria" value="Union Bank" />
-            <Picker.Item label="United Bank for Africa" value="UBA" />
-            <Picker.Item label="Unity Bank Plc" value="Unity" />
-            <Picker.Item label="Zenith Bank" value="Zenith" />
-          </Picker> */}
+              <RNPickerSelect 
+                  style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }}
+                  onValueChange={(value) => {
+                      console.log('changed value: ', value)
+                      this.setDataValue(value)
+                    }}
+                    items={this.state.banksList} value={this.state.banksList.code}
+                />
+              }
+          </TouchableOpacity>
         </Card>
       </View>
    
@@ -286,40 +285,19 @@ resolveBankData(accNumber, code) {
       
       <View style={{margin: 15}} >
         <Card>
-          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter amount" />
+          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter amount" onChangeText={(amount)=>this.setState({amount})} value={this.state.amount} />
         </Card>
       </View>
       
       <View style={{margin: 15}} >
         <Card>
-          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter message (optional)" />
+          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter message (optional)" onChangeText={(tansferMessage)=>this.setState({tansferMessage})} value={this.state.tansferMessage} />
         </Card>
       </View>
       
       <View style={{margin: 15, marginTop: 35}} >
-        <Text style={styles.submit} onPress={() => this.payment()}>Payment</Text>
+        <Text style={styles.submit} onPress={() => this.payment()}>Confirm</Text>
       </View>
-
-      <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-          }}>
-          <View style={{marginTop: 22}}>
-            <View>
-              <Text>Hello World!</Text>
-
-              <TouchableHighlight
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                }}>
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-        </Modal>
 
     </ImageBackground>
   )

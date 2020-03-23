@@ -20,7 +20,10 @@ export default class Browse extends Component {
       email: '',
       phone: '',
       wallet: '',
-      commission: ''
+      commission: '',
+      account_name: '',
+      account_no: '',
+      bank: ''
     }
 
   }
@@ -29,6 +32,7 @@ export default class Browse extends Component {
     headerStyle: {
       backgroundColor: 'rgb(147, 43, 173)',
     },
+    
     headerTintColor: '#fff',
     //Sets Header text color
     headerTitleStyle: {
@@ -71,7 +75,10 @@ export default class Browse extends Component {
         last_name: json.last_name,
         phone: json.phone,
         wallet: json.wallet,
-        commission: json.commission
+        commission: json.commission,
+        account_name: json.account_name,
+        account_no: json.account_no,
+        bank: json.bank
       });
 
       if(json.status == 200){
@@ -121,7 +128,7 @@ export default class Browse extends Component {
 
      <Text style={[styles.textTwo, {marginBottom: 15, color: 'black'}]}> Hi, {this.state.first_name} {this.state.last_name}</Text> 
 
-     <Card style={{height: 185, marginBottom: 5}}>
+     <Card style={{height: 220, marginBottom: 5}}>
        <Text style={styles.textTwo} >Wallet Balance: ₦{this.state.wallet}</Text>
        
        <View style={[styles.view, {width: '100%', height: '50%'}]} >
@@ -143,6 +150,8 @@ export default class Browse extends Component {
        </View>
 
        <Text style={styles.textThree} >Commission Earned: ₦{this.state.commission}</Text>
+       {/* <Text style={styles.textThree} >Bank Details</Text> */}
+      <Text style={styles.textThree} >Name: {this.state.account_name} - Number: {this.state.account_no} - Bank: {this.state.bank}</Text>
      </Card>
    </View>
     <View style={styles.screen}>

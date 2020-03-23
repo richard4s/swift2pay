@@ -22,6 +22,7 @@ export default class WalletTransfer extends Component {
     this.state={
       email: '',
       amount: '',
+      recipientID: ''
     }
   }; 
 
@@ -38,13 +39,14 @@ export default class WalletTransfer extends Component {
     .then(response => response.json())
     .then((json) => {
       user = JSON.stringify(json)
-      console.log('Response: ' , user, json.message)
-      alert('Full name: ' + json.name + ' Amount: ' +this.state.amount + ' Message: ' +this.state.optionalMessage)
+      console.log('Response: ' , user, json)
+      // alert('Full name: ' + json.name + ' Amount: ' +this.state.amount + ' Message: ' +this.state.optionalMessage)
       this.setState({
         status: json.status,
         userID: json.userID,
         name: json.name,
-        message: json.message
+        message: json.message,
+        recipientID: json.recipientID
       });
 
     })
@@ -53,7 +55,7 @@ export default class WalletTransfer extends Component {
       alert(error)
     });
 
-    fetch('https://swift2pay.com/account/api/request?action=walletTransfer&recipientID='+this.state.recipientUserID+'&userID='+grabUserId+'&amount='+this.state.amount+'&apiKey=JFJHFJJ38388739949HFGDJ', {
+    fetch('https://swift2pay.com/account/api/request?action=walletTransfer&recipientID='+this.state.recipientID+'&userID='+grabUserId+'&amount='+this.state.amount+'&apiKey=JFJHFJJ38388739949HFGDJ', {
       method: 'GET',
     })
     .then(response => response.json())

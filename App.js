@@ -1,57 +1,62 @@
-import React, {Component} from 'react';
+import React from 'react';
+import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { AppLoading, Asset, Font, Icon } from 'expo';
+import AppNavigator from './navigation/AppNavigator';
 
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+export default class App extends React.Component {
+  state = {
+    isLoadingComplete: false,
+  };
 
-import Welcome from './screens/Welcome';
-import Login from './screens/Login';
-import Register from './screens/Register';
-import Browse from './screens/Browse';
-import Airtime from './screens/Airtime';
-import Data from './screens/Data';
-import BuyData from './screens/BuyData';
-import BillPayment from './screens/BillPayment';
-import WalletTransfer from './screens/WalletTransfer';
-import BankTransfer from './screens/BankTransfer';
-import Insurance from './screens/Insurance';
-import FundWallet from './screens/FundWallet';
-import Transactions from './screens/Transactions';
-import Electricity from './screens/Electricity';
-import Television from './screens/Television';
-
-import RavePay from './screens/RavePay';
-import tvSubscription from './screens/tvSubscription';
-import ForgotPassword from './screens/ForgorPassword'
-
-console.disableYellowBox = true;
-
-// Import all the screens we are going to switch 
-
-const App = createStackNavigator({
-  // Constant which holds all the screens like index of any book 
-    Welcome: { screen: Welcome }, 
-    // First entry by default be our first screen if we do not define initialRouteName
-    Login: { screen: Login }, 
-    Register: { screen: Register }, 
-    Browse: { screen: Browse }, 
-    Airtime: { screen: Airtime }, 
-    Data: { screen: Data }, 
-    BillPayment: { screen: BillPayment }, 
-    WalletTransfer: { screen: WalletTransfer }, 
-    BankTransfer: { screen: BankTransfer }, 
-    Insurance: { screen: Insurance }, 
-    FundWallet: { screen: FundWallet }, 
-    Transactions: { screen: Transactions }, 
-    Electricity: { screen: Electricity }, 
-    Television: { screen: Television }, 
-    RavePay: {screen: RavePay},
-    tvSubscription: {screen: tvSubscription},
-    BuyData: {screen: BuyData},
-    ForgotPassword: {screen: ForgotPassword},
-  },
-  {
-    initialRouteName: 'Welcome',
+  render() {
+    // if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
+    //   return (
+    //     <AppLoading
+    //       startAsync={this._loadResourcesAsync}
+    //       onError={this._handleLoadingError}
+    //       onFinish={this._handleFinishLoading}
+    //     />
+    //   );
+    // } else {
+      return (
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <AppNavigator />
+        </View>
+      );
+    // }
   }
-);
 
-export default createAppContainer(App);
+  // _loadResourcesAsync = async () => {
+  //   return Promise.all([
+  //     Asset.loadAsync([
+  //       require('./assets/images/robot-dev.png'),
+  //       require('./assets/images/robot-prod.png'),
+  //     ]),
+  //     Font.loadAsync({
+  //       // This is the font that we are using for our tab bar
+  //       ...Icon.Ionicons.font,
+  //       // We include SpaceMono because we use it in HomeScreen.js. Feel free
+  //       // to remove this if you are not using it in your app
+  //       'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+  //     }),
+  //   ]);
+  // };
+
+  _handleLoadingError = error => {
+    // In this case, you might want to report the error to your error
+    // reporting service, for example Sentry
+    console.warn(error);
+  };
+
+  _handleFinishLoading = () => {
+    this.setState({ isLoadingComplete: true });
+  };
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});

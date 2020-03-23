@@ -144,31 +144,34 @@ export default class Login extends Component {
   return (
       <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
 
-<Modal
-                visible={this.state.visible}
-                modalAnimation={new SlideAnimation({
-                  slideFrom: 'bottom',
-                })}
-                onSwipeOut={(event) => {
-                  this.setState({ visible: false });
-                }}
-                footer={
-                  <ModalFooter>
-                    <ModalButton
-                      text="OK"
-                      onPress={() => {
-                        this.setState({ visible: false });
-                      }}
-                    />
-                  </ModalFooter>
-                }
-              >
-              <ModalContent>
-                  { 
-                    this.state.successLog == true ? <SuccessDialog /> : <ErrorDialog />
-                  }
-              </ModalContent>
-            </Modal>
+          {this.state.successLog == false && 
+            <Modal
+            visible={this.state.visible}
+            modalAnimation={new SlideAnimation({
+              slideFrom: 'bottom',
+            })}
+            onSwipeOut={(event) => {
+              this.setState({ visible: false });
+            }}
+            footer={
+              <ModalFooter>
+                <ModalButton
+                  text="OK"
+                  onPress={() => {
+                    this.setState({ visible: false });
+                  }}
+                />
+              </ModalFooter>
+            }
+          >
+          <ModalContent>
+              { 
+                this.state.successLog == false && <ErrorDialog />
+              }
+          </ModalContent>
+        </Modal>
+          }
+            
 
             
         <View style={styles.screen}>
