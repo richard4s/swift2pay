@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Picker, AsyncStorage, TouchableOpacity } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Picker,
+  ActivityIndicator, Platform, AsyncStorage, TouchableOpacity } from 'react-native';
+
+import Modal, { ModalTitle, ModalContent, SlideAnimation, ModalFooter, ModalButton } from 'react-native-modals';
+
+import FeatherIcons from 'react-native-vector-icons/Feather';
+
+import Spinner from 'react-native-loading-spinner-overlay';
+
 
 import Card from '../components/Card';
 
@@ -22,16 +30,27 @@ export default class WalletTransfer extends Component {
     this.state={
       email: '',
       amount: '',
-      recipientID: ''
+      recipientID: '',
+      userID: '',
+      visible: false,
+      isLoading: false,
+      spinner: false,
+      successLog: null
     }
   }; 
+
+  hideSpinner = () => {
+    this.setState({
+      spinner: false
+    }); 
+  }
 
   walletTransfer = async () => {
     const grabUserId = await AsyncStorage.getItem('userId')
 
-    alert('Please wait...')
+    // alert('Please wait...')
 
-    alert('Wallet Transfer')
+    // alert('Wallet Transfer')
 
     fetch('https://swift2pay.com/account/api/request?action=resolveWalletAccount&recipient='+this.state.email, {
       method: 'GET',
@@ -43,11 +62,14 @@ export default class WalletTransfer extends Component {
       // alert('Full name: ' + json.name + ' Amount: ' +this.state.amount + ' Message: ' +this.state.optionalMessage)
       this.setState({
         status: json.status,
-        userID: json.userID,
+        userID: grabUserId,
         name: json.name,
         message: json.message,
-        recipientID: json.recipientID
+        recipientID: json.recipientID,
+        isLoading: true
       });
+
+      this.initiateTransfer();
 
     })
     .catch((error) => {
@@ -55,38 +77,102 @@ export default class WalletTransfer extends Component {
       alert(error)
     });
 
-    fetch('https://swift2pay.com/account/api/request?action=walletTransfer&recipientID='+this.state.recipientID+'&userID='+grabUserId+'&amount='+this.state.amount+'&apiKey=JFJHFJJ38388739949HFGDJ', {
+    
+  }
+
+  initiateTransfer = () => {
+    // console.log('Statees: ', this.state)
+
+    fetch('https://swift2pay.com/account/api/request?action=walletTransfer&recipientID='+this.state.recipientID+'&userID='+this.state.userID+'&amount='+this.state.amount+'&apiKey=JFJHFJJ38388739949HFG', {
       method: 'GET',
     })
     .then(response => response.json())
     .then((json) => {
       user = JSON.stringify(json)
       console.log('Response: ', user, json.message)
-      alert(json.message)
+      // alert(json.message)
+
       this.setState({
         message: json.message,
+        visible: true,
+        isLoading: false,
+        spinner: false,
+        successLog: true
       });
 
-      if(json.status === 200){
-        console.log(json.message)
-        console.log(this.state.amount)
-        alert('Please wait...')
-        alert(json.message)
-      } else if(json.status === 400){
-        alert(json.message)
+      if(json.status == 200) {
+        this.setState({
+          successLog: true
+        })
+      } else {
+        this.setState({
+          successLog: false
+        })
       }
+  
+    }).catch((err) => {
+  
+      console.log(err)
+      
+      this.setState({
+        successLog: false
+      })
     })
-    .catch((error) => {
-      console.error(error);
-      alert('Insufficient Wallet Fund')
-      alert(error)
-    });
   }
 
  render() {
+
   const { navigate } = this.props.navigation;
+
+  const SuccessDialog = () => {
+    return(
+      <View>
+        <FeatherIcons style={{ textAlign: "center"}} name="check-circle" size={30} color="green" />
+        <Text>Your money is on its way</Text>
+      </View>   
+    )
+  }
+
+  const ErrorDialog = () => {
+    return(
+      <View>
+        <FeatherIcons style={{ textAlign: "center"}} name="x" size={30} color="red" />
+        <Text>Failed. Try again later</Text>
+      </View>   
+    )
+  }
+
   return (
    <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
+
+<Modal
+                visible={this.state.visible}
+                modalAnimation={new SlideAnimation({
+                  slideFrom: 'bottom',
+                })}
+                onSwipeOut={(event) => {
+                  this.setState({ visible: false });
+                }}
+                footer={
+                  <ModalFooter>
+                    <ModalButton
+                      text="OK"
+                      onPress={() => {
+                        this.setState({ visible: false });
+                        this.props.navigation.navigate('Browse', {
+                          userId: this.state.userID
+                        })
+                      }}
+                    />
+                  </ModalFooter>
+                }
+              >
+              <ModalContent>
+                  { 
+                    this.state.successLog == true ? <SuccessDialog /> : <ErrorDialog />
+                  }
+              </ModalContent>
+            </Modal>
    
       <View style={{margin: 15, marginTop: 75,}} >
         <Card>
@@ -105,6 +191,16 @@ export default class WalletTransfer extends Component {
           <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter message (optional)" onChangeText={(optionalMessage)=>this.setState({optionalMessage})} value={this.state.optionalMessage} />
         </Card>
       </View>
+
+          {
+            Platform.OS === 'android' ?
+              <Spinner
+              visible={this.state.spinner}
+              textContent={'Loading...'}
+              textStyle={{color: '#purple'}}
+            /> :
+            <ActivityIndicator size="large" animating={this.state.isLoading} color="purple" />
+          } 
       
       <View style={{margin: 15, marginTop: 35}} >
         <TouchableOpacity style={styles.submit} onPress={this.walletTransfer}>

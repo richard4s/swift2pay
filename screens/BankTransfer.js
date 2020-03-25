@@ -42,7 +42,7 @@ export default class BankTransfer extends Component {
      accNumber: '',
      accountNumber: '',
      amount: '',
-     tansferMessage: '',
+     transferMessage: '',
      modalVisible: false,
      dataValue: ''
    }
@@ -143,15 +143,14 @@ resolveBankData(accNumber, code) {
 
       this.setState({
         accNumber: json.accountnumber,
-        accName: json.data.data.accountname,
-        
+        accName: json.account_name, 
       });
 
       this.props.navigation.navigate('ConfirmTransfer', {
         accountNumber: this.state.accountNumber,
         amount: this.state.amount,
         bankCode: this.state.dataValue,
-        transferMessage: this.state.tansferMessage,
+        transferMessage: this.state.transferMessage,
         accountName: this.state.accName
       })
 
@@ -166,7 +165,7 @@ initiateTranfer = async() => {
 
   const grabUserId = await AsyncStorage.getItem('userId')
 
-  fetch('http://swift2pay.com/account/api/request?action=createTransfer&accountNo='+this.state.accountNumber+'&userID='+grabUserId+'&amount='+this.state.amount+'&bank='+this.state.dataValue+'&narration='+this.state.tansferMessage+'&apiKey=JFJHFJJ38388739949HFGDJ', {
+  fetch('http://swift2pay.com/account/api/request?action=createTransfer&accountNo='+this.state.accountNumber+'&userID='+grabUserId+'&amount='+this.state.amount+'&bank='+this.state.dataValue+'&narration='+this.state.transferMessage+'&apiKey=JFJHFJJ38388739949HFGDJ', {
     method: 'GET',
   })
   .then(response => response.json())
@@ -185,70 +184,6 @@ initiateTranfer = async() => {
 
  render() {
 
-  const bankValues = [
-    {
-      label: 'Access Bank',
-      value: 'Access Bank',
-    },
-    {
-      label: 'Alat By Wema',
-      value: 'Wema',
-    },
-    {
-      label: 'Ecobank Nigeria Plc',
-      value: 'Ecobank',
-    },
-    {
-      label: 'First Bank of Nigeria',
-      value: 'airtel',
-    },
-    {
-      label: 'First City Monument Bank',
-      value: 'FCMB',
-    },
-    {
-      label: 'Guaranty Trust Bank',
-      value: 'GTB',
-    },
-    {
-      label: 'Heritage Banking',
-      value: 'Heritage',
-    },
-    {
-      label: 'Polaris Bank Plc',
-      value: 'Polaris',
-    },
-    {
-      label: 'Stanbic-ibtc Bank Plc',
-      value: 'Stanbic',
-    },
-    {
-      label: 'Sterling Bank',
-      value: 'Sterling',
-    },
-    {
-      label: 'Union Bank of Nigeria',
-      value: 'Union Bank',
-    },
-    {
-      label: 'United Bank for Africa',
-      value: 'UBA',
-    },
-    {
-      label: 'Unity Bank Plc',
-      value: 'Unity',
-    },
-    {
-      label: 'Zenith Bank',
-      value: 'Zenith',
-    },
-  ];
-
-  const bankPlaceholder = {
-    label: 'Select your Bank...',
-    value: null,
-    color: '#9EA0A4',
-  };
 
   const { navigate } = this.props.navigation;
 
@@ -285,13 +220,13 @@ initiateTranfer = async() => {
       
       <View style={{margin: 15}} >
         <Card>
-          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter amount" onChangeText={(amount)=>this.setState({amount})} value={this.state.amount} />
+          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} keyboardType={'number-pad'} placeholder="Enter amount" onChangeText={(amount)=>this.setState({amount})} value={this.state.amount} />
         </Card>
       </View>
       
       <View style={{margin: 15}} >
         <Card>
-          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter message (optional)" onChangeText={(tansferMessage)=>this.setState({tansferMessage})} value={this.state.tansferMessage} />
+          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Enter message (optional)" onChangeText={(transferMessage)=>this.setState({transferMessage})} value={this.state.transferMessage} />
         </Card>
       </View>
       

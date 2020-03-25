@@ -23,7 +23,7 @@ import Television from '../screens/Television';
 
 import RavePay from '../screens/RavePay';
 import tvSubscription from '../screens/tvSubscription';
-import ForgotPassword from '../screens/ForgorPassword';
+import ForgotPassword from '../screens/ForgotPassword';
 import ConfirmTransfer from '../screens/ConfirmTransfer';
 
 console.disableYellowBox = true;

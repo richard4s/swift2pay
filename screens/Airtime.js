@@ -249,7 +249,7 @@ export default class Airtime extends Component {
               <Spinner
               visible={this.state.spinner}
               textContent={'Loading...'}
-              textStyle={{color: '#fff'}}
+              textStyle={{color: '#purple'}}
             /> :
             <ActivityIndicator size="large" animating={this.state.isLoading} color="purple" />
           }       
