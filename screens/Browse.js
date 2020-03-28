@@ -116,7 +116,7 @@ export default class Browse extends Component {
 
 
   return (
-    <SafeAreaView style={styles.container}>
+    
     <ScrollView
         contentContainerStyle={styles.scrollView}
         refreshControl={
@@ -154,11 +154,13 @@ export default class Browse extends Component {
       <Text style={styles.textThree} >Name: {this.state.account_name} - Number: {this.state.account_no} - Bank: {this.state.bank}</Text>
      </Card>
    </View>
-    <View style={styles.screen}>
+    
+     <ScrollView>
 
-     <Text style={styles.browse}>Browse</Text>
+     <View style={styles.screen}>
 
-     <ScrollView style={{width: '100%'}} >
+      {/* <Text style={styles.browse}>Browse</Text> */}
+
 
       <View style={styles.view} >
 
@@ -169,23 +171,23 @@ export default class Browse extends Component {
           </Card>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigate('Data')} >
+        {/* <TouchableOpacity onPress={() => navigate('Data')} >
           <Card style={styles.card}>
             <Image source={require('../assets/images/browse-icons/data-service.png')} style={styles.image} />
             <Text style={styles.text}>Data Service</Text>
           </Card> 
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
       </View>
 
       <View style={styles.view}>
 
-       <TouchableOpacity onPress={() => navigate('BillPayment')}>
+       {/* <TouchableOpacity onPress={() => navigate('BillPayment')}>
         <Card style={styles.card}>
           <Image source={require('../assets/images/browse-icons/bill-payment.png')} style={styles.image} />
           <Text style={styles.text}>Bill Payment</Text>
         </Card>
-       </TouchableOpacity>
+       </TouchableOpacity> */}
 
        <TouchableOpacity onPress={() => navigate('WalletTransfer')}>
         <Card style={styles.card} >
@@ -205,41 +207,41 @@ export default class Browse extends Component {
         </Card>
        </TouchableOpacity>
 
-       <TouchableOpacity onPress={() => navigate('Insurance')}>
+       {/* <TouchableOpacity onPress={() => navigate('Insurance')}>
         <Card style={styles.card}>
           <Image source={require('../assets/images/browse-icons/insurance.png')} style={styles.image} />
           <Text style={styles.text}>Insurance</Text>
         </Card>
-       </TouchableOpacity>
+       </TouchableOpacity> */}
                               
       </View>
 
       <View style={styles.view}>
        
-       <TouchableOpacity onPress={() => navigate('')}>
+       {/* <TouchableOpacity onPress={() => navigate('')}>
         <Card style={styles.card}>
           <Image source={require('../assets/images/browse-icons/scan-pay.png')} style={styles.image} />
           <Text style={styles.text}>Scan Pay</Text>
         </Card>
-       </TouchableOpacity>
+       </TouchableOpacity> */}
 
-       <TouchableOpacity>
+       {/* <TouchableOpacity>
         <Card style={styles.card}>
           <Image source={require('../assets/images/browse-icons/profile.png')} style={styles.image} />
           <Text style={styles.text}>Profile</Text>
         </Card>
-       </TouchableOpacity>
+       </TouchableOpacity> */}
        
        </View>
        
       <View style={styles.view}>
        
-       <TouchableOpacity>
+       {/* <TouchableOpacity>
         <Card style={styles.card}>
           <Image source={require('../assets/images/browse-icons/settings.png')} style={styles.image} />
           <Text style={styles.text}>Settings</Text>
         </Card>
-       </TouchableOpacity>
+       </TouchableOpacity> */}
 
        <TouchableOpacity  onPress={() => navigate('Welcome')}>
         <Card style={styles.card}>
@@ -250,12 +252,12 @@ export default class Browse extends Component {
                                   
       </View>
 
+      </View>
      </ScrollView>
-    </View>
+    
     
    </ImageBackground>
    </ScrollView>
-   </SafeAreaView>
  )
  }
 };
@@ -273,8 +275,8 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    width: null,
-    height: null,
+    width: '100%',
+    height: '100%',
     resizeMode: 'cover'
    },
    screen: {

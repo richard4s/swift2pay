@@ -67,7 +67,7 @@ export default class BuyData extends Component {
   buyData = async () => {
     const grabUserId = await AsyncStorage.getItem('userId')
     
-    fetch('https://swift2pay.com/account/api/request?action=walletAirtimePurchase&amount='+this.state.amount+'&mobileNetwork='+this.state.pickerSelection+'&apiKey=JFJHFJJ38388739949HFGDJ&phone='+this.state.phone+'&user_id='+ grabUserId +'&service_name=Airtime%20Purchase', {
+    fetch('https://swift2pay.com/account/api/request?action=walletDataGet&phone='+this.state.phone+'&product_id='+this.state.pickerSelection+'@'+this.state.amount+'&serviceID=mtn-data&userID='+grabUserId+'&apiKey=JFJHFJJ38388739949HFGDJ     https://swift2pay.com/account/api/request?action=walletAirtimePurchase&amount='+this.state.amount+'&mobileNetwork='+this.state.pickerSelection+'&apiKey=JFJHFJJ38388739949HFGDJ&phone='+this.state.phone+'&user_id='+ grabUserId +'&service_name=Airtime%20Purchase', {
       method: 'GET',
     })
     .then(response => response.json())

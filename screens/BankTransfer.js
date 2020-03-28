@@ -188,6 +188,7 @@ initiateTranfer = async() => {
   const { navigate } = this.props.navigation;
 
   return (
+    <ScrollView>
    <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
 
      <View style={{margin: 15, marginTop: 75, }} >
@@ -235,6 +236,7 @@ initiateTranfer = async() => {
       </View>
 
     </ImageBackground>
+    </ScrollView>
   )
  }
 };

@@ -38,6 +38,7 @@ export default class Airtime extends Component {
       pickerDisplayed: false,
       mobileNetwork: undefined,
       data: [], 
+      userID: '',
       visible: false,
       isLoading: false,
       spinner: false,
@@ -84,6 +85,7 @@ export default class Airtime extends Component {
         phone: json.phone,
         mobileNetwork: json.mobileNetwork,
         amount: json.amount,
+        userID: grabUserId,
       });
 
       
@@ -208,6 +210,9 @@ export default class Airtime extends Component {
                       text="OK"
                       onPress={() => {
                         this.setState({ visible: false });
+                        this.props.navigation.navigate('Browse', {
+                          userId: this.state.userID
+                        })
                       }}
                     />
                   </ModalFooter>

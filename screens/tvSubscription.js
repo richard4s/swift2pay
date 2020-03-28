@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Modal, TouchableHighlight, Text, View, TextInput, Image, Button, ScrollView, AsyncStorage, TouchableOpacity } from 'react-native';
+import { StyleSheet, ImageBackground, TouchableHighlight, Text, View, Platform, ActivityIndicator, 
+  TextInput, Image, Button, ScrollView, AsyncStorage, TouchableOpacity } from 'react-native';
 
 import RavePaymentModal from 'react-ravepayment'
 
-
-
+import { Modal as NativeModal} from 'react-native'
+import  Modal, { ModalTitle, ModalContent, SlideAnimation, ModalFooter, ModalButton } from 'react-native-modals';
 
 console.disableYellowBox = true;
 
 import Card from '../components/Card';
 
+import FeatherIcons from 'react-native-vector-icons/Feather';
 
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class TvSubsription extends Component {
   constructor(props) {
@@ -27,7 +30,14 @@ export default class TvSubsription extends Component {
       isLoading: true,
       variation_code: '',
       variation_amount: '',
-      wallet: ''
+      wallet: '',
+
+      // isLoading: true,
+      userID: '',
+      visible: false,
+      isAnimating: false,
+      spinner: false,
+      successLog: null,
     }
 
   }
@@ -64,6 +74,12 @@ export default class TvSubsription extends Component {
     })
    }
 
+   hideSpinner = () => {
+    this.setState({
+      spinner: false
+    }); 
+  }
+
   getTvInfo = async () => {
     const { navigation } = this.props;
 
@@ -77,7 +93,8 @@ export default class TvSubsription extends Component {
     this.setState({
         serviceID,
         cardNumber,
-        meterName
+        meterName,
+        userID: grabUserId
     })
 
     fetch('https://swift2pay.com/account/api/request?action=tvService&serviceID='+ serviceID +'&apiKey=JFJHFJJ38388739949HFGDJ', {
@@ -128,6 +145,8 @@ export default class TvSubsription extends Component {
 
   payTvSub =  async () => {
 
+    this.setState({ isAnimating: true, spinner: true });
+
     const grabUserId = await AsyncStorage.getItem('userId')
 
     fetch('https://swift2pay.com/account/api/request?action=buyTV&billersCode='+ this.state.cardNumber +'&serviceID='+ this.state.serviceID +'&variation_code='+ this.state.pickerSelection +'&amount='+ this.state.variation_amount +'&userID='+ grabUserId +'&apiKey=JFJHFJJ38388739949HFGDJ', {
@@ -138,6 +157,23 @@ export default class TvSubsription extends Component {
       user = JSON.stringify(json)
       console.log('Response: ' , user, json.message)
 
+      this.setState({
+        // message: json.message,
+        visible: true,
+        isAnimating: false,
+        spinner: false,
+        // successLog: true
+      });
+
+      if(json.status == 200) {
+        this.setState({
+          successLog: true
+        })
+      } else {
+        this.setState({
+          successLog: false
+        })
+      }
 
     })
     .catch((err) => {
@@ -156,9 +192,57 @@ export default class TvSubsription extends Component {
 
       const tvValues = this.state.variations;
 
+      const SuccessDialog = () => {
+        return(
+          <View>
+            <FeatherIcons style={{ textAlign: "center"}} name="check-circle" size={30} color="green" />
+            <Text>Your airtime is on its way</Text>
+          </View>   
+        )
+      }
+    
+      const ErrorDialog = () => {
+        return(
+          <View>
+            <FeatherIcons style={{ textAlign: "center"}} name="x" size={30} color="red" />
+            <Text>Failed. Try again later</Text>
+          </View>   
+        )
+      }
+
       return (
 
         <View style={{margin: 15}} >
+
+              <Modal
+                visible={this.state.visible}
+                modalAnimation={new SlideAnimation({
+                  slideFrom: 'bottom',
+                })}
+                onSwipeOut={(event) => {
+                  this.setState({ visible: false });
+                }}
+                footer={
+                  <ModalFooter>
+                    <ModalButton
+                      text="OK"
+                      onPress={() => {
+                        this.setState({ visible: false });
+                        this.props.navigation.navigate('Browse', {
+                          userId: this.state.userID
+                        })
+                      }}
+                    />
+                  </ModalFooter>
+                }
+              >
+              <ModalContent>
+                  { 
+                    this.state.successLog == true ? <SuccessDialog /> : <ErrorDialog />
+                  }
+              </ModalContent>
+            </Modal>
+
           <Card>
                 <Text>{this.state.serviceID}</Text>
                 <Text>{this.state.meterName} - {this.state.cardNumber}</Text>
@@ -166,7 +250,7 @@ export default class TvSubsription extends Component {
                 <Text style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }} placeholder={networkPlaceholder} >{this.state.pickerSelection}</Text>
             </TouchableOpacity>
 
-            <Modal visible={this.state.pickerDisplayed} animationType={"slide"} transparent={true} >
+            <NativeModal visible={this.state.pickerDisplayed} animationType={"slide"} transparent={true} >
                 <View style={{ margin: 20, padding: 20,
                 backgroundColor: '#efefef',
                 bottom: 20,
@@ -186,8 +270,18 @@ export default class TvSubsription extends Component {
                 <Text style={{ color: '#999' }}>Cancel</Text>
             </TouchableHighlight>
             </View>
-            </Modal>
+            </NativeModal>
           </Card>
+
+          {
+            Platform.OS === 'android' ?
+              <Spinner
+              visible={this.state.spinner}
+              textContent={'Loading...'}
+              textStyle={{color: '#fff'}}
+            /> :
+            <ActivityIndicator size="large" animating={this.state.isAnimating} color="purple" />
+          }  
 
           <TouchableOpacity style={styles.submit} onPress={() => this.payTvSub()}>
             <Text style={styles.textTwo}>Wallet Pay- ₦{this.state.wallet}</Text>
@@ -196,6 +290,8 @@ export default class TvSubsription extends Component {
       )
      }
     };
+
+    
     
     const styles = StyleSheet.create({
       backgroundImage: {

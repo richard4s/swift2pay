@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button, ScrollView, Picker, AsyncStorage, TouchableOpacity, Modal, TouchableHighlight } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button,  ActivityIndicator, Platform,
+  ScrollView, Picker, AsyncStorage, TouchableOpacity, Modal, TouchableHighlight } from 'react-native';
 
 // import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
 import RNPickerSelect from 'react-native-selector';
 
 import Card from '../components/Card';
+
+// import  Modal, { ModalTitle, ModalContent, SlideAnimation, ModalFooter, ModalButton } from 'react-native-modals';
+
+import FeatherIcons from 'react-native-vector-icons/Feather';
+
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class Electricity extends Component {
   static navigationOptions = {
@@ -175,7 +182,8 @@ export default class Electricity extends Component {
         <Card>
 
         <TouchableOpacity onPress={() => {this.togglePicker()}} >
-          <Text style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }} placeholder={networkPlaceholder} >{this.state.pickerSelection}</Text>
+          <Text style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, 
+          borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }} placeholder={networkPlaceholder} >{this.state.pickerSelection}</Text>
         </TouchableOpacity>
 
         <Modal visible={this.state.pickerDisplayed} animationType={"slide"} transparent={true} >
@@ -237,13 +245,13 @@ export default class Electricity extends Component {
 
       <View style={{margin: 15}} >
         <Card>
-          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Meter Number" keyboardType="number-pad" onChangeText={(meterNumber)=>this.setState({meterNumber})} value={this.state.meterNumber} />
+          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Meter Number" keyboardType="number-pad" returnKeyType={'done'} onChangeText={(meterNumber)=>this.setState({meterNumber})} value={this.state.meterNumber} />
         </Card>
       </View>
 
       <View style={{margin: 15}} >
         <Card>
-          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Amount" keyboardType="number-pad" onChangeText={(amount)=>this.setState({amount})} value={this.state.amount} />
+          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Amount" keyboardType="number-pad" returnKeyType={'done'} onChangeText={(amount)=>this.setState({amount})} value={this.state.amount} />
         </Card>
       </View>
       

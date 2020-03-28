@@ -40,6 +40,7 @@ export default class Transactions extends Component {
      .then((resJson) => {
       // JSON.stringify(resJson)
       //  console.log('transactions ---' , JSON.stringify(resJson))
+      console.log('Log: ', resJson)
        this.setState({
          data: resJson,
          isLoading: false

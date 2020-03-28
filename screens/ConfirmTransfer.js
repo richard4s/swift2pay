@@ -75,11 +75,14 @@ hideSpinner = () => {
 
 initiateTranfer = async() => {
 
+  // this.setState({ isLoading: true, spinner: true });
+
   const grabUserId = await AsyncStorage.getItem('userId')
 
   this.setState({
     userID: grabUserId,
-    isLoading: true
+    isLoading: true,
+    spinner: true
   })
 
   fetch('http://swift2pay.com/account/api/request?action=createTransfer&accountNo='+this.props.navigation.state.params.accountNumber+'&userID='+grabUserId+'&amount='+this.props.navigation.state.params.amount+'&bank='+this.props.navigation.state.params.bankCode+'&narration='+this.props.navigation.state.params.transferMessage+'&apiKey=JFJHFJJ38388739949HFGDJ', {
@@ -179,7 +182,7 @@ initiateTranfer = async() => {
       <View style={{margin: 15 }} >
         <Card>
             <Text>{this.props.navigation.state.params.accountNumber}</Text>
-            {/* <Text>{this.props.navigation.state.params.amount}</Text> */}
+            <Text>{this.props.navigation.state.params.amount}</Text>
             <Text>{this.props.navigation.state.params.accountName}</Text>
             {/* <Text>{this.props.navigation.state.params.bankCode}</Text> */}
         </Card>

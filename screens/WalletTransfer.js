@@ -46,11 +46,15 @@ export default class WalletTransfer extends Component {
   }
 
   walletTransfer = async () => {
+
+    this.setState({ isLoading: true, spinner: true });
+
     const grabUserId = await AsyncStorage.getItem('userId')
 
     // alert('Please wait...')
 
     // alert('Wallet Transfer')
+
 
     fetch('https://swift2pay.com/account/api/request?action=resolveWalletAccount&recipient='+this.state.email, {
       method: 'GET',

@@ -137,7 +137,7 @@ export default class BuyData extends Component {
 
       if(json.status == 200){
         console.log(json.message)
-        alert(json.message)
+        // alert(json.message)
         
       } else {
         this.setState({
@@ -257,6 +257,9 @@ export default class BuyData extends Component {
                       text="OK"
                       onPress={() => {
                         this.setState({ visible: false });
+                        this.props.navigation.navigate('Browse', {
+                          userId: this.state.getUserId
+                        })
                       }}
                     />
                   </ModalFooter>
