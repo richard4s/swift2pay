@@ -156,7 +156,7 @@ export default class Browse extends Component {
    </View>
     
      <ScrollView>
-
+ 
      <View style={styles.screen}>
 
       {/* <Text style={styles.browse}>Browse</Text> */}
@@ -171,23 +171,23 @@ export default class Browse extends Component {
           </Card>
         </TouchableOpacity>
 
-        {/* <TouchableOpacity onPress={() => navigate('Data')} >
+        <TouchableOpacity onPress={() => navigate('Data')} >
           <Card style={styles.card}>
             <Image source={require('../assets/images/browse-icons/data-service.png')} style={styles.image} />
             <Text style={styles.text}>Data Service</Text>
           </Card> 
-        </TouchableOpacity> */}
+        </TouchableOpacity>
 
       </View>
 
       <View style={styles.view}>
 
-       {/* <TouchableOpacity onPress={() => navigate('BillPayment')}>
+       <TouchableOpacity onPress={() => navigate('BillPayment')}>
         <Card style={styles.card}>
           <Image source={require('../assets/images/browse-icons/bill-payment.png')} style={styles.image} />
           <Text style={styles.text}>Bill Payment</Text>
         </Card>
-       </TouchableOpacity> */}
+       </TouchableOpacity>
 
        <TouchableOpacity onPress={() => navigate('WalletTransfer')}>
         <Card style={styles.card} >
@@ -205,6 +205,13 @@ export default class Browse extends Component {
           <Image source={require('../assets/images/browse-icons/bank-transfer.png')} style={styles.image} />
           <Text style={styles.text}>Bank Transfer</Text>
         </Card>
+       </TouchableOpacity>
+
+       <TouchableOpacity  onPress={() => navigate('Welcome')}>
+        <Card style={styles.card}>
+          <Image source={require('../assets/images/browse-icons/logout.png')} style={styles.image} />
+          <Text style={styles.text}>Logout</Text>
+        </Card> 
        </TouchableOpacity>
 
        {/* <TouchableOpacity onPress={() => navigate('Insurance')}>
@@ -243,12 +250,7 @@ export default class Browse extends Component {
         </Card>
        </TouchableOpacity> */}
 
-       <TouchableOpacity  onPress={() => navigate('Welcome')}>
-        <Card style={styles.card}>
-          <Image source={require('../assets/images/browse-icons/logout.png')} style={styles.image} />
-          <Text style={styles.text}>Logout</Text>
-        </Card> 
-       </TouchableOpacity>
+       
                                   
       </View>
 

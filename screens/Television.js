@@ -127,7 +127,7 @@ export default class Television extends Component {
   return (
    <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
    
-      <View style={{margin: 15, marginTop: 75,}} >
+      {/* <View style={{margin: 15, marginTop: 75,}} >
         <Card>
 
         <TouchableOpacity onPress={() => {this.togglePicker()}} >
@@ -155,9 +155,22 @@ export default class Television extends Component {
            </TouchableHighlight>
          </View>
        </Modal>
-          {/* <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Select Meter Provider" onChangeText={(email)=>this.setState({email})} value={this.state.email} /> */}
+          <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Select Meter Provider" onChangeText={(email)=>this.setState({email})} value={this.state.email} />
         </Card>
-      </View>
+      </View> */}
+
+            <View style={{margin: 15}} >
+              <Card >
+                <RNPickerSelect
+                  style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }}
+                  onValueChange={(value) => {
+                      console.log(value)
+                      this.setPickerValue(value)
+                    }}
+                  items={networkValues}
+                />
+              </Card>
+            </View>
 
       <View style={{margin: 15}} >
         <Card>

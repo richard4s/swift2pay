@@ -21,11 +21,11 @@ import Transactions from '../screens/Transactions';
 import Electricity from '../screens/Electricity';
 import Television from '../screens/Television';
 
-import RavePay from '../screens/RavePay';
+import RavePay from '../screens/ravePay';
 import tvSubscription from '../screens/tvSubscription';
 import ForgotPassword from '../screens/ForgotPassword';
 import ConfirmTransfer from '../screens/ConfirmTransfer';
-
+ 
 console.disableYellowBox = true;
 
 const AppStack = createStackNavigator({ 

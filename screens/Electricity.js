@@ -3,7 +3,7 @@ import { StyleSheet, ImageBackground, Text, View, TextInput, Image, Button,  Act
   ScrollView, Picker, AsyncStorage, TouchableOpacity, Modal, TouchableHighlight } from 'react-native';
 
 // import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
-import RNPickerSelect from 'react-native-selector';
+// import RNPickerSelect from 'react-native-selector';
 
 import Card from '../components/Card';
 
@@ -12,6 +12,7 @@ import Card from '../components/Card';
 import FeatherIcons from 'react-native-vector-icons/Feather';
 
 import Spinner from 'react-native-loading-spinner-overlay';
+import RNPickerSelect from 'react-native-selector';
 
 export default class Electricity extends Component {
   static navigationOptions = {
@@ -29,7 +30,8 @@ export default class Electricity extends Component {
 
   constructor(props){
     super(props);
-    this.state={
+
+    this.state = {
      meterNumber: '',
      amount: '',
      value: null,
@@ -39,6 +41,7 @@ export default class Electricity extends Component {
      pickerVariationDisplayed: false,
      mobileNetwork: undefined,
      data: [],
+     recipientUserID: ''
     }
   }; 
 
@@ -77,6 +80,8 @@ export default class Electricity extends Component {
   electricPay = async () => {
     const grabUserId = await AsyncStorage.getItem('userId')
 
+    console.log('States: ', this.state)
+
     alert('Please wait...')
     
     fetch('https://swift2pay.com/account/api/request?action=validateMeter&billersCode='+this.state.meterNumber+'&serviceID='+this.state.pickerSelection+'&variation_code='+this.state.pickerVariationSelection+'&apiKey=JFJHFJJ38388739949HFGDJ', {
@@ -84,8 +89,9 @@ export default class Electricity extends Component {
     })
     .then(response => response.json())
     .then((json) => {
-      user = JSON.stringify(json)
-      console.log('Response: ' , user, json.message)
+
+      console.log('Response: ' , json)
+
       this.setState({
         status: json.status,
         meterName: json.meterName,
@@ -98,6 +104,10 @@ export default class Electricity extends Component {
       alert(error)
     });
 
+    
+  }
+
+  confirmPayment = () => {
     fetch('https://swift2pay.com/account/api/request?action=walletTransfer&recipientID='+this.state.recipientUserID+'&userID='+grabUserId+'&amount='+this.state.amount+'&apiKey=JFJHFJJ38388739949HFGDJ', {
       method: 'GET',
     })
@@ -178,68 +188,29 @@ export default class Electricity extends Component {
   return (
    <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
    
-      <View style={{margin: 15, marginTop: 75,}} >
-        <Card>
+   <View style={{margin: 15}} >
+      <Card >
+        <RNPickerSelect
+          style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }}
+          onValueChange={(value) => {
+              console.log(value)
+              this.setPickerValue(value)
+            }}
+          items={networkValues}
+        />
+      </Card>
+    </View>
 
-        <TouchableOpacity onPress={() => {this.togglePicker()}} >
-          <Text style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, 
-          borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }} placeholder={networkPlaceholder} >{this.state.pickerSelection}</Text>
-        </TouchableOpacity>
-
-        <Modal visible={this.state.pickerDisplayed} animationType={"slide"} transparent={true} >
-         <View style={{ margin: 20, padding: 20,
-           backgroundColor: '#efefef',
-           bottom: 20,
-           left: 20,
-           right: 20,
-           alignItems: 'center',
-           position: 'absolute' }}>
-           <Text style={{fontWeight: 'bold'}}>Please select a Meter Provider</Text>
-           { networkValues.map((value, index) => {
-             return <TouchableHighlight key={index} onPress={() => this.setPickerValue(value.value)} style={{ paddingTop: 4, paddingBottom: 4 }}>
-                 <Text>{ value.label }</Text>
-               </TouchableHighlight>
-           })}
-
-           
-           <TouchableHighlight onPress={() => this.togglePicker()} style={{ paddingTop: 4, paddingBottom: 4 }}>
-             <Text style={{ color: '#999' }}>Cancel</Text>
-           </TouchableHighlight>
-         </View>
-       </Modal>
-          {/* <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Select Meter Provider" onChangeText={(email)=>this.setState({email})} value={this.state.email} /> */}
-        </Card>
-      </View>
-      
       <View style={{margin: 15}} >
-        <Card>
-           
-        <TouchableOpacity onPress={() => {this.toggleVariationPicker()}} >
-          <Text style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }} placeholder={variationPlaceholder} >{this.state.pickerVariationSelection}</Text>
-        </TouchableOpacity>
-
-        <Modal visible={this.state.pickerVariationDisplayed} animationType={"slide"} transparent={true} >
-         <View style={{ margin: 20, padding: 20,
-           backgroundColor: '#efefef',
-           bottom: 20,
-           left: 20,
-           right: 20,
-           alignItems: 'center',
-           position: 'absolute' }}>
-           <Text style={{fontWeight: 'bold'}}>Please select a Variation Code</Text>
-           { variationValues.map((value, index) => {
-             return <TouchableHighlight key={index} onPress={() => this.setVariationPickerValue(value.value)} style={{ paddingTop: 4, paddingBottom: 4 }}>
-                 <Text>{ value.label }</Text>
-               </TouchableHighlight>
-           })}
-
-           
-           <TouchableHighlight onPress={() => this.toggleVariationPicker()} style={{ paddingTop: 4, paddingBottom: 4 }}>
-             <Text style={{ color: '#999' }}>Cancel</Text>
-           </TouchableHighlight>
-         </View>
-       </Modal>
-          {/* <TextInput style={{ width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5 }} placeholder="Select Variation Code" onChangeText={(optionalMessage)=>this.setState({optionalMessage})} value={this.state.optionalMessage} /> */}
+        <Card >
+          <RNPickerSelect
+            style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }}
+            onValueChange={(value) => {
+                console.log(value)
+                this.setVariationPickerValue(value)
+              }}
+            items={variationValues}
+          />
         </Card>
       </View>
 

@@ -14,6 +14,7 @@ import Card from '../components/Card';
 import FeatherIcons from 'react-native-vector-icons/Feather';
 
 import Spinner from 'react-native-loading-spinner-overlay';
+import RNPickerSelect from 'react-native-selector';
 
 export default class TvSubsription extends Component {
   constructor(props) {
@@ -108,7 +109,7 @@ export default class TvSubsription extends Component {
     //   console.log('Response23: ' , json.content.varations)
 
       this.setState({
-        variations: json.content.varations,
+        variations: json,
         isLoading: false
       });
 
@@ -244,9 +245,9 @@ export default class TvSubsription extends Component {
             </Modal>
 
           <Card>
-                <Text>{this.state.serviceID}</Text>
-                <Text>{this.state.meterName} - {this.state.cardNumber}</Text>
-            <TouchableOpacity onPress={() => {this.togglePicker()}} >
+                <Text>Service: {this.state.serviceID}</Text>
+                <Text>Customer Info: {this.state.meterName} {this.state.cardNumber}</Text>
+            {/* <TouchableOpacity onPress={() => {this.togglePicker()}} >
                 <Text style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }} placeholder={networkPlaceholder} >{this.state.pickerSelection}</Text>
             </TouchableOpacity>
 
@@ -270,7 +271,19 @@ export default class TvSubsription extends Component {
                 <Text style={{ color: '#999' }}>Cancel</Text>
             </TouchableHighlight>
             </View>
-            </NativeModal>
+            </NativeModal> */}
+            <View style={{margin: 15}} >
+              <Card >
+                <RNPickerSelect
+                  style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }}
+                  onValueChange={(value) => {
+                      console.log(value)
+                      this.setPickerValue(value)
+                    }}
+                  items={this.state.variations}
+                />
+              </Card>
+            </View>
           </Card>
 
           {

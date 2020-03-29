@@ -87,11 +87,11 @@ export default class BuyData extends Component {
     .then(response => response.json())
     .then((json) => {
       user = JSON.stringify(json)
-      // console.log('Response Json: ', json.content)
+      console.log('Response Json: ', json)
       // console.log('Response user: ' , user.content.varations)
       
       this.setState({
-        getVariation: json.content.varations,
+        getVariation: json,
         getUserId: grabUserId,
         isLoading: false
       });
@@ -119,7 +119,7 @@ export default class BuyData extends Component {
 
     this.setState({ isAnimating: true, spinner: true });
     
-    fetch('https://swift2pay.com/account/api/request?action=walletDataGet&phone='+this.props.navigation.state.params.phoneNumber+'&product_id='+this.state.dataValue+'@'+this.state.dataAmount+'&serviceID='+this.props.navigation.state.params.network+'-data&userID='+this.state.getUserId+'&apiKey=JFJHFJJ38388739949HFGDJ', {
+    fetch('https://swift2pay.com/account/api/request?action=walletDataGet&phone='+this.props.navigation.state.params.phoneNumber+'&product_id='+this.state.dataValue+'&serviceID='+this.props.navigation.state.params.network+'-data&userID='+this.state.getUserId+'&apiKey=JFJHFJJ38388739949HFGDJ', {
       method: 'GET',
     })
     .then(response => response.json())
@@ -274,8 +274,10 @@ export default class BuyData extends Component {
       
         <View style={{margin: 15}} >
           <Text>Data bundles</Text>
-              
-                {/* {!this.state.isLoading &&
+
+          <View style={{margin: 15}} >
+              <Card >
+                {!this.state.isLoading &&
                   <RNPickerSelect 
                   style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }}
                   onValueChange={(value) => {
@@ -286,9 +288,12 @@ export default class BuyData extends Component {
                     }}
                     // placeholder={{label: 'Select plan', value: 'disabled'}}
                     items={this.state.getVariation} value={this.state.dataValue}
-                /> */}
+                />
+                }
+                </Card>
+              </View>
 
-              {!this.state.isLoading &&
+              {/* {!this.state.isLoading &&
               <Card >
               <TouchableOpacity onPress={() => {this.togglePicker()}} >
                 <Text style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }} placeholder={'select a plan'} >{this.state.dataValue || 'Select a bundle'}</Text>
@@ -318,7 +323,7 @@ export default class BuyData extends Component {
 
               </Card>
 
-                }
+                } */}
 
 
           {
