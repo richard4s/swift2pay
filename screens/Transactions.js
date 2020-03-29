@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, FlatList, Image, ActivityIndicator, AsyncStorage, SafeAreaView } from 'react-native';
 
 // import { ListItem } from "react-native-elements"
+import Card from '../components/Card';
 
 export default class Transactions extends Component {
   static navigationOptions = {
@@ -51,11 +52,13 @@ export default class Transactions extends Component {
    renderRow = ({item}) => {
       return (
         <View style={styles.itemRow}>
-          <Text style={styles.itemText}>{item.service_name}</Text>
-          <Text style={styles.itemText}>{item.service_value}</Text>
-          <Text style={styles.itemText}>{item.amount}</Text>
-          <Text style={styles.itemText}>{item.date}</Text>
-          <Text style={styles.itemText}>{item.value_number}</Text>
+          <Card>
+            <Text style={styles.itemText}>{item.service_name}</Text>
+            <Text style={styles.itemText}>{item.service_value}</Text>
+            <Text style={styles.itemText}>{item.amount}</Text>
+            <Text style={styles.itemText}>{item.date}</Text>
+            <Text style={styles.itemText}>{item.value_number}</Text>
+          </Card>
         </View>
       )
    }
@@ -76,15 +79,17 @@ export default class Transactions extends Component {
   render() {
     return (
       <SafeAreaView>
-        <FlatList 
-          style={styles.screen}
-          data={this.state.data}
-          renderItem={this.renderRow}
-          keyExtractor={(item) => item.date}
-          // onEndReached={this.handleLoadMore}
-          // onEndReachedThreshold={0}
-          // ListFooterComponent={this.renderFooter}
-        />
+        <Card>
+          <FlatList 
+            style={styles.screen}
+            data={this.state.data}
+            renderItem={this.renderRow}
+            keyExtractor={(item) => item.date}
+            // onEndReached={this.handleLoadMore}
+            // onEndReachedThreshold={0}
+            // ListFooterComponent={this.renderFooter}
+          />
+        </Card>
       </SafeAreaView>
       
     )

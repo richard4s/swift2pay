@@ -82,7 +82,7 @@ export default class Electricity extends Component {
 
     console.log('States: ', this.state)
 
-    alert('Please wait...')
+    // alert('Please wait...')
     
     fetch('https://swift2pay.com/account/api/request?action=validateMeter&billersCode='+this.state.meterNumber+'&serviceID='+this.state.pickerSelection+'&variation_code='+this.state.pickerVariationSelection+'&apiKey=JFJHFJJ38388739949HFGDJ', {
       method: 'GET',
@@ -98,6 +98,14 @@ export default class Electricity extends Component {
         message: json.message
       });
 
+      this.props.navigation.navigate('ElectricityConfirm', {
+        meterName: this.state.meterName,
+        billersCode: this.state.meterNumber,
+        serviceID: this.state.pickerSelection,
+        variation_code: this.state.pickerVariationSelection,
+        amount: this.state.amount,
+      })
+
     })
     .catch((error) => {
       console.error(error);
@@ -107,34 +115,34 @@ export default class Electricity extends Component {
     
   }
 
-  confirmPayment = () => {
-    fetch('https://swift2pay.com/account/api/request?action=walletTransfer&recipientID='+this.state.recipientUserID+'&userID='+grabUserId+'&amount='+this.state.amount+'&apiKey=JFJHFJJ38388739949HFGDJ', {
-      method: 'GET',
-    })
-    .then(response => response.json())
-    .then((json) => {
-      user = JSON.stringify(json)
-      console.log('Response: ', user, json.message)
-      alert(json.message)
-      this.setState({
-        message: json.message,
-      });
+  // confirmPayment = () => {
+  //   fetch('https://swift2pay.com/account/api/request?action=walletTransfer&recipientID='+this.state.recipientUserID+'&userID='+grabUserId+'&amount='+this.state.amount+'&apiKey=JFJHFJJ38388739949HFGDJ', {
+  //     method: 'GET',
+  //   })
+  //   .then(response => response.json())
+  //   .then((json) => {
+  //     user = JSON.stringify(json)
+  //     console.log('Response: ', user, json.message)
+  //     alert(json.message)
+  //     this.setState({
+  //       message: json.message,
+  //     });
 
-      if(json.status === 200){
-        console.log(json.message)
-        console.log(this.state.amount)
-        alert('Please wait...')
-        alert(json.message)
-      } else if(json.status === 400){
-        alert(json.message)
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      alert('Insufficient Wallet Fund')
-      alert(error)
-    });
-  }
+  //     if(json.status === 200){
+  //       console.log(json.message)
+  //       console.log(this.state.amount)
+  //       alert('Please wait...')
+  //       alert(json.message)
+  //     } else if(json.status === 400){
+  //       alert(json.message)
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.error(error);
+  //     alert('Insufficient Wallet Fund')
+  //     alert(error)
+  //   });
+  // }
 
  render() {
 

@@ -25,6 +25,7 @@ import RavePay from '../screens/ravePay';
 import tvSubscription from '../screens/tvSubscription';
 import ForgotPassword from '../screens/ForgotPassword';
 import ConfirmTransfer from '../screens/ConfirmTransfer';
+import ElectricityConfirm from '../screens/ElectricityConfirm';
  
 console.disableYellowBox = true;
 
@@ -49,6 +50,7 @@ const AppStack = createStackNavigator({
         BuyData: {screen: BuyData},
         
         ConfirmTransfer: {screen: ConfirmTransfer},
+        ElectricityConfirm: {screen: ElectricityConfirm}
     },
     // {
     //     initialRouteName: 'Welcome',
