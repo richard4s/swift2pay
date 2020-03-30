@@ -9,7 +9,7 @@
       "android",
       "web"
     ],
-    "version": "2.1.0",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -27,7 +27,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.swift2pay.prodVersion"
+      "package": "com.swift2pay.firstversion"
     },
     "description": "Fintech App for all your needs",
     "githubUrl": "https://github.com/richard4s/swift2pay"
