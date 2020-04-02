@@ -27,8 +27,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.swift2pay.firstversion",
-      "versionCode": 2
+      "package": "com.swift2pay.firstversion"
     },
     "description": "Fintech App for all your needs",
     "githubUrl": "https://github.com/richard4s/swift2pay"
