@@ -11,7 +11,7 @@
     ],
     "version": "3.3.0",
     "orientation": "portrait",
-    "icon": "./assets/icon-apple.png",
+    "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -24,8 +24,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.swift2pay.firstversion"
+      "supportsTablet": true
     },
     "android": {
       "package": "com.swift2pay.firstversion",

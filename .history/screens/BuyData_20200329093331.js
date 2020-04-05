@@ -79,9 +79,6 @@ export default class BuyData extends Component {
 
 
   getDataBundles = async () => {
-
-    this.setState({ isAnimating: true, spinner: true });
-
     const grabUserId = await AsyncStorage.getItem('userId')
     
     fetch('https://swift2pay.com/account/api/request?action=getData&mobileNetwork='+this.props.navigation.state.params.network+'-data', {
@@ -96,9 +93,7 @@ export default class BuyData extends Component {
       this.setState({
         getVariation: json,
         getUserId: grabUserId,
-        isLoading: false,
-        isAnimating: false,
-        spinner: false,
+        isLoading: false
       });
 
       if(json.status == 200){

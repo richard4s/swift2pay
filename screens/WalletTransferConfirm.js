@@ -73,56 +73,46 @@ hideSpinner = () => {
   }); 
 }
 
-initiateTranfer = async() => {
+initiateTransfer = () => {
+    // console.log('Statees: ', this.state)
+    this.setState({ isLoading: true, spinner: true });
 
-  // this.setState({ isLoading: true, spinner: true });
+    fetch('https://swift2pay.com/account/api/request?action=walletTransfer&recipientID='+this.props.navigation.state.params.recipientID+'&userID='+this.props.navigation.state.params.userID+'&amount='+this.props.navigation.state.params.amount+'&apiKey=JFJHFJJ38388739949HFG', {
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then((json) => {
+      user = JSON.stringify(json)
+      console.log('Response: ', user, json.message)
+      // alert(json.message)
 
-  const grabUserId = await AsyncStorage.getItem('userId')
-
-  this.setState({
-    userID: grabUserId,
-    isLoading: true,
-    spinner: true
-  })
-
-  fetch('http://swift2pay.com/account/api/request?action=createTransfer&accountNo='+this.props.navigation.state.params.accountNumber+'&userID='+grabUserId+'&amount='+this.props.navigation.state.params.amount+'&bank='+this.props.navigation.state.params.bankCode+'&narration='+this.props.navigation.state.params.transferMessage+'&apiKey=JFJHFJJ38388739949HFGDJ', {
-    method: 'GET',
-  })
-  .then(response => response.json())
-  .then((json) => {
-    banks = JSON.stringify(json)
-
-    console.log('Response: ', banks)
-    console.log(json.message)
-
-    this.setState({
-      message: json.message,
-      visible: true,
-      isLoading: false,
-      spinner: false,
-      // successLog: true
-    });
-
-    if(json.status == 200) {
       this.setState({
+        message: json.message,
+        visible: true,
+        isLoading: false,
+        spinner: false,
         successLog: true
-      })
-    } else {
+      });
+
+      if(json.status == 200) {
+        this.setState({
+          successLog: true
+        })
+      } else {
+        this.setState({
+          successLog: false
+        })
+      }
+  
+    }).catch((err) => {
+  
+      console.log(err)
+      
       this.setState({
         successLog: false
       })
-    }
-
-  }).catch((err) => {
-
-    console.log(err)
-    
-    this.setState({
-      successLog: false
     })
-
-  })
-}
+  }
 
  render() {
     
@@ -181,10 +171,9 @@ initiateTranfer = async() => {
    
       <View style={{margin: 15 }} >
         <Card>
-            <Text>Account Number: {this.props.navigation.state.params.accountNumber}</Text>
+            <Text>Name: {this.props.navigation.state.params.userName}</Text>
+            <Text>Email: {this.props.navigation.state.params.userEmail}</Text>
             <Text>Amount: NGN{this.props.navigation.state.params.amount}</Text>
-            <Text>Account Name: {this.props.navigation.state.params.accountName}</Text>
-            {/* <Text>{this.props.navigation.state.params.bankCode}</Text> */}
         </Card>
       </View>
 
@@ -199,7 +188,7 @@ initiateTranfer = async() => {
           } 
       
       <View style={{margin: 15, marginTop: 35}} >
-        <Text style={styles.submit} onPress={() => this.initiateTranfer()}>Transfer</Text>
+        <Text style={styles.submit} onPress={() => this.initiateTransfer()}>Transfer</Text>
       </View>
 
     </ImageBackground>

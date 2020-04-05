@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, FlatList, Image, ActivityIndicator, AsyncStorage, SafeAreaView,
-Platform , RefreshControl, ScrollView} from 'react-native';
+Platform } from 'react-native';
 
 import Modal, { ModalTitle, ModalContent, SlideAnimation, ModalFooter, ModalButton } from 'react-native-modals';
 
@@ -10,9 +10,8 @@ import Card from '../components/Card';
 import FeatherIcons from 'react-native-vector-icons/Feather';
 
 import Spinner from 'react-native-loading-spinner-overlay';
-import moment from 'moment';
 
-// import Date from 'datejs';
+import Date from 'datejs';
 
 export default class Transactions extends Component {
   static navigationOptions = {
@@ -90,8 +89,8 @@ export default class Transactions extends Component {
           <Card>
             {item.service_name ? <Text style={styles.itemText}>Service Name: {item.service_name}</Text> : null}
             {item.service_value ? <Text style={styles.itemText}>Service Value: {item.service_value}</Text> : null}
-            {item.amount ? <Text style={styles.itemText}>Amount: ₦{item.amount}</Text> : null}
-            {item.date ? <Text style={styles.itemText}>Date: {item.date}</Text> : null}
+            {item.amount ? <Text style={styles.itemText}>Amount: NGN{item.amount}</Text> : null}
+            {item.date ? <Text style={styles.itemText}>Date: {Date.parse(item.date)}</Text> : null}
             {item.value_number ? <Text style={styles.itemText}>Value Number: {item.value_number}</Text> : null}
           </Card>
         </View>
@@ -132,12 +131,6 @@ export default class Transactions extends Component {
     }
 
     return (
-      <ScrollView
-        contentContainerStyle={styles.scrollView}
-        refreshControl={
-          <RefreshControl refreshing={false} onRefresh={() => this.getData()} />
-        }
-      >
       <SafeAreaView>
 
       {this.state.successLog == false && 
@@ -191,7 +184,9 @@ export default class Transactions extends Component {
           }  
 
       </SafeAreaView>
-    </ScrollView>
+
+      
+      
     )
   }
 };

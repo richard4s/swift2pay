@@ -8,7 +8,6 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@expo/traveling-fastlane-darwin": "^1.13.1",
     "appcenter": "2.6.0",
     "appcenter-analytics": "2.6.0",
     "appcenter-crashes": "2.6.0",

@@ -71,16 +71,12 @@ export default class WalletTransfer extends Component {
         message: json.message,
         recipientID: json.recipientID,
         isLoading: true,
-        // visible: true,
+        visible: true,
         isLoading: false,
         spinner: false,
       });
 
-      if(!json.name) {
-        this.setState({
-          visible: true
-        })
-      }
+      console.log('Nameee: ', json.name)
 
       this.props.navigation.navigate('WalletTransferConfirm', {
         recipientID: this.state.recipientID,
@@ -166,34 +162,34 @@ export default class WalletTransfer extends Component {
   return (
    <ImageBackground source={require('../assets/images/bg/background.png')} style={styles.backgroundImage}>
 
-    <Modal
-        visible={this.state.visible}
-        modalAnimation={new SlideAnimation({
-          slideFrom: 'bottom',
-        })}
-        onSwipeOut={(event) => {
-          this.setState({ visible: false });
-        }}
-        footer={
-          <ModalFooter>
-            <ModalButton
-              text="OK"
-              onPress={() => {
-                this.setState({ visible: false });
-                this.props.navigation.navigate('Browse', {
-                  userId: this.state.userID
-                })
-              }}
-            />
-          </ModalFooter>
-        }
-      >
-      <ModalContent>
-          { 
-            this.state.successLog == true ? <SuccessDialog /> : <ErrorDialog />
-          }
-      </ModalContent>
-    </Modal>
+    {/* <Modal
+                visible={this.state.visible}
+                modalAnimation={new SlideAnimation({
+                  slideFrom: 'bottom',
+                })}
+                onSwipeOut={(event) => {
+                  this.setState({ visible: false });
+                }}
+                footer={
+                  <ModalFooter>
+                    <ModalButton
+                      text="OK"
+                      onPress={() => {
+                        this.setState({ visible: false });
+                        this.props.navigation.navigate('Browse', {
+                          userId: this.state.userID
+                        })
+                      }}
+                    />
+                  </ModalFooter>
+                }
+              >
+              <ModalContent>
+                  { 
+                    this.state.successLog == true ? <SuccessDialog /> : <ErrorDialog />
+                  }
+              </ModalContent>
+            </Modal> */}
    
       <View style={{margin: 15, marginTop: 75,}} >
         <Card>

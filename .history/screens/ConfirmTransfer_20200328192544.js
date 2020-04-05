@@ -181,9 +181,9 @@ initiateTranfer = async() => {
    
       <View style={{margin: 15 }} >
         <Card>
-            <Text>Account Number: {this.props.navigation.state.params.accountNumber}</Text>
-            <Text>Amount: NGN{this.props.navigation.state.params.amount}</Text>
-            <Text>Account Name: {this.props.navigation.state.params.accountName}</Text>
+            <Text>{this.props.navigation.state.params.accountNumber}</Text>
+            <Text>{this.props.navigation.state.params.amount}</Text>
+            <Text>{this.props.navigation.state.params.accountName}</Text>
             {/* <Text>{this.props.navigation.state.params.bankCode}</Text> */}
         </Card>
       </View>

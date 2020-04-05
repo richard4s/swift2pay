@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, TouchableHighlight, Text, View, RefreshControl,
-  TextInput, Image, Button, ScrollView, AsyncStorage, TouchableOpacity } from 'react-native';
+import { StyleSheet, ImageBackground, TouchableHighlight, Text, View, TextInput, Image, Button, ScrollView, AsyncStorage, TouchableOpacity } from 'react-native';
 
 // import MyWebView from 'react-native-webview-autoheight';
 
@@ -25,16 +24,16 @@ export default class FundWallet extends Component {
       first_name: '',
       email: '',
 
-      wallet: '',
-      commission: '',
-      account_name: '',
-      account_no: '',
-      bank: ''
+      wallet: json.wallet,
+      commission: json.commission,
+      account_name: json.account_name,
+      account_no: json.account_no,
+      bank: json.bank
     }
 
-    // this.onSuccess = this.onSuccess.bind(this);
-    // this.onFailure = this.onFailure.bind(this);
-    // this.onClose = this.onClose.bind(this);
+    this.onSuccess = this.onSuccess.bind(this);
+    this.onFailure = this.onFailure.bind(this);
+    this.onClose = this.onClose.bind(this);
   }
 
   static navigationOptions = {
@@ -54,113 +53,113 @@ export default class FundWallet extends Component {
     this.getBankInfo()
   }
 
-  // callback = (response) => {
-  //   console.log(response);
+  callback = (response) => {
+    console.log(response);
 
-  // }
+  }
 
-  // close = () => {
-  //   console.log("Payment closed");
-  // }
+  close = () => {
+    console.log("Payment closed");
+  }
 
-  // getReference = () => {
-  //   let text = "";
-  //   let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.=";
+  getReference = () => {
+    let text = "";
+    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.=";
 
-  //   for( let i=0; i < 10; i++ )
-  //     text += possible.charAt(Math.floor(Math.random() * possible.length));
+    for( let i=0; i < 10; i++ )
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
 
-  //       return text;
-  // }
+        return text;
+  }
 
-  // grabUserInfo =  async () => {
+  grabUserInfo =  async () => {
 
-  //   const grabUserId = await AsyncStorage.getItem('userId')
+    const grabUserId = await AsyncStorage.getItem('userId')
 
-  //   fetch('https://swift2pay.com/account/api/request.php?action=profile&userID='+grabUserId+'&apiKey=JFJHFJJ38388739949HFGDJ', {
-  //     method: 'GET',
-  //   }) 
-  //   .then(response => response.json())
-  //   .then((json) => {
-  //     user = JSON.stringify(json)
-  //     console.log('Response: ' , user, json.message)
-  //     this.setState({
-  //       message: json.message,
-  //       first_name: json.first_name,
-  //       last_name: json.last_name,
-  //       email: json.email
-  //     });
+    fetch('https://swift2pay.com/account/api/request.php?action=profile&userID='+grabUserId+'&apiKey=JFJHFJJ38388739949HFGDJ', {
+      method: 'GET',
+    }) 
+    .then(response => response.json())
+    .then((json) => {
+      user = JSON.stringify(json)
+      console.log('Response: ' , user, json.message)
+      this.setState({
+        message: json.message,
+        first_name: json.first_name,
+        last_name: json.last_name,
+        email: json.email
+      });
 
       
 
-  //   })
-  //   .catch((err) => {
-  //     console.log(err)
-  //   })
-  // }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
 
-  //  onSuccess = async (data) => {
-  //   console.log("success", data);
-  //   // You can get the transaction reference from successful transaction charge response returned and handle your transaction verification here
-  //   console.log('data 1', data.data.tx.txRef)
+   onSuccess = async (data) => {
+    console.log("success", data);
+    // You can get the transaction reference from successful transaction charge response returned and handle your transaction verification here
+    console.log('data 1', data.data.tx.txRef)
 
-  //   const grabUserId = await AsyncStorage.getItem('userId')
+    const grabUserId = await AsyncStorage.getItem('userId')
 
-  //   console.log(grabUserId)
+    console.log(grabUserId)
 
-  //   let transReference = data.data.tx.txRef.slice(6)
-  //   console.log(transReference)
+    let transReference = data.data.tx.txRef.slice(6)
+    console.log(transReference)
 
-  //   fetch('http://swift2pay.com/account/api/request?action=walletFunding&apiKey=JFJHFJJ38388739949HFGDJ&userID='+grabUserId+'&txref='+data.data.tx.txRef, {
-  //     method: 'GET',
-  //   }) 
-  //   .then(response => response.json())
-  //   .then((json) => {
-  //     user = JSON.stringify(json)
-  //     console.log('Response: ' , user, json.message)
-  //     this.setState({
-  //       message: json.message,
-  //       first_name: json.first_name,
-  //       last_name: json.last_name,
-  //       email: json.email
-  //     });
+    fetch('http://swift2pay.com/account/api/request?action=walletFunding&apiKey=JFJHFJJ38388739949HFGDJ&userID='+grabUserId+'&txref='+data.data.tx.txRef, {
+      method: 'GET',
+    }) 
+    .then(response => response.json())
+    .then((json) => {
+      user = JSON.stringify(json)
+      console.log('Response: ' , user, json.message)
+      this.setState({
+        message: json.message,
+        first_name: json.first_name,
+        last_name: json.last_name,
+        email: json.email
+      });
 
-  //     this.props.navigation.navigate('Browse', {
-  //       userId: grabUserId
-  //     })
+      this.props.navigation.navigate('Browse', {
+        userId: grabUserId
+      })
 
-  //   })
-  //   .catch((err) => {
-  //     console.log(err)
-  //   })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 
-  // }
+  }
  
-  // onFailure(data) {
-  //   console.log("error", data);
-  // }
+  onFailure(data) {
+    console.log("error", data);
+  }
  
-  // onClose() {
-  //   //navigate to the desired screen on rave close
-  //   console.log("Payment closed");
-  //   // this.props.navigation.navigate('Browse', {
-  //   //   userId: json.userID
-  //   // })
-  // }
+  onClose() {
+    //navigate to the desired screen on rave close
+    console.log("Payment closed");
+    // this.props.navigation.navigate('Browse', {
+    //   userId: json.userID
+    // })
+  }
 
-  // raveModal = () => {
-  //   console.log('Rave modal', this.state.amount)
-  //   this.props.navigation.navigate('RavePay', {
-  //     message: this.state.message,
-  //     first_name: this.state.first_name,
-  //     last_name: this.state.last_name,
-  //     email: this.state.email,
-  //     amount: this.state.amount
-  //   })
-  // }
+  raveModal = () => {
+    console.log('Rave modal', this.state.amount)
+    this.props.navigation.navigate('RavePay', {
+      message: this.state.message,
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
+      email: this.state.email,
+      amount: this.state.amount
+    })
+  }
 
   getBankInfo = async () => {
-    // const { navigation } = this.props;
+    const { navigation } = this.props;
 
     const grabUserId = await AsyncStorage.getItem('userId')
 
@@ -191,12 +190,12 @@ export default class FundWallet extends Component {
       if(json.status == 200){
         console.log(json.message)
         // alert('Data successfully updated') 
-        // this._storeData(json.userID)  
+        this._storeData(json.userID)  
       }
     })
     .catch((error) => {
       console.error(error);
-      // alert(error)
+      alert(error)
     });
   }
 
@@ -225,8 +224,8 @@ export default class FundWallet extends Component {
             <Text style={styles.itemText}>Bank Account Name: {this.state.account_name}</Text>
             <Text style={styles.itemText}>Bank Account Number: {this.state.account_no}</Text>
             <Text style={styles.itemText}>Bank: {this.state.bank}</Text>
-            <Text style={styles.itemText}>Commission: ₦{this.state.commission}</Text>
-            <Text style={styles.itemText}>Wallet Balance: ₦{this.state.wallet}</Text>
+            <Text style={styles.itemText}>Commission: {this.state.commission}</Text>
+            <Text style={styles.itemText}>Wallet Balance: {this.state.wallet}</Text>
           </Card>
         </View>
 

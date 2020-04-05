@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, TouchableHighlight, Text, View, RefreshControl,
+import { StyleSheet, ImageBackground, TouchableHighlight, Text, View, RefreshControl
   TextInput, Image, Button, ScrollView, AsyncStorage, TouchableOpacity } from 'react-native';
 
 // import MyWebView from 'react-native-webview-autoheight';
@@ -225,8 +225,8 @@ export default class FundWallet extends Component {
             <Text style={styles.itemText}>Bank Account Name: {this.state.account_name}</Text>
             <Text style={styles.itemText}>Bank Account Number: {this.state.account_no}</Text>
             <Text style={styles.itemText}>Bank: {this.state.bank}</Text>
-            <Text style={styles.itemText}>Commission: ₦{this.state.commission}</Text>
-            <Text style={styles.itemText}>Wallet Balance: ₦{this.state.wallet}</Text>
+            <Text style={styles.itemText}>Commission: {this.state.commission}</Text>
+            <Text style={styles.itemText}>Wallet Balance: {this.state.wallet}</Text>
           </Card>
         </View>
 

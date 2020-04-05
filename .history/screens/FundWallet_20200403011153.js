@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, TouchableHighlight, Text, View, RefreshControl,
-  TextInput, Image, Button, ScrollView, AsyncStorage, TouchableOpacity } from 'react-native';
+import { StyleSheet, ImageBackground, TouchableHighlight, Text, View, TextInput, Image, Button, ScrollView, AsyncStorage, TouchableOpacity } from 'react-native';
 
 // import MyWebView from 'react-native-webview-autoheight';
 
@@ -25,11 +24,11 @@ export default class FundWallet extends Component {
       first_name: '',
       email: '',
 
-      wallet: '',
-      commission: '',
-      account_name: '',
-      account_no: '',
-      bank: ''
+      wallet: json.wallet,
+      commission: json.commission,
+      account_name: json.account_name,
+      account_no: json.account_no,
+      bank: json.bank
     }
 
     // this.onSuccess = this.onSuccess.bind(this);
@@ -225,8 +224,8 @@ export default class FundWallet extends Component {
             <Text style={styles.itemText}>Bank Account Name: {this.state.account_name}</Text>
             <Text style={styles.itemText}>Bank Account Number: {this.state.account_no}</Text>
             <Text style={styles.itemText}>Bank: {this.state.bank}</Text>
-            <Text style={styles.itemText}>Commission: ₦{this.state.commission}</Text>
-            <Text style={styles.itemText}>Wallet Balance: ₦{this.state.wallet}</Text>
+            <Text style={styles.itemText}>Commission: {this.state.commission}</Text>
+            <Text style={styles.itemText}>Wallet Balance: {this.state.wallet}</Text>
           </Card>
         </View>
 

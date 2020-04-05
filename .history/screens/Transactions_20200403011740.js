@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, FlatList, Image, ActivityIndicator, AsyncStorage, SafeAreaView,
-Platform , RefreshControl, ScrollView} from 'react-native';
+Platform , RefreshControl} from 'react-native';
 
 import Modal, { ModalTitle, ModalContent, SlideAnimation, ModalFooter, ModalButton } from 'react-native-modals';
 
@@ -90,7 +90,7 @@ export default class Transactions extends Component {
           <Card>
             {item.service_name ? <Text style={styles.itemText}>Service Name: {item.service_name}</Text> : null}
             {item.service_value ? <Text style={styles.itemText}>Service Value: {item.service_value}</Text> : null}
-            {item.amount ? <Text style={styles.itemText}>Amount: ₦{item.amount}</Text> : null}
+            {item.amount ? <Text style={styles.itemText}>Amount: NGN{item.amount}</Text> : null}
             {item.date ? <Text style={styles.itemText}>Date: {item.date}</Text> : null}
             {item.value_number ? <Text style={styles.itemText}>Value Number: {item.value_number}</Text> : null}
           </Card>

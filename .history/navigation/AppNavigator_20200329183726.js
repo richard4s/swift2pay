@@ -26,7 +26,6 @@ import tvSubscription from '../screens/tvSubscription';
 import ForgotPassword from '../screens/ForgotPassword';
 import ConfirmTransfer from '../screens/ConfirmTransfer';
 import ElectricityConfirm from '../screens/ElectricityConfirm';
-import WalletTransferConfirm from '../screens/WalletTransferConfirm';
  
 console.disableYellowBox = true;
 
@@ -51,8 +50,7 @@ const AppStack = createStackNavigator({
         BuyData: {screen: BuyData},
         
         ConfirmTransfer: {screen: ConfirmTransfer},
-        ElectricityConfirm: {screen: ElectricityConfirm},
-        WalletTransferConfirm: {screen: WalletTransferConfirm}
+        ElectricityConfirm: {screen: ElectricityConfirm}
     },
     // {
     //     initialRouteName: 'Welcome',
@@ -84,6 +82,8 @@ export default createAppContainer(createSwitchNavigator(
     AuthLoading: AuthLoadingScreen,
     App: AppStack,
     Auth: AuthStack,
+    // BestPrices: BestPricesScreen,
+    // MainDrawer: MainDrawerNavigator,
   },
   {
     initialRouteName: 'AuthLoading',

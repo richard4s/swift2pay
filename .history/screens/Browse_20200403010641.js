@@ -148,7 +148,7 @@ export default class Browse extends Component {
 
        <Text style={styles.textThree} >Commission Earned: ₦{this.state.commission}</Text>
        {/* <Text style={styles.textThree} >Bank Details</Text> */}
-      {/* <Text style={styles.textThree} >Name: {this.state.account_name} - Number: {this.state.account_no} - Bank: {this.state.bank}</Text> */}
+      <Text style={styles.textThree} >Name: {this.state.account_name} - Number: {this.state.account_no} - Bank: {this.state.bank}</Text>
      </Card>
    </View>
     

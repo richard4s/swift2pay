@@ -84,6 +84,8 @@ export default createAppContainer(createSwitchNavigator(
     AuthLoading: AuthLoadingScreen,
     App: AppStack,
     Auth: AuthStack,
+    // BestPrices: BestPricesScreen,
+    // MainDrawer: MainDrawerNavigator,
   },
   {
     initialRouteName: 'AuthLoading',

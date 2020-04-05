@@ -246,8 +246,7 @@ export default class TvSubsription extends Component {
 
           <Card>
                 <Text>Service: {this.state.serviceID}</Text>
-                <Text>Customer Info: {this.state.meterName} </Text>
-                <Text>Decoder Number: {this.state.cardNumber}</Text>
+                <Text>Customer Info: {this.state.meterName} {this.state.cardNumber}</Text>
             {/* <TouchableOpacity onPress={() => {this.togglePicker()}} >
                 <Text style={{width: '90%', height: 25, borderColor: 'gray', borderWidth: 1, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, alignItems: "center", padding: 5, margin: 5, }} placeholder={networkPlaceholder} >{this.state.pickerSelection}</Text>
             </TouchableOpacity>
